@@ -1,0 +1,13 @@
+ext {
+    subProjectNames = [
+            ':jdbc-utils'
+    ]
+    compileClassPaths = [
+            'org.xerial:sqlite-jdbc:3.39.2.0'
+    ]
+    compileJarFilePaths = []
+    testCompileClassPaths = []
+    testCompileJarFilePaths = []
+}
+
+apply from: gradle.ext.rootDirPath + '/common_build.gradle'

@@ -1,0 +1,28 @@
+package com.utils.jdbc.data_sources;
+
+import java.util.Properties;
+
+import com.utils.log.Logger;
+
+public class DataSourceSqlLite extends AbstractDataSource {
+
+	public DataSourceSqlLite(
+			final String databaseUrl,
+			final Properties properties) {
+		super("jdbc:sqlite", databaseUrl, properties);
+	}
+
+	@Override
+	boolean loadDriver() {
+
+		boolean success = false;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			success = true;
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to load SQLLite driver");
+		}
+		return success;
+	}
+}

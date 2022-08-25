@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="AppStartUtilsManager" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="com.personal.utils.AppStartUtilsManager" />
+    <module name="UtilsManagerAllModules.UtilsManager.main" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.personal.utils.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

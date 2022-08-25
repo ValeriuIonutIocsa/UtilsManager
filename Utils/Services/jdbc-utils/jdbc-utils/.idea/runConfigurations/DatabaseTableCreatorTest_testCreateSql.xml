@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="DatabaseTableCreatorTest.testCreateSql" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+    <module name="jdbc-utils" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.utils.jdbc.tables.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="com.utils.jdbc.tables" />
+    <option name="MAIN_CLASS_NAME" value="com.utils.jdbc.tables.DatabaseTableCreatorTest" />
+    <option name="METHOD_NAME" value="testCreateSql" />
+    <option name="TEST_OBJECT" value="method" />
+    <option name="PARAMETERS" value="" />
+    <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -1,0 +1,72 @@
+package com.utils.jdbc.tables;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.utils.data_types.db.DatabaseTableColumn;
+import com.utils.data_types.db.DatabaseTableInfo;
+import com.utils.log.Logger;
+
+public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator {
+
+	@Override
+	public boolean work(
+			final Connection connection,
+			final DatabaseTableInfo databaseTableInfo,
+			final String indexName,
+			final int[] columnIndices) {
+
+		boolean success = false;
+		try {
+			final String tableName = databaseTableInfo.getName();
+			Logger.printProgress("creating table \"" + tableName + "\"");
+
+			final String sql = createSql(databaseTableInfo, indexName, columnIndices);
+			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+				preparedStatement.execute();
+			}
+
+			Logger.printStatus("Successfully created table \"" + tableName + "\".");
+			success = true;
+
+		} catch (final Exception exc) {
+			final String tableName = databaseTableInfo.getName();
+			Logger.printError("failed to create table \"" + tableName + "\"");
+			Logger.printException(exc);
+		}
+		return success;
+	}
+
+	static String createSql(
+			final DatabaseTableInfo databaseTableInfo,
+			final String indexName,
+			final int[] columnIndices) {
+
+		final String tableName = databaseTableInfo.getName();
+
+		final List<Integer> columnIndexList = new ArrayList<>();
+		for (final int columnIndex : columnIndices) {
+			columnIndexList.add(columnIndex);
+		}
+
+		final List<String> columns = new ArrayList<>();
+		final DatabaseTableColumn[] databaseTableColumns = databaseTableInfo.getDatabaseTableColumnArray();
+		for (int columnIndex = 0; columnIndex < databaseTableColumns.length; columnIndex++) {
+
+			if (columnIndexList.contains(columnIndex)) {
+
+				final DatabaseTableColumn databaseTableColumn = databaseTableColumns[columnIndex];
+				final String columnName = databaseTableColumn.getName();
+				final String columnString = "\"" + columnName + "\"";
+				columns.add(columnString);
+			}
+		}
+
+		final String columnsString = StringUtils.join(columns, ',');
+		return "CREATE INDEX \"" + indexName + "\" ON \"" + tableName + "\"(" + columnsString + ")";
+	}
+}

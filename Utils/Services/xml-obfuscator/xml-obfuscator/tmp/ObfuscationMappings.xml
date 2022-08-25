@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ObfuscationMappings>
+    <Obfuscation Original="Belgian Waffles" Obfuscated="val_0"></Obfuscation>
+    <Obfuscation Original="Two of our famous Belgian Waffles with plenty of real maple syrup" Obfuscated="val_1"></Obfuscation>
+    <Obfuscation Original="Strawberry Belgian Waffles" Obfuscated="val_2"></Obfuscation>
+    <Obfuscation Original="Light Belgian waffles covered with strawberries and whipped cream" Obfuscated="val_3"></Obfuscation>
+    <Obfuscation Original="Berry-Berry Belgian Waffles" Obfuscated="val_4"></Obfuscation>
+    <Obfuscation Original="Light Belgian waffles covered with an assortment of fresh berries and whipped cream" Obfuscated="val_5"></Obfuscation>
+    <Obfuscation Original="French Toast" Obfuscated="val_6"></Obfuscation>
+    <Obfuscation Original="Thick slices made from our homemade sourdough bread" Obfuscated="val_7"></Obfuscation>
+    <Obfuscation Original="Homestyle Breakfast" Obfuscated="val_8"></Obfuscation>
+    <Obfuscation Original="Two eggs, bacon or sausage, toast, and our ever-popular hash browns" Obfuscated="val_9"></Obfuscation>
+</ObfuscationMappings>

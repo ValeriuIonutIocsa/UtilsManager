@@ -1,0 +1,13 @@
+ext {
+    subProjectNames = [
+            ':io-utils'
+    ]
+    compileClassPaths = [
+            'org.influxdb:influxdb-java:2.23'
+    ]
+    compileJarFilePaths = []
+    testCompileClassPaths = []
+    testCompileJarFilePaths = []
+}
+
+apply from: gradle.ext.rootDirPath + '/common_build.gradle'

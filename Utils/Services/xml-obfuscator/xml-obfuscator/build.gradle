@@ -1,0 +1,15 @@
+ext {
+    mainClass = 'com.utils.xml.AppStartXmlObfuscator'
+    projectVersion = '1.0.0'
+
+    subProjectNames = [
+            ':xml-utils',
+            ':xml-stax-utils'
+    ]
+    compileClassPaths = []
+    compileJarFilePaths = []
+    testCompileClassPaths = []
+    testCompileJarFilePaths = []
+}
+
+apply from: gradle.ext.rootDirPath + '/common_build.gradle'

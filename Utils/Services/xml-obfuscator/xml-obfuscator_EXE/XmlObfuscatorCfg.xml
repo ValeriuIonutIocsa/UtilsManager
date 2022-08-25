@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xml_obfuscator_settings>
+    
+    <xml_file>
+        <input_path>test_in.xml</input_path>
+        <output_path>test_out.xml</output_path>
+        <obfuscate>
+            <xpath>breakfast_menu/food/name</xpath>
+            <text_content/>
+        </obfuscate>
+        <obfuscate>
+            <xpath>breakfast_menu/food/description</xpath>
+            <text_content/>
+        </obfuscate>
+        <mapping_path>mapping.csv</mapping_path>
+    </xml_file>
+    
+</xml_obfuscator_settings>

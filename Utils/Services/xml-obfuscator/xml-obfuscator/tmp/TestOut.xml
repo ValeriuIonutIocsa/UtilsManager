@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<breakfast_menu>
+    
+    <food>
+        
+        <name>val_0</name>
+        
+        <description>val_0</description>
+        
+        <price>$5.95</price>
+        
+        <description>val_1</description>
+        
+        <calories>650</calories>
+    </food>
+    
+    <food>
+        
+        <name>val_2</name>
+        
+        <description>val_0</description>
+        
+        <price>$7.95</price>
+        
+        <description>val_3</description>
+        
+        <calories>900</calories>
+    </food>
+    
+    <food>
+        
+        <name>val_4</name>
+        
+        <price>$8.95</price>
+        
+        <description>val_5</description>
+        
+        <calories>900</calories>
+    </food>
+    
+    <food>
+        
+        <name>val_6</name>
+        
+        <price>$4.50</price>
+        
+        <description>val_7</description>
+        
+        <calories>600</calories>
+    </food>
+    
+    <food>
+        
+        <name>val_8</name>
+        
+        <price>$6.95</price>
+        
+        <description>val_9</description>
+        
+        <calories>950</calories>
+    </food>
+</breakfast_menu>
