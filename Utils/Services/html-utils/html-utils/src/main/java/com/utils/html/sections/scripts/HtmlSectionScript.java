@@ -13,13 +13,14 @@ public abstract class HtmlSectionScript extends AbstractHtmlSection {
 	public void write(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("script");
+		final String scriptTagName = "script";
+		xmlStAXWriter.writeStartElement(scriptTagName);
 		xmlStAXWriter.writeAttribute("type", "text/javascript");
 
 		final String jsScriptContent = createJsScriptContent();
 		new HtmlSectionPlainText(jsScriptContent).write(xmlStAXWriter);
 
-		xmlStAXWriter.writeEndElement("script");
+		xmlStAXWriter.writeEndElement(scriptTagName);
 	}
 
 	protected abstract String createJsScriptContent();

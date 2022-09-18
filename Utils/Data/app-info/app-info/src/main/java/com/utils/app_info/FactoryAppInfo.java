@@ -18,8 +18,18 @@ public final class FactoryAppInfo {
 	private FactoryAppInfo() {
 	}
 
+	public static AppInfo computeInstance(
+			final String appTitleDefault,
+			final String appVersionDefault) {
+
+		if (instance == null) {
+			instance = newInstance(appTitleDefault, appVersionDefault);
+		}
+		return instance;
+	}
+
 	@ApiMethod
-	public static void initialize(
+	private static AppInfo newInstance(
 			final String appTitleDefault,
 			final String appVersionDefault) {
 
@@ -71,7 +81,7 @@ public final class FactoryAppInfo {
 			defaultBuildTime = false;
 		}
 
-		instance = new AppInfo(
+		return new AppInfo(
 				appTitle, defaultTitle, appVersion, defaultVersion, buildTime, defaultBuildTime);
 	}
 
@@ -92,10 +102,5 @@ public final class FactoryAppInfo {
 			lastCh = ch;
 		}
 		return stringBuilder.toString();
-	}
-
-	@ApiMethod
-	public static AppInfo getInstance() {
-		return instance;
 	}
 }

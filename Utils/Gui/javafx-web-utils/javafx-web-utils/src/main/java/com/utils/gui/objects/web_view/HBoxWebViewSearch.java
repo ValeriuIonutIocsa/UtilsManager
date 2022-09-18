@@ -45,23 +45,23 @@ public class HBoxWebViewSearch extends AbstractCustomControl<HBox> {
 	protected void createControls(
 			final HBox hBoxRoot) {
 
-		final Label labelSearch = BasicControlsFactories.getInstance().createLabel("search:");
-		labelSearch.setTooltip(BasicControlsFactories.getInstance().createTooltip(SEARCH_TOOLTIP_TEXT));
-		GuiUtils.addToHBox(hBoxRoot, labelSearch,
+		final Label searchLabel = BasicControlsFactories.getInstance().createLabel("search:");
+		searchLabel.setTooltip(BasicControlsFactories.getInstance().createTooltip(SEARCH_TOOLTIP_TEXT));
+		GuiUtils.addToHBox(hBoxRoot, searchLabel,
 				Pos.CENTER_LEFT, Priority.NEVER, 0, 0, 0, 5);
 
 		final ToggleButton caseSensitiveToggleButton = createCaseSensitiveToggleButton();
 
-		final TextField textFieldSearch = BasicControlsFactories.getInstance().createTextField("");
-		textFieldSearch.setTooltip(BasicControlsFactories.getInstance().createTooltip(SEARCH_TOOLTIP_TEXT));
-		textFieldSearch.setOnAction(event -> customWebView.search(
-				textFieldSearch.getText(), caseSensitiveToggleButton.isSelected()));
+		final TextField searchTextField = BasicControlsFactories.getInstance().createTextField("");
+		searchTextField.setTooltip(BasicControlsFactories.getInstance().createTooltip(SEARCH_TOOLTIP_TEXT));
+		searchTextField.setOnAction(event -> customWebView.search(
+				searchTextField.getText(), caseSensitiveToggleButton.isSelected()));
 		customWebView.getRoot().setOnKeyPressed(event -> {
 			if (event.isControlDown() && event.getCode() == KeyCode.F) {
-				textFieldSearch.requestFocus();
+				searchTextField.requestFocus();
 			}
 		});
-		GuiUtils.addToHBox(hBoxRoot, textFieldSearch,
+		GuiUtils.addToHBox(hBoxRoot, searchTextField,
 				Pos.CENTER_LEFT, Priority.ALWAYS, 0, 0, 0, 5);
 
 		final ImageView imageViewSearch = new ImageView(ImagesGuiUtils.IMAGE_SEARCH);
@@ -70,7 +70,7 @@ public class HBoxWebViewSearch extends AbstractCustomControl<HBox> {
 		stackPaneImageViewSearch.setPadding(new Insets(0, 2, 0, 2));
 		stackPaneImageViewSearch.setOnMouseClicked(mouseEvent -> {
 			if (GuiUtils.isLeftClick(mouseEvent)) {
-				customWebView.search(textFieldSearch.getText(), caseSensitiveToggleButton.isSelected());
+				customWebView.search(searchTextField.getText(), caseSensitiveToggleButton.isSelected());
 			}
 		});
 		GuiUtils.setDefaultBorder(stackPaneImageViewSearch);

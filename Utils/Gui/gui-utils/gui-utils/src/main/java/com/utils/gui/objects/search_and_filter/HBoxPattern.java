@@ -22,7 +22,7 @@ import javafx.scene.layout.Priority;
 
 class HBoxPattern extends AbstractCustomControl<HBox> {
 
-	private final TextField textFieldPattern;
+	private final TextField patternTextField;
 	private final ToggleButton negateToggleButton;
 	private final ToggleButton caseSensitiveToggleButton;
 
@@ -30,22 +30,22 @@ class HBoxPattern extends AbstractCustomControl<HBox> {
 			final boolean focus,
 			final EventHandler<ActionEvent> textFieldEventHandler) {
 
-		textFieldPattern = createTextFieldPattern(focus, textFieldEventHandler);
+		patternTextField = createPatternTextField(focus, textFieldEventHandler);
 		negateToggleButton = createNegateToggleButton();
 		caseSensitiveToggleButton = createCaseSensitiveToggleButton();
 	}
 
-	private static TextField createTextFieldPattern(
+	private static TextField createPatternTextField(
 			final boolean focus,
 			final EventHandler<ActionEvent> textFieldEventHandler) {
 
-		final TextField textFieldPattern = BasicControlsFactories.getInstance().createTextField("");
-		textFieldPattern.setMinWidth(60);
+		final TextField patternTextField = BasicControlsFactories.getInstance().createTextField("");
+		patternTextField.setMinWidth(60);
 		if (focus) {
-			Platform.runLater(textFieldPattern::requestFocus);
+			Platform.runLater(patternTextField::requestFocus);
 		}
-		textFieldPattern.setOnAction(textFieldEventHandler);
-		return textFieldPattern;
+		patternTextField.setOnAction(textFieldEventHandler);
+		return patternTextField;
 	}
 
 	private static ToggleButton createNegateToggleButton() {
@@ -73,7 +73,7 @@ class HBoxPattern extends AbstractCustomControl<HBox> {
 
 		final HBox hBoxRoot = LayoutControlsFactories.getInstance().createHBox();
 
-		GuiUtils.addToHBox(hBoxRoot, textFieldPattern,
+		GuiUtils.addToHBox(hBoxRoot, patternTextField,
 				Pos.CENTER_LEFT, Priority.ALWAYS, 0, 0, 0, 0);
 
 		GuiUtils.addToHBox(hBoxRoot, negateToggleButton,
@@ -89,7 +89,7 @@ class HBoxPattern extends AbstractCustomControl<HBox> {
 			final int patternTypeIndex) {
 
 		CustomPattern customPattern = null;
-		final String pattern = textFieldPattern.getText();
+		final String pattern = patternTextField.getText();
 		if (StringUtils.isNotBlank(pattern)) {
 
 			final boolean negate = negateToggleButton.isSelected();

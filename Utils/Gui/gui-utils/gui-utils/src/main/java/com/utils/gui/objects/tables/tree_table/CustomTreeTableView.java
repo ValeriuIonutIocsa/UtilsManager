@@ -59,6 +59,8 @@ public class CustomTreeTableView<
 	private boolean hideVerticalScrollBar;
 	private Predicate<TableRowDataT> filterPredicate;
 
+	private boolean expandedListenerActive;
+
 	public CustomTreeTableView(
 			final TableColumnData[] tableColumnDataArray,
 			final boolean editable,
@@ -76,6 +78,8 @@ public class CustomTreeTableView<
 		treeItemList = new ArrayList<>();
 
 		filterPredicate = item -> true;
+
+		expandedListenerActive = true;
 
 		setMinHeight(80);
 
@@ -550,14 +554,21 @@ public class CustomTreeTableView<
 	@ApiMethod
 	public void setFilteredItems() {
 
-		final TableRowDataT value = unfilteredTreeItemRoot.getValue();
-		final boolean expanded = unfilteredTreeItemRoot.isExpanded();
-		final TreeItem<TableRowDataT> filteredRoot = createTreeItem(value, expanded);
+		try {
+			expandedListenerActive = false;
 
-		setFilteredItemsRec(unfilteredTreeItemRoot, filteredRoot);
+			final TableRowDataT value = unfilteredTreeItemRoot.getValue();
+			final boolean expanded = unfilteredTreeItemRoot.isExpanded();
+			final TreeItem<TableRowDataT> filteredRoot = createTreeItem(value, expanded);
 
-		setRoot(filteredRoot);
-		fillTreeItemList();
+			setFilteredItemsRec(unfilteredTreeItemRoot, filteredRoot);
+
+			setRoot(filteredRoot);
+			fillTreeItemList();
+
+		} finally {
+			expandedListenerActive = true;
+		}
 	}
 
 	private void setFilteredItemsRec(
@@ -591,8 +602,15 @@ public class CustomTreeTableView<
 		treeItem.expandedProperty().addListener((
 				observable,
 				oldValue,
-				newValue) -> fillTreeItemList());
+				newValue) -> expandedPropertyChanged());
 		return treeItem;
+	}
+
+	private void expandedPropertyChanged() {
+
+		if (expandedListenerActive) {
+			fillTreeItemList();
+		}
 	}
 
 	@ApiMethod
@@ -638,43 +656,54 @@ public class CustomTreeTableView<
 			final List<TableRowDataT> tableRowDataList,
 			final boolean expanded) {
 
-		int indexInTreeItemList = -1;
-		for (int i = 0; i < treeItemList.size(); i++) {
+		try {
+			expandedListenerActive = false;
 
-			final TreeItem<TableRowDataT> treeItem = treeItemList.get(i);
-			if (treeItemParent.equals(treeItem)) {
+			int indexInTreeItemList = -1;
+			for (int i = 0; i < treeItemList.size(); i++) {
 
-				indexInTreeItemList = i;
-				break;
+				final TreeItem<TableRowDataT> treeItem = treeItemList.get(i);
+				if (treeItemParent.equals(treeItem)) {
+
+					indexInTreeItemList = i;
+					break;
+				}
 			}
-		}
 
-		if (indexInTreeItemList >= 0) {
-
-			for (final TableRowDataT tableRowData : tableRowDataList) {
-
-				final TreeItem<TableRowDataT> treeItemChild = createTreeItem(tableRowData, true);
-				treeItemParent.getChildren().add(treeItemChild);
-			}
-			treeItemParent.setExpanded(expanded);
-			treeItemList.addAll(indexInTreeItemList + 1, treeItemParent.getChildren());
-		}
-
-		final TableRowDataT tableRowDataT = treeItemParent.getValue();
-		if (tableRowDataT != null) {
-
-			final UnfilteredTreeItem<TableRowDataT> unfilteredTreeItemParent =
-					computeUnfilteredTreeItemParentRec(unfilteredTreeItemRoot, tableRowDataT);
-			if (unfilteredTreeItemParent != null) {
+			if (indexInTreeItemList >= 0) {
 
 				for (final TableRowDataT tableRowData : tableRowDataList) {
 
-					final UnfilteredTreeItem<TableRowDataT> unfilteredTreeItemChild =
-							new UnfilteredTreeItem<>(tableRowData, true);
-					unfilteredTreeItemParent.getChildrenList().add(unfilteredTreeItemChild);
-					unfilteredTreeItemParent.setExpanded(expanded);
+					final TreeItem<TableRowDataT> treeItemChild = createTreeItem(tableRowData, true);
+					treeItemParent.getChildren().add(treeItemChild);
+				}
+				treeItemParent.setExpanded(expanded);
+				treeItemList.addAll(indexInTreeItemList + 1, treeItemParent.getChildren());
+			}
+
+			final TableRowDataT tableRowDataT = treeItemParent.getValue();
+			if (tableRowDataT != null) {
+
+				final UnfilteredTreeItem<TableRowDataT> unfilteredTreeItemParent =
+						computeUnfilteredTreeItemParentRec(unfilteredTreeItemRoot, tableRowDataT);
+				if (unfilteredTreeItemParent != null) {
+
+					for (final TableRowDataT tableRowData : tableRowDataList) {
+
+						final UnfilteredTreeItem<TableRowDataT> unfilteredTreeItemChild =
+								new UnfilteredTreeItem<>(tableRowData, true);
+						unfilteredTreeItemParent.getChildrenList().add(unfilteredTreeItemChild);
+						unfilteredTreeItemParent.setExpanded(expanded);
+					}
 				}
 			}
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to add cells to tree view");
+			Logger.printException(exc);
+
+		} finally {
+			expandedListenerActive = true;
 		}
 	}
 

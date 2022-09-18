@@ -18,11 +18,12 @@ public class HtmlSectionLinkedCssResource extends AbstractHtmlSection {
 	public void write(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("link");
+        final String linkTagName = "link";
+        xmlStAXWriter.writeStartElement(linkTagName);
 		xmlStAXWriter.writeAttribute("type", "text/css");
 		xmlStAXWriter.writeAttribute("rel", "stylesheet");
 		xmlStAXWriter.writeAttribute("href", IoUtils.resourceToUrl(cssResourceFilePath).toExternalForm());
 
-		xmlStAXWriter.writeEndElement("link");
+		xmlStAXWriter.writeEndElement(linkTagName);
 	}
 }

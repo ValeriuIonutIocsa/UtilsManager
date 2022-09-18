@@ -17,10 +17,11 @@ public class HtmlSectionLinkedScript extends AbstractHtmlSection {
 	public void write(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("script");
+		final String scriptTagName = "script";
+		xmlStAXWriter.writeStartElement(scriptTagName);
 		xmlStAXWriter.writeAttribute("type", "text/javascript");
 		xmlStAXWriter.writeAttribute("src", jsScriptLink);
 
-		xmlStAXWriter.writeEndElement("script");
+		xmlStAXWriter.writeEndElement(scriptTagName);
 	}
 }

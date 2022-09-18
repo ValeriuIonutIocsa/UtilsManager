@@ -696,6 +696,11 @@ public final class StrUtils {
 	}
 
 	@ApiMethod
+	public static String createPathDateTimeString() {
+		return new SimpleDateFormat("dd_MMM_yyyy__hh_mm_ss_SSS__zzz", Locale.US).format(new Date());
+	}
+
+	@ApiMethod
 	public static String createDisplayDateTimeString() {
 		return new SimpleDateFormat("dd MMM yyyy, hh:mm:ss zzz", Locale.US).format(new Date());
 	}

@@ -99,20 +99,22 @@ public class XmlFile {
 			protected void write() {
 
 				writeStartDocument();
-				writeStartElement("ObfuscationMappings");
+				final String obfuscationMappingsTagName = "ObfuscationMappings";
+				writeStartElement(obfuscationMappingsTagName);
 
 				for (final Map.Entry<String, String> mappingEntry : obfuscatedToOriginalValuesMap.entrySet()) {
 
 					final String original = mappingEntry.getKey();
 					final String obfuscated = mappingEntry.getValue();
 
-					writeStartElement("Obfuscation");
+					final String obfuscationTagName = "Obfuscation";
+					writeStartElement(obfuscationTagName);
 					writeAttribute("Original", original);
 					writeAttribute("Obfuscated", obfuscated);
-					writeEndElement("Obfuscation");
+					writeEndElement(obfuscationTagName);
 				}
 
-				writeEndElement("ObfuscationMappings");
+				writeEndElement(obfuscationMappingsTagName);
 				writeEndDocument();
 			}
 		}.writeXml();

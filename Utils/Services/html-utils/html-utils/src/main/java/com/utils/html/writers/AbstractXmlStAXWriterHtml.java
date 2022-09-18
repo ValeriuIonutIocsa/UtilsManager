@@ -17,36 +17,41 @@ public abstract class AbstractXmlStAXWriterHtml extends AbstractXmlStAXWriter {
 	protected void write() {
 
 		writePlainText("<!-- saved from url=(0014)about:internet -->");
-		writeStartElement("html");
+		final String htmlTagName = "html";
+		writeStartElement(htmlTagName);
 
-		writeStartElement("head");
+		final String headTagName = "head";
+		writeStartElement(headTagName);
 		writeHead(this);
-		writeEndElement("head");
+		writeEndElement(headTagName);
 
-		writeStartElement("body");
+		final String bodyTagName = "body";
+		writeStartElement(bodyTagName);
 		writeBodyAttributes(this);
 		writeBody(this);
-		writeEndElement("body");
+		writeEndElement(bodyTagName);
 
-		writeEndElement("html");
+		writeEndElement(htmlTagName);
 	}
 
 	private void writeHead(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("meta");
+		final String metaTagName = "meta";
+		xmlStAXWriter.writeStartElement(metaTagName);
 		xmlStAXWriter.writeAttribute("http-equiv", "X-UA-Compatible");
 		xmlStAXWriter.writeAttribute("content", "IE=10; IE=9; IE=8; IE=7; IE=EDGE");
-		xmlStAXWriter.writeEndElement("meta");
+		xmlStAXWriter.writeEndElement(metaTagName);
 
-		xmlStAXWriter.writeStartElement("style");
+		final String styleTagName = "style";
+		xmlStAXWriter.writeStartElement(styleTagName);
 		xmlStAXWriter.writeAttribute("type", "text/css");
 		xmlStAXWriter.writeAttribute("xml:space", "preserve");
 
 		final String cssString = createCssString();
 		new HtmlSectionPlainText(cssString).write(xmlStAXWriter);
 
-		xmlStAXWriter.writeEndElement("style");
+		xmlStAXWriter.writeEndElement(styleTagName);
 	}
 
 	protected abstract String createCssString();

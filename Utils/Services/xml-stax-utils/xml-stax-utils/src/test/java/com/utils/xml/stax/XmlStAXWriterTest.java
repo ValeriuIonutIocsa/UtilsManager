@@ -28,24 +28,28 @@ class XmlStAXWriterTest {
 
 				writeStartDocument();
 
-				writeStartElement("test1");
+				final String test1TagName = "test1";
+				writeStartElement(test1TagName);
 
-				writeStartElement("test2");
+				final String test2TagName = "test2";
+				writeStartElement(test2TagName);
 				writeAttribute("attribute", "a>b<c");
 
-				writeStartElement("test3");
+				final String test3TagName = "test3";
+				writeStartElement(test3TagName);
 				writeAttribute("before_attribute", "before");
 				writeAttribute("after_attribute", "after");
 
-				writeEndElement("test3");
+				writeEndElement(test3TagName);
 
-				writeStartElement("test4");
+				final String test4TagName = "test4";
+				writeStartElement(test4TagName);
 
-				writeEndElement("test4");
+				writeEndElement(test4TagName);
 
-				writeEndElement("test2");
+				writeEndElement(test2TagName);
 
-				writeEndElement("test1");
+				writeEndElement(test1TagName);
 
 				writeEndDocument();
 			}

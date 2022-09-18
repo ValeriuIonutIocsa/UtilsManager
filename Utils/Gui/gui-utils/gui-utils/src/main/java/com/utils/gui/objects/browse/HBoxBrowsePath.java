@@ -21,7 +21,7 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 
 	private final String name;
 
-	private final TextField textFieldPath;
+	private final TextField pathTextField;
 
 	private Path initialDirectoryPath;
 
@@ -33,9 +33,9 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 		this.name = name;
 		this.initialDirectoryPath = initialDirectoryPath;
 
-		textFieldPath = BasicControlsFactories.getInstance().createTextField("");
+		pathTextField = BasicControlsFactories.getInstance().createTextField("");
 		if (StringUtils.isNotBlank(initialValue)) {
-			textFieldPath.setText(initialValue);
+			pathTextField.setText(initialValue);
 		}
 	}
 
@@ -44,7 +44,7 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 
 		final HBox hBoxRoot = LayoutControlsFactories.getInstance().createHBox();
 
-		GuiUtils.addToHBox(hBoxRoot, textFieldPath,
+		GuiUtils.addToHBox(hBoxRoot, pathTextField,
 				Pos.CENTER, Priority.ALWAYS, 0, 0, 0, 0);
 
 		final Button buttonBrowse = BasicControlsFactories.getInstance().createButton("...");
@@ -59,7 +59,7 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 
 		final String pathString = browsePath();
 		if (StringUtils.isNotBlank(pathString)) {
-			textFieldPath.setText(pathString);
+			pathTextField.setText(pathString);
 		}
 	}
 
@@ -77,7 +77,7 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 	}
 
 	public String getPathString() {
-		return GuiUtils.computeTextInputControlPathString(textFieldPath);
+		return GuiUtils.computeTextInputControlPathString(pathTextField);
 	}
 
 	String getName() {
@@ -89,7 +89,7 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 		this.initialDirectoryPath = initialDirectoryPath;
 	}
 
-	public TextField getTextFieldPath() {
-		return textFieldPath;
+	public TextField getPathTextField() {
+		return pathTextField;
 	}
 }
