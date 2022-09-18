@@ -2,7 +2,21 @@ final String projectPath = file('.').getAbsolutePath()
 final String rootDirPath = file('../../../../').getAbsolutePath()
 gradle.ext.rootDirPath = rootDirPath
 final String[] subProjectsRelativePaths = [
-        '/Projects/Personal/UtilsManager/UtilsManager'
+        '/Projects/Personal/UtilsManager/UtilsManager',
+        '/Utils/Data/app-info/app-info',
+        '/Utils/Gui/controls-fx-utils/controls-fx-utils',
+        '/Utils/Gui/medusa-utils/medusa-utils',
+        '/Utils/Gui/javafx-swing-utils/javafx-swing-utils',
+        '/Utils/Gui/javafx-web-utils/javafx-web-utils',
+        '/Utils/Services/http-utils/http-utils',
+        '/Utils/Services/influxdb-utils/influxdb-utils',
+        '/Utils/Services/jdbc-utils-oracle-db/jdbc-utils-oracle-db',
+        '/Utils/Services/jdbc-utils-sql-lite/jdbc-utils-sql-lite',
+        '/Utils/Services/js-utils/js-utils',
+        '/Utils/Services/math-utils/math-utils',
+        '/Utils/Services/srec-utils/srec-utils',
+        '/Utils/Services/xls-utils/xls-utils',
+        '/Utils/Services/xml-obfuscator/xml-obfuscator'
 ]
 
 apply from: rootDirPath + '/common_settings.gradle'

@@ -1,6 +1,31 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+    dependencies {
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.42.0'
+    }
+}
+
+apply plugin: 'com.github.ben-manes.versions'
+
 ext {
     subProjectNames = [
-            ':UtilsManager'
+            ':UtilsManager',
+            ':app-info',
+            ':controls-fx-utils',
+            ':medusa-utils',
+            ':javafx-swing-utils',
+            ':javafx-web-utils',
+            ':http-utils',
+            ':influxdb-utils',
+            ':jdbc-utils-oracle-db',
+            ':jdbc-utils-sql-lite',
+            ':js-utils',
+            ':math-utils',
+            ':srec-utils',
+            ':xls-utils',
+            ':xml-obfuscator'
     ]
     compileClassPaths = []
     compileJarFilePaths = []
