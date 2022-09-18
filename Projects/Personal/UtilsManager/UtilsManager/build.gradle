@@ -1,6 +1,8 @@
 ext {
-    mainClass = 'com.personal.imo.AppStart' + project.name
+    mainClass = 'com.personal.utils.AppStart' + project.name
     projectVersion = '0.0.1'
+    convertToExe = false
+    jarFolderPath = 'C:\\IVI\\Apps\\UtilsManager'
 
     subProjectNames = [
             ':io-utils'
