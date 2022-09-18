@@ -63,7 +63,7 @@ public class GradleRoot {
 
 		try {
 			Logger.printProgress("copying file:");
-			Logger.printLine(dstFilePathString);
+			Logger.printLine(srcFilePathString);
 
 			final Path srcFilePath = Paths.get(srcFilePathString);
 			final Path dstFilePath = Paths.get(dstFilePathString);
@@ -81,7 +81,7 @@ public class GradleRoot {
 
 		try {
 			Logger.printProgress("copying folder:");
-			Logger.printLine(dstModuleFolderPathString);
+			Logger.printLine(srcModuleFolderPathString);
 
 			final Path dstModuleFolderPath = Paths.get(dstModuleFolderPathString);
 			final boolean deleteFolderSuccess = FactoryFolderDeleter.getInstance()
