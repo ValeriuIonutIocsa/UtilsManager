@@ -45,6 +45,11 @@ public final class FileCopierImpl implements FileCopier {
 
 		boolean success = false;
 		try {
+			Logger.printProgress("copying file:");
+			Logger.printLine(srcFilePathString);
+			Logger.printLine("to:");
+			Logger.printLine(dstFilePathString);
+
 			if (dstFileExists) {
 				FactoryReadOnlyFlagClearer.getInstance()
 						.clearReadOnlyFlagFileNoChecks(dstFilePathString, true);

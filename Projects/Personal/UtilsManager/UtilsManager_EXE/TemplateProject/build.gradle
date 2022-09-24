@@ -2,9 +2,7 @@ ext {
     mainClass = 'com.personal.utils.AppStart' + project.name
     projectVersion = '0.0.1'
 
-    subProjectNames = [
-%%SUB_PROJECTS%%
-    ]
+    subProjectNames = %%SUB_PROJECTS%%
     compileClassPaths = []
     compileJarFilePaths = []
     testCompileClassPaths = []

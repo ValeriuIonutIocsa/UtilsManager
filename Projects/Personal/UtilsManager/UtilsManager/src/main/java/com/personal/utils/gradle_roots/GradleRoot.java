@@ -48,8 +48,21 @@ public class GradleRoot {
 					srcGradleRoot.moduleFolderPathsByNameMap.getOrDefault(moduleName, null);
 			if (srcModuleFolderPathString != null) {
 
-				FactoryFolderCopier.getInstance().copyFolder(srcModuleFolderPathString, moduleFolderPathString);
+				FactoryFolderCopier.getInstance().copyFolder(
+						srcModuleFolderPathString, moduleFolderPathString, true);
 			}
 		}
+	}
+
+	public String getCommonBuildGradleFilePathString() {
+		return commonBuildGradleFilePathString;
+	}
+
+	public String getCommonSettingsGradleFilePathString() {
+		return commonSettingsGradleFilePathString;
+	}
+
+	public String getGitAttributesFilePathString() {
+		return gitAttributesFilePathString;
 	}
 }

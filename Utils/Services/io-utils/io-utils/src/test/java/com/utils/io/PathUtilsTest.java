@@ -120,4 +120,50 @@ class PathUtilsTest {
 		final String normalizedPathString = PathUtils.computeNormalizedPathString("test path", pathString);
 		Assertions.assertEquals(expectedNormalizedPathString, normalizedPathString);
 	}
+
+	@TestFactory
+	List<DynamicTest> testComputeFileName() {
+
+		final List<DynamicTest> dynamicTestList = new ArrayList<>();
+		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3, 4, 5);
+		if (testCaseList.contains(1)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("1 (regular file path)",
+					() -> testComputeFileNameCommon(
+							"C:\\IVI\\Prog\\JavaGradle\\WeatherAnalyzer\\common_build.gradle",
+							"common_build.gradle")));
+		}
+		if (testCaseList.contains(2)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("2 (regular folder path)",
+					() -> testComputeFileNameCommon(
+							"C:\\IVI\\Prog\\JavaGradle\\WeatherAnalyzer",
+							"WeatherAnalyzer")));
+		}
+		if (testCaseList.contains(3)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("3 (folder path with dot)",
+					() -> testComputeFileNameCommon(
+							"C:\\IVI\\Prog\\JavaGradle\\WeatherAnalyzer\\.",
+							".")));
+		}
+		if (testCaseList.contains(4)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("4 (folder path with two dots)",
+					() -> testComputeFileNameCommon(
+							"C:\\IVI\\Prog\\JavaGradle\\WeatherAnalyzer\\..",
+							"..")));
+		}
+		if (testCaseList.contains(5)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("5 (null file path)",
+					() -> testComputeFileNameCommon(
+							null,
+							null)));
+		}
+		return dynamicTestList;
+	}
+
+	private static void testComputeFileNameCommon(
+			final String pathString,
+			final String expectedFileName) {
+
+		final String fileName = PathUtils.computeFileName(pathString);
+		Assertions.assertEquals(expectedFileName, fileName);
+	}
 }

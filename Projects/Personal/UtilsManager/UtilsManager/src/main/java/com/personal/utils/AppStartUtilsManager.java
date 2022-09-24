@@ -16,6 +16,8 @@ final class AppStartUtilsManager {
 	public static void main(
 			final String[] args) {
 
+		Logger.setDebugMode(true);
+
 		final Instant start = Instant.now();
 		Logger.printProgress("starting UtilsManager");
 
@@ -34,7 +36,7 @@ final class AppStartUtilsManager {
 		}
 
 		String pathString = args[1];
-		pathString = PathUtils.tryParsePath("path", pathString).toAbsolutePath().toString();
+		pathString = PathUtils.tryParsePath("path", pathString).toAbsolutePath().normalize().toString();
 		if (!IoUtils.directoryExists(pathString)) {
 
 			Logger.printError("invalid path:" +

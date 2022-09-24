@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 
+import com.utils.annotations.ApiMethod;
 import com.utils.io.folder_deleters.FactoryFolderDeleter;
 import com.utils.log.Logger;
 
@@ -14,14 +15,18 @@ public class FolderCopierImpl implements FolderCopier {
 	private FolderCopierImpl() {
 	}
 
+	@ApiMethod
 	@Override
 	public void copyFolder(
 			final String srcFolderPathString,
-			final String dstFolderPathString) {
+			final String dstFolderPathString,
+			final boolean verbose) {
 
 		try {
 			Logger.printProgress("copying folder:");
 			Logger.printLine(srcFolderPathString);
+			Logger.printLine("to:");
+			Logger.printLine(dstFolderPathString);
 
 			final boolean deleteFolderSuccess = FactoryFolderDeleter.getInstance()
 					.deleteFolder(dstFolderPathString, true);
@@ -33,7 +38,12 @@ public class FolderCopierImpl implements FolderCopier {
 			}
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to copy folder:" + System.lineSeparator() + dstFolderPathString);
+			if (verbose) {
+				Logger.printError("failed to copy folder " +
+						System.lineSeparator() + srcFolderPathString +
+						System.lineSeparator() + "to:" +
+						System.lineSeparator() + dstFolderPathString);
+			}
 			Logger.printException(exc);
 		}
 	}
