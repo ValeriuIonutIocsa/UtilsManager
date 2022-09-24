@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.utils.io.IoUtils;
+import com.utils.io.ResourceFileUtils;
 import com.utils.log.Logger;
 import com.utils.xml.dom.XmlDomUtils;
 
@@ -17,7 +17,7 @@ class HtmlUtilsTest {
 		final Element documentElement = document.createElement("html_embed_image_test");
 		document.appendChild(documentElement);
 
-		final byte[] imageFileBytes = IoUtils.resourceFileToByteArray("com/utils/html/test.png");
+		final byte[] imageFileBytes = ResourceFileUtils.resourceFileToByteArray("com/utils/html/test.png");
 
 		HtmlUtils.embedImage(documentElement, imageFileBytes);
 

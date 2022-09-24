@@ -3,7 +3,7 @@ package com.utils.jdbc.tables;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import com.utils.io.IoUtils;
+import com.utils.io.ResourceFileUtils;
 import com.utils.log.Logger;
 
 public class DatabaseDropEverythingImpl implements DatabaseDropEverything {
@@ -15,7 +15,7 @@ public class DatabaseDropEverythingImpl implements DatabaseDropEverything {
 		try {
 			Logger.printProgress("dropping everything from the database");
 
-			final String sql = IoUtils.resourceFileToString("com/utils/jdbc/tables/drop_eveything.sql");
+			final String sql = ResourceFileUtils.resourceFileToString("com/utils/jdbc/tables/drop_eveything.sql");
 			try (Statement statement = connection.createStatement()) {
 				statement.execute(sql);
 			}

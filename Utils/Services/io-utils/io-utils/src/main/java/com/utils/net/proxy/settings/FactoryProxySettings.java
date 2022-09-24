@@ -1,9 +1,6 @@
 package com.utils.net.proxy.settings;
 
-import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
@@ -15,6 +12,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 import com.utils.crypt.EncryptionUtils;
 import com.utils.io.IoUtils;
+import com.utils.io.StreamUtils;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
@@ -28,15 +26,15 @@ public final class FactoryProxySettings {
 		ProxySettings proxySettings = null;
 		try {
 			final Properties properties = new Properties();
-			final Path proxySettingsPath = createProxySettingsPath();
-			if (IoUtils.fileExists(proxySettingsPath)) {
+			final String proxySettingsPathString = createProxySettingsPathString();
+			if (IoUtils.fileExists(proxySettingsPathString)) {
 
 				Logger.printProgress("parsing proxy settings file:");
-				Logger.printLine(proxySettingsPath);
+				Logger.printLine(proxySettingsPathString);
 
 				final Cipher decryptCipher = EncryptionUtils.createDecryptCipher();
 				try (InputStream inputStream = new CipherInputStream(
-						new BufferedInputStream(Files.newInputStream(proxySettingsPath)), decryptCipher)) {
+						StreamUtils.openBufferedInputStream(proxySettingsPathString), decryptCipher)) {
 
 					properties.load(inputStream);
 
@@ -61,7 +59,7 @@ public final class FactoryProxySettings {
 		return proxySettings;
 	}
 
-	static Path createProxySettingsPath() {
-		return Paths.get(SystemUtils.USER_HOME, "IVIProxySettings.encrypted");
+	static String createProxySettingsPathString() {
+		return Paths.get(SystemUtils.USER_HOME, "IVIProxySettings.encrypted").toString();
 	}
 }

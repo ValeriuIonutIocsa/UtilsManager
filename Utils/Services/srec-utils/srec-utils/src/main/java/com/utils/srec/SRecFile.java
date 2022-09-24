@@ -1,16 +1,13 @@
 package com.utils.srec;
 
-import java.io.BufferedOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import com.utils.io.StreamUtils;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
 import com.utils.log.Logger;
@@ -224,12 +221,11 @@ public class SRecFile {
 			Logger.printProgress("saving SREC file to:");
 			Logger.printLine(copySRecFilePathString);
 
-			final Path copySRecFilePath = Paths.get(copySRecFilePathString);
-			FactoryFolderCreator.getInstance().createParentDirectories(copySRecFilePath, true);
-			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(copySRecFilePath, true);
-			try (PrintStream printStream = new PrintStream(
-					new BufferedOutputStream(Files.newOutputStream(copySRecFilePath)),
-					false, StandardCharsets.UTF_8)) {
+			FactoryFolderCreator.getInstance().createParentDirectories(copySRecFilePathString, true);
+			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(copySRecFilePathString, true);
+
+			try (final PrintStream printStream =
+					StreamUtils.openPrintStream(copySRecFilePathString, false, StandardCharsets.UTF_8)) {
 
 				for (final SRecRecord sRecRecord : sRecRecordList) {
 					sRecRecord.write(printStream);

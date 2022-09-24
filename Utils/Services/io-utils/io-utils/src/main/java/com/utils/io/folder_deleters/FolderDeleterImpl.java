@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -23,12 +24,12 @@ public final class FolderDeleterImpl implements FolderDeleter {
 	@Override
 	@ApiMethod
 	public boolean deleteFolder(
-			final Path folderPath,
+			final String folderPathString,
 			final boolean verbose) {
 
 		final boolean success;
-		if (IoUtils.directoryExists(folderPath)) {
-			success = deleteFolderNoChecks(folderPath, verbose);
+		if (IoUtils.directoryExists(folderPathString)) {
+			success = deleteFolderNoChecks(folderPathString, verbose);
 		} else {
 			success = true;
 		}
@@ -38,20 +39,22 @@ public final class FolderDeleterImpl implements FolderDeleter {
 	@Override
 	@ApiMethod
 	public boolean deleteFolderNoChecks(
-			final Path folderPath,
+			final String folderPathString,
 			final boolean verbose) {
 
 		boolean success = false;
 		try {
+			final Path folderPath = Paths.get(folderPathString);
 			Files.walkFileTree(folderPath, new SimpleFileVisitor<>() {
 
 				@Override
 				public FileVisitResult visitFile(
-						final Path file,
+						final Path filePath,
 						final BasicFileAttributes attrs) throws IOException {
 
-					FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFileNoChecks(file, true);
-					Files.delete(file);
+					FactoryReadOnlyFlagClearer.getInstance()
+							.clearReadOnlyFlagFileNoChecks(filePath.toString(), true);
+					Files.delete(filePath);
 					return FileVisitResult.CONTINUE;
 				}
 
@@ -69,7 +72,7 @@ public final class FolderDeleterImpl implements FolderDeleter {
 
 		} catch (final Exception exc) {
 			if (verbose) {
-				Logger.printError("failed to delete folder:" + System.lineSeparator() + folderPath);
+				Logger.printError("failed to delete folder:" + System.lineSeparator() + folderPathString);
 			}
 			Logger.printException(exc);
 		}
@@ -79,12 +82,12 @@ public final class FolderDeleterImpl implements FolderDeleter {
 	@Override
 	@ApiMethod
 	public boolean cleanFolder(
-			final Path folderPath,
+			final String folderPathString,
 			final boolean verbose) {
 
 		final boolean success;
-		if (IoUtils.directoryExists(folderPath)) {
-			success = cleanFolderNoChecks(folderPath, verbose);
+		if (IoUtils.directoryExists(folderPathString)) {
+			success = cleanFolderNoChecks(folderPathString, verbose);
 		} else {
 			success = true;
 		}
@@ -94,30 +97,32 @@ public final class FolderDeleterImpl implements FolderDeleter {
 	@Override
 	@ApiMethod
 	public boolean cleanFolderNoChecks(
-			final Path folderPath,
+			final String folderPathString,
 			final boolean verbose) {
 
 		boolean success = false;
 		try {
+			final Path folderPath = Paths.get(folderPathString);
 			Files.walkFileTree(folderPath, new SimpleFileVisitor<>() {
 
 				@Override
 				public FileVisitResult visitFile(
-						final Path file,
+						final Path filePath,
 						final BasicFileAttributes attrs) throws IOException {
 
-					FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFileNoChecks(file, true);
-					Files.delete(file);
+					FactoryReadOnlyFlagClearer.getInstance()
+							.clearReadOnlyFlagFileNoChecks(filePath.toString(), true);
+					Files.delete(filePath);
 					return FileVisitResult.CONTINUE;
 				}
 
 				@Override
 				public FileVisitResult postVisitDirectory(
-						final Path dir,
+						final Path directoryPath,
 						final IOException exc) throws IOException {
 
-					if (!folderPath.equals(dir)) {
-						Files.delete(dir);
+					if (!folderPath.equals(directoryPath)) {
+						Files.delete(directoryPath);
 					}
 					return FileVisitResult.CONTINUE;
 				}
@@ -126,7 +131,7 @@ public final class FolderDeleterImpl implements FolderDeleter {
 
 		} catch (final Exception exc) {
 			if (verbose) {
-				Logger.printError("failed to clean folder:" + System.lineSeparator() + folderPath);
+				Logger.printError("failed to clean folder:" + System.lineSeparator() + folderPathString);
 			}
 			Logger.printException(exc);
 		}

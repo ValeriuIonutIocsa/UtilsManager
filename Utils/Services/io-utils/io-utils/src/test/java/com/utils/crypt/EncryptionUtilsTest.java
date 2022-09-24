@@ -17,8 +17,8 @@ import javax.crypto.CipherOutputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
+import com.utils.io.ReaderUtils;
 import com.utils.log.Logger;
 
 class EncryptionUtilsTest {
@@ -42,7 +42,7 @@ class EncryptionUtilsTest {
 		final Cipher decryptCipher = EncryptionUtils.createDecryptCipher();
 		try (InputStream inputStream = new CipherInputStream(
 				new BufferedInputStream(Files.newInputStream(encryptedFilePath)), decryptCipher)) {
-			decryptedString = IoUtils.inputStreamToString(inputStream, StandardCharsets.UTF_8.name());
+			decryptedString = ReaderUtils.inputStreamToString(inputStream, StandardCharsets.UTF_8.name());
 		}
 
 		Assertions.assertEquals(originalString, decryptedString);
@@ -61,14 +61,14 @@ class EncryptionUtilsTest {
 		Logger.printLine(encryptedFilePath);
 
 		final Cipher encryptCipher = EncryptionUtils.createEncryptCipher();
-		try (OutputStream outputStream = new CipherOutputStream(
+		try (final OutputStream outputStream = new CipherOutputStream(
 				new BufferedOutputStream(Files.newOutputStream(encryptedFilePath)), encryptCipher)) {
 			properties.store(outputStream, "test properties file for encryption");
 		}
 
 		final Properties decryptedProperties = new Properties();
 		final Cipher decryptCipher = EncryptionUtils.createDecryptCipher();
-		try (InputStream inputStream = new CipherInputStream(
+		try (final InputStream inputStream = new CipherInputStream(
 				new BufferedInputStream(Files.newInputStream(encryptedFilePath)), decryptCipher)) {
 			decryptedProperties.load(inputStream);
 		}

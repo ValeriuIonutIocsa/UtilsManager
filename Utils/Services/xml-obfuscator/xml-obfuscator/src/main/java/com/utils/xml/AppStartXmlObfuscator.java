@@ -23,20 +23,20 @@ public final class AppStartXmlObfuscator {
 				FactoryCliArgsXmlObfuscator.newInstance(args);
 		if (cliArgsXmlObfuscator != null) {
 
-			final Path cnfFilePath = cliArgsXmlObfuscator.getConfigurationFilePath();
-			main(cnfFilePath);
+			final String cnfFilePathString = cliArgsXmlObfuscator.getConfigurationFilePathString();
+			main(cnfFilePathString);
 		}
 	}
 
 	public static void main(
-			final Path cnfFilePath) {
+			final String cnfFilePathString) {
 
-		if (!IoUtils.fileExists(cnfFilePath)) {
+		if (!IoUtils.fileExists(cnfFilePathString)) {
 			Logger.printError("the configuration file path is invalid");
 
 		} else {
 			final SettingsXmlObfuscator settingsXmlObfuscator =
-					FactorySettingsXmlObfuscator.newInstance(cnfFilePath);
+					FactorySettingsXmlObfuscator.newInstance(cnfFilePathString);
 			if (settingsXmlObfuscator != null) {
 
 				final List<XmlFile> xmlFileList = settingsXmlObfuscator.getXmlFileList();

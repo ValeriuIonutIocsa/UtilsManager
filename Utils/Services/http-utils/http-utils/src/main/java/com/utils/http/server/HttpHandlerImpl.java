@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.utils.io.IoUtils;
+import com.utils.io.ReaderUtils;
 import com.utils.log.Logger;
 
 public class HttpHandlerImpl implements HttpHandler {
@@ -60,7 +60,7 @@ public class HttpHandlerImpl implements HttpHandler {
 					final InputStream requestBodyInputStream = httpExchange.getRequestBody();
 					if (requestBodyInputStream != null) {
 
-						final String requestBody = IoUtils.inputStreamToString(requestBodyInputStream);
+						final String requestBody = ReaderUtils.inputStreamToString(requestBodyInputStream);
 						httpHandlerWorker.setRequestBody(requestBody);
 					}
 				}

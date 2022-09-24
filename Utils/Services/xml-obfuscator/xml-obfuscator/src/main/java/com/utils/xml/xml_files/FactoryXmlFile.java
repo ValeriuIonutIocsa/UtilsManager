@@ -1,6 +1,5 @@
 package com.utils.xml.xml_files;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +22,9 @@ public final class FactoryXmlFile {
 
 		XmlFile xmlFile = null;
 		try {
-			final Path inputPath = parsePath(xmlFileElement, "input_path");
-			final Path outputPath = parsePath(xmlFileElement, "output_path");
-			final Path mappingsPath = parsePath(xmlFileElement, "mappings_path");
+			final String inputPathString = parsePathString(xmlFileElement, "input_path");
+			final String outputPathString = parsePathString(xmlFileElement, "output_path");
+			final String mappingsPathString = parsePathString(xmlFileElement, "mappings_path");
 
 			final Map<String, Obfuscation> obfuscationsByXpathMap = new HashMap<>();
 			final List<Element> obfuscationElementList =
@@ -40,7 +39,7 @@ public final class FactoryXmlFile {
 				}
 			}
 
-			xmlFile = new XmlFile(inputPath, outputPath, mappingsPath, obfuscationsByXpathMap);
+			xmlFile = new XmlFile(inputPathString, outputPathString, mappingsPathString, obfuscationsByXpathMap);
 
 		} catch (final Exception exc) {
 			Logger.printError("failed to parse a xml file element");
@@ -49,13 +48,13 @@ public final class FactoryXmlFile {
 		return xmlFile;
 	}
 
-	private static Path parsePath(
+	private static String parsePathString(
 			final Element xmlFileElement,
 			final String pathElementTagName) {
 
 		final Element inputPathElement =
 				XmlDomUtils.getFirstElementByTagName(xmlFileElement, pathElementTagName);
 		final String inputPathString = inputPathElement.getTextContent().trim();
-		return Paths.get(inputPathString).toAbsolutePath();
+		return Paths.get(inputPathString).toAbsolutePath().toString();
 	}
 }

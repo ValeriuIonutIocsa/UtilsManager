@@ -1,6 +1,5 @@
 package com.utils.xml.dom;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
@@ -38,22 +37,22 @@ class XmlDomUtilsTest {
 		final String str = XmlDomUtils.saveXmlFile(document, false, 4);
 		Logger.printLine(str);
 
-		final Path xmlFilePath =
-				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml");
+		final String xmlFilePathString =
+				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml").toString();
 		Logger.printProgress("saving XMl file:");
-		Logger.printLine(xmlFilePath);
-		XmlDomUtils.saveXmlFile(document, false, 4, xmlFilePath);
+		Logger.printLine(xmlFilePathString);
+		XmlDomUtils.saveXmlFile(document, false, 4, xmlFilePathString);
 	}
 
 	@Test
 	void testParseAndSaveXmlFile() throws Exception {
 
-		final Path xmlFilePath =
-				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml");
+		final String xmlFilePathString =
+				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml").toString();
 		Logger.printProgress("parsing and saving XML file:");
-		Logger.printLine(xmlFilePath);
-		final Document document = XmlDomUtils.openDocument(xmlFilePath);
+		Logger.printLine(xmlFilePathString);
+		final Document document = XmlDomUtils.openDocument(xmlFilePathString);
 
-		XmlDomUtils.saveXmlFile(document, false, 4, xmlFilePath);
+		XmlDomUtils.saveXmlFile(document, false, 4, xmlFilePathString);
 	}
 }

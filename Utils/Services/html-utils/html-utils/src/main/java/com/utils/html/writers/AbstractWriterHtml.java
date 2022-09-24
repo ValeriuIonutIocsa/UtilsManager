@@ -1,15 +1,13 @@
 package com.utils.html.writers;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.utils.html.sections.HtmlSection;
+import com.utils.io.StreamUtils;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
 import com.utils.log.Logger;
@@ -23,16 +21,17 @@ public abstract class AbstractWriterHtml implements WriterHtml {
 
 	@Override
 	public void writeToFile(
-			final Path outputPath) {
+			final String outputPathString) {
 
-		FactoryFolderCreator.getInstance().createParentDirectories(outputPath, true);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPath, true);
+		FactoryFolderCreator.getInstance().createParentDirectories(outputPathString, true);
+		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, true);
 
-		try (OutputStream outputStream = new BufferedOutputStream(Files.newOutputStream(outputPath))) {
+		try (OutputStream outputStream = StreamUtils.openBufferedOutputStream(outputPathString)) {
 			write(outputStream);
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to write HTML to file:" + System.lineSeparator() + outputPath);
+			Logger.printError("failed to write HTML to file:" +
+					System.lineSeparator() + outputPathString);
 			Logger.printException(exc);
 		}
 	}

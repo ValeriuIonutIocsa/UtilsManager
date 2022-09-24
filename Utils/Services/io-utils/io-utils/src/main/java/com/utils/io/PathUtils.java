@@ -31,13 +31,15 @@ public final class PathUtils {
 	@ApiMethod
 	public static Path tryParseExistingFilePath(
 			final String pathName,
-			final String pathString) {
+			final String pathStringParam) {
 
-		Path path = tryParsePath(pathName, pathString);
-		final boolean fileExists = IoUtils.fileExists(path);
+		Path path = tryParsePath(pathName, pathStringParam);
+		final String pathString = path.toString();
+		final boolean fileExists = IoUtils.fileExists(pathString);
 		if (!fileExists) {
+
 			Logger.printError(pathName + " does not exist:" +
-					System.lineSeparator() + path);
+					System.lineSeparator() + pathString);
 			path = null;
 		}
 		return path;
@@ -46,13 +48,15 @@ public final class PathUtils {
 	@ApiMethod
 	public static Path tryParseExistingFolderPath(
 			final String pathName,
-			final String pathString) {
+			final String pathStringParam) {
 
-		Path path = tryParsePath(pathName, pathString);
-		final boolean directoryExists = IoUtils.directoryExists(path);
+		Path path = tryParsePath(pathName, pathStringParam);
+		final String pathString = path.toString();
+		final boolean directoryExists = IoUtils.directoryExists(pathString);
 		if (!directoryExists) {
+
 			Logger.printError(pathName + " does not exist:" +
-					System.lineSeparator() + path);
+					System.lineSeparator() + pathString);
 			path = null;
 		}
 		return path;
@@ -139,36 +143,36 @@ public final class PathUtils {
 		return FilenameUtils.getName(pathString);
 	}
 
-    @ApiMethod
-    public static String computeFolderPathString(
-            final Path path) {
+	@ApiMethod
+	public static String computeFolderPathString(
+			final Path path) {
 
-        String folderPathString;
-        final Path parentPath = path.getParent();
-        if (parentPath != null) {
-            folderPathString = parentPath.toString();
-        } else {
-            folderPathString = null;
-        }
-        return folderPathString;
-    }
+		final String folderPathString;
+		final Path parentPath = path.getParent();
+		if (parentPath != null) {
+			folderPathString = parentPath.toString();
+		} else {
+			folderPathString = null;
+		}
+		return folderPathString;
+	}
 
-    @ApiMethod
-    public static String computeFolderPathString(
-            final String pathString) {
+	@ApiMethod
+	public static String computeFolderPathString(
+			final String pathString) {
 
-        String folderPathString = null;
-        try {
-            final Path path = Paths.get(pathString);
-            final Path parentPath = path.getParent();
-            if (parentPath != null) {
-                folderPathString = parentPath.toString();
-            }
+		String folderPathString = null;
+		try {
+			final Path path = Paths.get(pathString);
+			final Path parentPath = path.getParent();
+			if (parentPath != null) {
+				folderPathString = parentPath.toString();
+			}
 
-        } catch (Exception ignored) {
-        }
-        return folderPathString;
-    }
+		} catch (final Exception ignored) {
+		}
+		return folderPathString;
+	}
 
 	@ApiMethod
 	public static String computeExtension(

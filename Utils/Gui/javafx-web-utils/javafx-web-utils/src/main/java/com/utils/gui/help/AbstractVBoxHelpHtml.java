@@ -7,7 +7,7 @@ import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.objects.HBoxWindowButtons;
 import com.utils.gui.objects.PopupWindow;
 import com.utils.gui.objects.web_view.CustomWebView;
-import com.utils.io.IoUtils;
+import com.utils.io.ResourceFileUtils;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -45,7 +45,7 @@ public abstract class AbstractVBoxHelpHtml
 	protected String createHtmlContent() {
 
 		final String htmlResourceFilePathString = createHtmlResourceFilePathString();
-		return IoUtils.resourceFileToString(htmlResourceFilePathString);
+		return ResourceFileUtils.resourceFileToString(htmlResourceFilePathString);
 	}
 
 	protected abstract String createHtmlResourceFilePathString();

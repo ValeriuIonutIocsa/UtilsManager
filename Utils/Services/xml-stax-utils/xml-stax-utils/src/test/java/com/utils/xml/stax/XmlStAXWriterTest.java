@@ -1,6 +1,5 @@
 package com.utils.xml.stax;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Stack;
 
@@ -9,8 +8,8 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.junit.jupiter.api.Test;
 
-import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
+import com.utils.io.ReaderUtils;
 import com.utils.io.file_deleters.FactoryFileDeleter;
 import com.utils.log.Logger;
 
@@ -19,9 +18,9 @@ class XmlStAXWriterTest {
 	@Test
 	void testWrite() throws Exception {
 
-		final Path tempXmlFilePath =
-				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_stax_writer_test.xml");
-		new AbstractXmlStAXWriter(tempXmlFilePath, "    ") {
+		final String tempXmlFilePathString =
+				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_stax_writer_test.xml").toString();
+		new AbstractXmlStAXWriter(tempXmlFilePathString, "    ") {
 
 			@Override
 			protected void write() {
@@ -56,10 +55,10 @@ class XmlStAXWriterTest {
 
 		}.writeXml();
 
-		final String fileToString = IoUtils.fileToString(tempXmlFilePath);
+		final String fileToString = ReaderUtils.fileToString(tempXmlFilePathString);
 		Logger.printLine(fileToString);
 
-		new AbstractXmlStAXReader(tempXmlFilePath) {
+		new AbstractXmlStAXReader(tempXmlFilePathString) {
 
 			@Override
 			protected void parseXmlEvent(
@@ -80,6 +79,6 @@ class XmlStAXWriterTest {
 			}
 		}.readXml();
 
-		FactoryFileDeleter.getInstance().deleteFile(tempXmlFilePath, true);
+		FactoryFileDeleter.getInstance().deleteFile(tempXmlFilePathString, true);
 	}
 }

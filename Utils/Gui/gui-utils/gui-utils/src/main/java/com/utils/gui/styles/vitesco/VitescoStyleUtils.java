@@ -1,6 +1,5 @@
 package com.utils.gui.styles.vitesco;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.apache.commons.lang3.SystemUtils;
@@ -47,11 +46,11 @@ public final class VitescoStyleUtils {
 
 		String guiThemeName = null;
 		try {
-			final Path generalSettingsFilePath = Paths.get(SystemUtils.USER_HOME,
-					"Documents", "ProjectAnalyzer", "GeneralSettings.xml");
-			if (IoUtils.fileExists(generalSettingsFilePath)) {
+			final String generalSettingsFilePathString = Paths.get(SystemUtils.USER_HOME,
+					"Documents", "ProjectAnalyzer", "GeneralSettings.xml").toString();
+			if (IoUtils.fileExists(generalSettingsFilePathString)) {
 
-				final Document document = XmlDomUtils.openDocument(generalSettingsFilePath);
+				final Document document = XmlDomUtils.openDocument(generalSettingsFilePathString);
 				final Element documentElement = document.getDocumentElement();
 
 				final Element guiThemeElement =

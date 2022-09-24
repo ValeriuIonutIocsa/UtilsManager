@@ -1,6 +1,5 @@
 package com.utils.xml.settings;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +17,14 @@ public final class FactorySettingsXmlObfuscator {
 	}
 
 	public static SettingsXmlObfuscator newInstance(
-			final Path configurationFilePath) {
+			final String configurationFilePathString) {
 
 		SettingsXmlObfuscator settingsXmlObfuscator = null;
 		try {
 			Logger.printProgress("parsing XML obfuscator configuration file:");
-			Logger.printLine(configurationFilePath);
+			Logger.printLine(configurationFilePathString);
 
-			final Document document = XmlDomUtils.openDocument(configurationFilePath);
+			final Document document = XmlDomUtils.openDocument(configurationFilePathString);
 			final Element documentElement = document.getDocumentElement();
 
 			final List<XmlFile> xmlFileList = new ArrayList<>();

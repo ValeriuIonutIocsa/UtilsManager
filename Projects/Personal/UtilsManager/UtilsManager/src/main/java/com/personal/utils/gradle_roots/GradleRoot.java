@@ -1,16 +1,9 @@
 package com.personal.utils.gradle_roots;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
-
-import com.utils.io.folder_deleters.FactoryFolderDeleter;
-import com.utils.log.Logger;
+import com.utils.io.file_copiers.FactoryFileCopier;
+import com.utils.io.folder_copiers.FactoryFolderCopier;
 import com.utils.string.StrUtils;
 
 public class GradleRoot {
@@ -40,9 +33,12 @@ public class GradleRoot {
 	public void synchronizeFrom(
 			final GradleRoot srcGradleRoot) {
 
-		copyFile(srcGradleRoot.commonBuildGradleFilePathString, commonBuildGradleFilePathString);
-		copyFile(srcGradleRoot.commonSettingsGradleFilePathString, commonSettingsGradleFilePathString);
-		copyFile(srcGradleRoot.gitAttributesFilePathString, gitAttributesFilePathString);
+		FactoryFileCopier.getInstance().copyFile(
+				srcGradleRoot.commonBuildGradleFilePathString, commonBuildGradleFilePathString, true, true);
+		FactoryFileCopier.getInstance().copyFile(
+				srcGradleRoot.commonSettingsGradleFilePathString, commonSettingsGradleFilePathString, true, true);
+		FactoryFileCopier.getInstance().copyFile(
+				srcGradleRoot.gitAttributesFilePathString, gitAttributesFilePathString, true, true);
 
 		for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
 
@@ -52,50 +48,8 @@ public class GradleRoot {
 					srcGradleRoot.moduleFolderPathsByNameMap.getOrDefault(moduleName, null);
 			if (srcModuleFolderPathString != null) {
 
-				copyFolder(srcModuleFolderPathString, moduleFolderPathString);
+				FactoryFolderCopier.getInstance().copyFolder(srcModuleFolderPathString, moduleFolderPathString);
 			}
-		}
-	}
-
-	private static void copyFile(
-			final String srcFilePathString,
-			final String dstFilePathString) {
-
-		try {
-			Logger.printProgress("copying file:");
-			Logger.printLine(srcFilePathString);
-
-			final Path srcFilePath = Paths.get(srcFilePathString);
-			final Path dstFilePath = Paths.get(dstFilePathString);
-			Files.copy(srcFilePath, dstFilePath, StandardCopyOption.REPLACE_EXISTING);
-
-		} catch (final Exception exc) {
-			Logger.printError("failed to copy file:" + System.lineSeparator() + dstFilePathString);
-			Logger.printException(exc);
-		}
-	}
-
-	private void copyFolder(
-			final String srcModuleFolderPathString,
-			final String dstModuleFolderPathString) {
-
-		try {
-			Logger.printProgress("copying folder:");
-			Logger.printLine(srcModuleFolderPathString);
-
-			final Path dstModuleFolderPath = Paths.get(dstModuleFolderPathString);
-			final boolean deleteFolderSuccess = FactoryFolderDeleter.getInstance()
-					.deleteFolder(dstModuleFolderPath, true);
-			if (deleteFolderSuccess) {
-
-				final File srcModuleFolder = new File(srcModuleFolderPathString);
-				final File dstModuleFolder = dstModuleFolderPath.toFile();
-				FileUtils.copyDirectory(srcModuleFolder, dstModuleFolder);
-			}
-
-		} catch (final Exception exc) {
-			Logger.printError("failed to copy folder:" + System.lineSeparator() + dstModuleFolderPathString);
-			Logger.printException(exc);
 		}
 	}
 }

@@ -4,8 +4,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
@@ -75,16 +73,9 @@ public class HBoxBrowsePathFile extends HBoxBrowsePath {
 
 		File initialDirectory = null;
 		final String pathString = getPathString();
-		if (StringUtils.isNotBlank(pathString)) {
-
-			final Path path = PathUtils.tryParsePath(null, pathString);
-			if (path != null) {
-
-				final Path parentPath = path.getParent();
-				if (IoUtils.directoryExists(parentPath)) {
-					initialDirectory = parentPath.toFile();
-				}
-			}
+		final String parentPathString = PathUtils.computeParentPathString(null, pathString);
+		if (IoUtils.directoryExists(parentPathString)) {
+			initialDirectory = new File(parentPathString);
 		}
 		if (initialDirectory == null) {
 			initialDirectory = super.getInitialDirectory();

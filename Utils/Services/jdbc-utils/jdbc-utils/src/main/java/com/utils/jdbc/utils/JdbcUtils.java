@@ -1,7 +1,6 @@
 package com.utils.jdbc.utils;
 
 import java.io.PrintStream;
-import java.nio.file.Path;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -77,9 +76,9 @@ public final class JdbcUtils {
 	@ApiMethod
 	public static void printResultSetToCsv(
 			final ResultSet resultSet,
-			final Path outputPath) {
+			final String outputPathString) {
 
-		final CsvWriter csvWriter = new AbstractCsvWriter("JDBC result set", outputPath) {
+		final CsvWriter csvWriter = new AbstractCsvWriter("JDBC result set", outputPathString) {
 
 			@Override
 			protected void write(

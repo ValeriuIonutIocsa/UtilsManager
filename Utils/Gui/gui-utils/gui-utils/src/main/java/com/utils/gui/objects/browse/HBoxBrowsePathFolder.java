@@ -3,11 +3,8 @@ package com.utils.gui.objects.browse;
 import java.io.File;
 import java.nio.file.Path;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.io.IoUtils;
-import com.utils.io.PathUtils;
 
 import javafx.stage.DirectoryChooser;
 
@@ -44,12 +41,8 @@ public class HBoxBrowsePathFolder extends HBoxBrowsePath {
 
 		File initialDirectory = null;
 		final String pathString = getPathString();
-		if (StringUtils.isNotBlank(pathString)) {
-
-			final Path path = PathUtils.tryParsePath(null, pathString);
-			if (IoUtils.directoryExists(path)) {
-				initialDirectory = path.toFile();
-			}
+		if (IoUtils.directoryExists(pathString)) {
+			initialDirectory = new File(pathString);
 		}
 		if (initialDirectory == null) {
 			initialDirectory = super.getInitialDirectory();

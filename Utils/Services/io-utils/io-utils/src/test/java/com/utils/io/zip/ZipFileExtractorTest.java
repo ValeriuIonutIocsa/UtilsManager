@@ -1,8 +1,5 @@
 package com.utils.io.zip;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +16,7 @@ class ZipFileExtractorTest {
 		final boolean updateFileTimes = true;
 		final boolean verbose = true;
 
-		final Path zipArchiveFilePath = Paths.get(zipArchiveFilePathString);
-		final Path dstFolderPath = Paths.get(dstFolderPathString);
-		final ZipFileExtractor zipFileExtractor = new ZipFileExtractor(zipArchiveFilePath, dstFolderPath,
+		final ZipFileExtractor zipFileExtractor = new ZipFileExtractor(zipArchiveFilePathString, dstFolderPathString,
 				useTempFile, deleteExisting, threadCount, updateFileTimes, verbose);
 		zipFileExtractor.work();
 		final boolean success = zipFileExtractor.isSuccess();

@@ -2,8 +2,6 @@ package com.utils.xml.stax;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Stack;
 
 import javax.xml.stream.XMLEventReader;
@@ -11,56 +9,57 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import com.utils.io.StreamUtils;
 import com.utils.log.Logger;
 import com.utils.string.exc.SilentException;
 
 public abstract class AbstractXmlStAXReader implements XmlStAXReader {
 
-	private final BufferedInputStream bufferedInputStream;
+	private final InputStream inputStream;
 	private final XMLEventReader xmlEventReader;
 
 	protected AbstractXmlStAXReader(
-			final InputStream inputStream) {
+			final InputStream inputStreamParam) {
 
-		BufferedInputStream bufferedInputStream = null;
+		InputStream inputStream = null;
 		XMLEventReader xmlEventReader = null;
 		try {
-			bufferedInputStream = new BufferedInputStream(inputStream);
+			inputStream = new BufferedInputStream(inputStreamParam);
 
 			System.setProperty(
 					"javax.xml.stream.XMLInputFactory",
 					"com.sun.xml.internal.stream.XMLInputFactoryImpl");
 			final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
 			xmlInputFactory.setProperty(XMLInputFactory.IS_COALESCING, true);
-			xmlEventReader = xmlInputFactory.createXMLEventReader(bufferedInputStream);
+			xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
 
 		} catch (final Exception exc) {
 			Logger.printError("failed to create the XML reader");
 			Logger.printException(exc);
 		}
-		this.bufferedInputStream = bufferedInputStream;
+		this.inputStream = inputStream;
 		this.xmlEventReader = xmlEventReader;
 	}
 
 	protected AbstractXmlStAXReader(
-			final Path xmlFilePath) {
+			final String xmlFilePathString) {
 
-		BufferedInputStream bufferedInputStream = null;
+		InputStream inputStream = null;
 		XMLEventReader xmlEventReader = null;
 		try {
-			bufferedInputStream = new BufferedInputStream(Files.newInputStream(xmlFilePath));
+			inputStream = StreamUtils.openInputStream(xmlFilePathString);
 
 			System.setProperty("javax.xml.stream.XMLInputFactory",
 					"com.sun.xml.internal.stream.XMLInputFactoryImpl");
 			final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
 			xmlInputFactory.setProperty(XMLInputFactory.IS_COALESCING, true);
-			xmlEventReader = xmlInputFactory.createXMLEventReader(bufferedInputStream);
+			xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
 
 		} catch (final Exception exc) {
 			Logger.printError("failed to create the XML reader");
 			Logger.printException(exc);
 		}
-		this.bufferedInputStream = bufferedInputStream;
+		this.inputStream = inputStream;
 		this.xmlEventReader = xmlEventReader;
 	}
 
@@ -112,7 +111,7 @@ public abstract class AbstractXmlStAXReader implements XmlStAXReader {
 
 		try {
 			xmlEventReader.close();
-			bufferedInputStream.close();
+			inputStream.close();
 		} catch (final Exception ignored) {
 		}
 	}

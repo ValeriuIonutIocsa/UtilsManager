@@ -1,18 +1,16 @@
 package com.utils.xml.cli;
 
-import java.nio.file.Path;
-
 public class CliArgsXmlObfuscator {
 
-	private final Path configurationFilePath;
+	private final String configurationFilePathString;
 
 	CliArgsXmlObfuscator(
-			final Path configurationFilePath) {
+			final String configurationFilePathString) {
 
-		this.configurationFilePath = configurationFilePath;
+		this.configurationFilePathString = configurationFilePathString;
 	}
 
-	public Path getConfigurationFilePath() {
-		return configurationFilePath;
+	public String getConfigurationFilePathString() {
+		return configurationFilePathString;
 	}
 }

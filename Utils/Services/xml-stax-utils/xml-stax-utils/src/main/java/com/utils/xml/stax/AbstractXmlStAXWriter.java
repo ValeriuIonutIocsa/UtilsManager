@@ -3,8 +3,6 @@ package com.utils.xml.stax;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Objects;
 
 import javax.xml.namespace.QName;
@@ -16,6 +14,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.utils.io.StreamUtils;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
 import com.utils.log.Logger;
@@ -62,7 +61,7 @@ public abstract class AbstractXmlStAXWriter implements XmlStAXWriter {
 	}
 
 	protected AbstractXmlStAXWriter(
-			final Path xmlFilePath,
+			final String xmlFilePathString,
 			final String indentString) {
 
 		this.indentString = Objects.toString(indentString, "");
@@ -71,10 +70,10 @@ public abstract class AbstractXmlStAXWriter implements XmlStAXWriter {
 		XMLEventWriter xmlEventWriter = null;
 
 		try {
-			FactoryFolderCreator.getInstance().createParentDirectories(xmlFilePath, true);
-			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(xmlFilePath, true);
+			FactoryFolderCreator.getInstance().createParentDirectories(xmlFilePathString, true);
+			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(xmlFilePathString, true);
 
-			bufferedOutputStream = new BufferedOutputStream(Files.newOutputStream(xmlFilePath));
+			bufferedOutputStream = new BufferedOutputStream(StreamUtils.openOutputStream(xmlFilePathString));
 
 			System.setProperty("javax.xml.stream.XMLOutputFactory",
 					"com.sun.xml.internal.stream.XMLOutputFactoryImpl");

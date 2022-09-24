@@ -1,14 +1,11 @@
 package com.utils.srec;
 
-import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.utils.io.IoUtils;
+import com.utils.io.StreamUtils;
 import com.utils.log.Logger;
 import com.utils.srec.record_types.FactorySRecRecordType;
 import com.utils.srec.record_types.SRecRecordType;
@@ -27,13 +24,12 @@ public final class FactorySRecFile {
 			Logger.printProgress("parsing SREC file:");
 			Logger.printLine(sRecFilePathString);
 
-			final Path sRecFilePath = Paths.get(sRecFilePathString);
-			if (!IoUtils.fileExists(sRecFilePath)) {
-				Logger.printWarning("the SREC file does not exist!");
+			if (!IoUtils.fileExists(sRecFilePathString)) {
+				Logger.printWarning("the SREC file does not exist");
 
 			} else {
 				final List<SRecRecord> sRecRecordList = new ArrayList<>();
-				try (InputStream inputStream = new BufferedInputStream(Files.newInputStream(sRecFilePath))) {
+				try (InputStream inputStream = StreamUtils.openBufferedInputStream(sRecFilePathString)) {
 
 					int state = 0;
 					SRecRecordType sRecRecordType = null;

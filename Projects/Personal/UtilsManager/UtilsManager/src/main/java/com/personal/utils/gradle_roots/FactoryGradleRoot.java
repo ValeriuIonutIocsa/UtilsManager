@@ -1,6 +1,5 @@
 package com.personal.utils.gradle_roots;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
@@ -8,12 +7,19 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.utils.io.IoUtils;
+import com.utils.io.ListFileUtils;
 import com.utils.io.PathUtils;
 
 public final class FactoryGradleRoot {
 
 	private FactoryGradleRoot() {
+	}
+
+	public static GradleRoot newInstanceUtils() {
+
+		final String utilsRootPathString =
+				Paths.get("C:\\IVI\\Prog\\JavaGradle\\UtilsManager").toString();
+		return newInstance(utilsRootPathString);
 	}
 
 	public static GradleRoot newInstance(
@@ -27,16 +33,17 @@ public final class FactoryGradleRoot {
 				Paths.get(rootFolderPathString, ".gitattributes").toString();
 
 		final Map<String, String> moduleFolderPathsByNameMap = new HashMap<>();
-		final Path rootFolderPath = Paths.get(rootFolderPathString);
-		final List<Path> buildGradleFilePathList = IoUtils.listFilesRecursively(rootFolderPath, filePath -> {
-			final String fileName = PathUtils.computeFileName(filePath);
-			return StringUtils.equalsIgnoreCase(fileName, "build.gradle");
-		});
-		for (final Path buildGradleFilePath : buildGradleFilePathList) {
+		final List<String> buildGradleFilePathStringList =
+				ListFileUtils.listFilesRecursively(rootFolderPathString, filePath -> {
 
-			final Path moduleFolderPath = buildGradleFilePath.getParent();
-			final String moduleName = PathUtils.computeFileName(moduleFolderPath);
-			final String moduleFolderPathString = moduleFolderPath.toString();
+					final String fileName = PathUtils.computeFileName(filePath);
+					return StringUtils.equalsIgnoreCase(fileName, "build.gradle");
+				});
+		for (final String buildGradleFilePathString : buildGradleFilePathStringList) {
+
+			final String moduleFolderPathString =
+					PathUtils.computeParentPathString("build gradle file", buildGradleFilePathString);
+			final String moduleName = PathUtils.computeFileName(moduleFolderPathString);
 			moduleFolderPathsByNameMap.put(moduleName, moduleFolderPathString);
 		}
 

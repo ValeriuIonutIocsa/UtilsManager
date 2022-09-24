@@ -1,11 +1,7 @@
 package com.personal.utils;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Instant;
 
-import com.personal.utils.gradle_roots.FactoryGradleRoot;
-import com.personal.utils.gradle_roots.GradleRoot;
 import com.personal.utils.mode.FactoryMode;
 import com.personal.utils.mode.Mode;
 import com.utils.io.IoUtils;
@@ -38,8 +34,8 @@ final class AppStartUtilsManager {
 		}
 
 		String pathString = args[1];
-		final Path path = PathUtils.tryParsePath("path", pathString).toAbsolutePath();
-		if (!IoUtils.directoryExists(path)) {
+		pathString = PathUtils.tryParsePath("path", pathString).toAbsolutePath().toString();
+		if (!IoUtils.directoryExists(pathString)) {
 
 			Logger.printError("invalid path:" +
 					System.lineSeparator() + pathString);
@@ -50,44 +46,12 @@ final class AppStartUtilsManager {
 		Logger.printLine("mode: " + modeName);
 
 		Logger.printLine("path:");
-		pathString = path.toString();
 		Logger.printLine(pathString);
 
-		final String rootFolderPathString = computeRootFolderPathStringRec(pathString);
-		Logger.printLine("root folder path:");
-		Logger.printLine(rootFolderPathString);
-
-		final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(rootFolderPathString);
-
-		final String utilsRootPathString =
-				Paths.get("C:\\IVI\\Prog\\JavaGradle\\UtilsManager").toString();
-		final GradleRoot utilsGradleRoot = FactoryGradleRoot.newInstance(utilsRootPathString);
-
-		if (mode == Mode.DOWNLOAD) {
-			gradleRoot.synchronizeFrom(utilsGradleRoot);
-		} else if (mode == Mode.UPLOAD) {
-			utilsGradleRoot.synchronizeFrom(gradleRoot);
-		}
-
-		Logger.printFinishMessage(start);
-	}
-
-	private static String computeRootFolderPathStringRec(
-			final String pathString) {
-
-		final String rootFolderPathString;
-		final Path commonBuildGradleFilePath = Paths.get(pathString, "common_build.gradle");
-		if (IoUtils.fileExists(commonBuildGradleFilePath)) {
-			rootFolderPathString = pathString;
-
+		if (mode == Mode.CREATE) {
+			WorkerCreate.work(pathString);
 		} else {
-			final String folderPathString = PathUtils.computeFolderPathString(pathString);
-			if (folderPathString != null) {
-				rootFolderPathString = computeRootFolderPathStringRec(folderPathString);
-			} else {
-				rootFolderPathString = null;
-			}
+			WorkerDownloadUpload.work(mode, pathString, start);
 		}
-		return rootFolderPathString;
 	}
 }

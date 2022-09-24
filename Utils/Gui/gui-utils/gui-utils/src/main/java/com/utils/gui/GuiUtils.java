@@ -11,7 +11,7 @@ import com.sun.javafx.application.PlatformImpl;
 import com.utils.annotations.ApiMethod;
 import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.version.VersionDependentMethods;
-import com.utils.io.IoUtils;
+import com.utils.io.ResourceFileUtils;
 import com.utils.log.Logger;
 
 import javafx.application.Platform;
@@ -78,7 +78,7 @@ public final class GuiUtils {
 			final String imageName) {
 
 		Image image = null;
-		try (InputStream inputStream = IoUtils.resourceFileToInputStream(imageName)) {
+		try (InputStream inputStream = ResourceFileUtils.resourceFileToInputStream(imageName)) {
 
 			if (inputStream == null) {
 				Logger.printWarning("failed to find resource file " + imageName);

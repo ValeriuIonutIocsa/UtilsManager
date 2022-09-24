@@ -2,6 +2,7 @@ package com.utils.io.folder_creators;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.utils.annotations.ApiMethod;
 import com.utils.io.IoUtils;
@@ -18,13 +19,17 @@ public final class FolderCreatorImpl implements FolderCreator {
 	@ApiMethod
 	@Override
 	public boolean createParentDirectories(
-			final Path filePath,
+			final String filePathString,
 			final boolean verbose) {
 
 		final boolean success;
-		if (filePath != null) {
-			final Path parentFile = filePath.getParent();
-			success = createDirectories(parentFile, verbose);
+		if (filePathString != null) {
+
+			final Path filePath = Paths.get(filePathString);
+			final Path parentFolderPath = filePath.getParent();
+			final String parentFolderPathString = parentFolderPath.toString();
+			success = createDirectories(parentFolderPathString, verbose);
+
 		} else {
 			success = true;
 		}
@@ -34,12 +39,12 @@ public final class FolderCreatorImpl implements FolderCreator {
 	@ApiMethod
 	@Override
 	public boolean createDirectories(
-			final Path directoryPath,
+			final String directoryPathString,
 			final boolean verbose) {
 
 		final boolean success;
-		if (directoryPath != null && !IoUtils.directoryExists(directoryPath)) {
-			success = createDirectoriesNoCheck(directoryPath, verbose);
+		if (directoryPathString != null && !IoUtils.directoryExists(directoryPathString)) {
+			success = createDirectoriesNoCheck(directoryPathString, verbose);
 		} else {
 			success = true;
 		}
@@ -49,16 +54,20 @@ public final class FolderCreatorImpl implements FolderCreator {
 	@ApiMethod
 	@Override
 	public boolean createDirectoriesNoCheck(
-			final Path directoryPath,
+			final String directoryPathString,
 			final boolean verbose) {
 
 		boolean success = false;
 		try {
+			final Path directoryPath = Paths.get(directoryPathString);
 			Files.createDirectories(directoryPath);
 			success = true;
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to create directory:" + System.lineSeparator() + directoryPath);
+			if (verbose) {
+				Logger.printError("failed to create directory:" +
+						System.lineSeparator() + directoryPathString);
+			}
 			Logger.printException(exc);
 		}
 		return success;
@@ -67,12 +76,12 @@ public final class FolderCreatorImpl implements FolderCreator {
 	@ApiMethod
 	@Override
 	public boolean createDirectory(
-			final Path directoryPath,
+			final String directoryPathString,
 			final boolean verbose) {
 
 		final boolean success;
-		if (directoryPath != null && !IoUtils.directoryExists(directoryPath)) {
-			success = createDirectoryNoChecks(directoryPath, verbose);
+		if (directoryPathString != null && !IoUtils.directoryExists(directoryPathString)) {
+			success = createDirectoryNoChecks(directoryPathString, verbose);
 		} else {
 			success = true;
 		}
@@ -82,17 +91,19 @@ public final class FolderCreatorImpl implements FolderCreator {
 	@ApiMethod
 	@Override
 	public boolean createDirectoryNoChecks(
-			final Path directoryPath,
+			final String directoryPathString,
 			final boolean verbose) {
 
 		boolean success = false;
 		try {
+			final Path directoryPath = Paths.get(directoryPathString);
 			Files.createDirectory(directoryPath);
 			success = true;
 
 		} catch (final Exception exc) {
 			if (verbose) {
-				Logger.printError("failed to create directory:" + System.lineSeparator() + directoryPath);
+				Logger.printError("failed to create directory:" +
+						System.lineSeparator() + directoryPathString);
 			}
 			Logger.printException(exc);
 		}

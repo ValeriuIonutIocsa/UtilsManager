@@ -26,20 +26,21 @@ public final class IoTestUtils {
 		Logger.printLine(folderPathString);
 		Logger.printLine(otherFolderPathString);
 
-		final Path folderPath = Paths.get(folderPathString);
-		final List<Path> filePathList;
-		final boolean folderExists = IoUtils.directoryExists(folderPath);
+		final List<String> filePathStringList;
+		final boolean folderExists = IoUtils.directoryExists(folderPathString);
 		if (folderExists) {
-			filePathList = IoUtils.listFilesRecursively(folderPath);
+			filePathStringList = ListFileUtils.listFilesRecursively(folderPathString);
 		} else {
-			filePathList = new ArrayList<>();
+			filePathStringList = new ArrayList<>();
 		}
 
 		final Set<String> matchedOtherFilePathStringSet = new HashSet<>();
-		for (final Path filePath : filePathList) {
+		for (final String filePathString : filePathStringList) {
 
-			if (!IoUtils.directoryExists(filePath)) {
+			if (!IoUtils.directoryExists(filePathString)) {
 
+				final Path folderPath = Paths.get(folderPathString);
+				final Path filePath = Paths.get(filePathString);
 				final Path relativePath = folderPath.relativize(filePath);
 				final String relativePathString = relativePath.toString();
 				final Path otherFilePath = Paths.get(otherFolderPathString, relativePathString);
@@ -54,30 +55,28 @@ public final class IoTestUtils {
 							System.lineSeparator() + otherFilePath);
 				}
 
-				final String filePathString = filePath.toString();
-
 				final FileCompareData fileCompareData = new FileCompareData(
 						filePathString, otherFilePathString, contentEquals);
 				fileCompareDataList.add(fileCompareData);
 			}
 		}
 
-		final Path otherFolderPath = Paths.get(otherFolderPathString);
-		final List<Path> otherFilePathList;
-		final boolean otherFolderExists = IoUtils.directoryExists(otherFolderPath);
+		final List<String> otherFilePathStringList;
+		final boolean otherFolderExists = IoUtils.directoryExists(otherFolderPathString);
 		if (otherFolderExists) {
-			otherFilePathList = IoUtils.listFilesRecursively(otherFolderPath);
+			otherFilePathStringList = ListFileUtils.listFilesRecursively(otherFolderPathString);
 		} else {
-			otherFilePathList = new ArrayList<>();
+			otherFilePathStringList = new ArrayList<>();
 		}
 
-		for (final Path otherFilePath : otherFilePathList) {
+		for (final String otherFilePathString : otherFilePathStringList) {
 
-			if (!IoUtils.directoryExists(otherFilePath)) {
+			if (!IoUtils.directoryExists(otherFilePathString)) {
 
-				final String otherFilePathString = otherFilePath.toString();
 				if (!matchedOtherFilePathStringSet.contains(otherFilePathString)) {
 
+					final Path otherFolderPath = Paths.get(otherFolderPathString);
+					final Path otherFilePath = Paths.get(otherFilePathString);
 					final Path relativePath = otherFolderPath.relativize(otherFilePath);
 					final String relativePathString = relativePath.toString();
 					final Path filePath = Paths.get(folderPathString, relativePathString);

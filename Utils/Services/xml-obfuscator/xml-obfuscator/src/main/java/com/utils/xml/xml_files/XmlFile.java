@@ -1,6 +1,5 @@
 package com.utils.xml.xml_files;
 
-import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -17,36 +16,36 @@ import com.utils.xml.xml_files.obfuscate.Obfuscation;
 
 public class XmlFile {
 
-	private final Path inputPath;
-	private final Path outputPath;
-	private final Path mappingsPath;
+	private final String inputPathString;
+	private final String outputPathString;
+	private final String mappingsPathString;
 	private final Map<String, Obfuscation> obfuscationsByXpathMap;
 
 	XmlFile(
-			final Path inputPath,
-			final Path outputPath,
-			final Path mappingsPath,
+			final String inputPathString,
+			final String outputPathString,
+			final String mappingsPathString,
 			final Map<String, Obfuscation> obfuscationsByXpathMap) {
 
-		this.inputPath = inputPath;
-		this.outputPath = outputPath;
-		this.mappingsPath = mappingsPath;
+		this.inputPathString = inputPathString;
+		this.outputPathString = outputPathString;
+		this.mappingsPathString = mappingsPathString;
 		this.obfuscationsByXpathMap = obfuscationsByXpathMap;
 	}
 
 	public void obfuscate() {
 
 		Logger.printProgress("obfuscating XML file:");
-		Logger.printLine(inputPath);
+		Logger.printLine(inputPathString);
 
 		final Map<String, String> obfuscatedToOriginalValuesMap = new LinkedHashMap<>();
 
-		new AbstractXmlStAXWriter(outputPath, "    ") {
+		new AbstractXmlStAXWriter(outputPathString, "    ") {
 
 			@Override
 			protected void write() {
 
-				new AbstractXmlStAXReader(inputPath) {
+				new AbstractXmlStAXReader(inputPathString) {
 
 					@Override
 					protected void parseXmlEvent(
@@ -84,16 +83,16 @@ public class XmlFile {
 		writeMapping(obfuscatedToOriginalValuesMap);
 
 		Logger.printStatus("Obfuscated XML file generated:");
-		Logger.printLine(outputPath);
+		Logger.printLine(outputPathString);
 	}
 
 	private void writeMapping(
 			final Map<String, String> obfuscatedToOriginalValuesMap) {
 
 		Logger.printProgress("generating the obfuscation mapping file:");
-		Logger.printLine(mappingsPath);
+		Logger.printLine(mappingsPathString);
 
-		new AbstractXmlStAXWriter(mappingsPath, "    ") {
+		new AbstractXmlStAXWriter(mappingsPathString, "    ") {
 
 			@Override
 			protected void write() {

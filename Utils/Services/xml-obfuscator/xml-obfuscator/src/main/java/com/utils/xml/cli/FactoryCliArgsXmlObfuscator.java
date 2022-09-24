@@ -1,6 +1,5 @@
 package com.utils.xml.cli;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.utils.log.Logger;
@@ -20,10 +19,10 @@ public final class FactoryCliArgsXmlObfuscator {
 
 			} else {
 
-				final String configurationFilePathString = args[0];
-				final Path configurationFilePath =
-						Paths.get(configurationFilePathString).toAbsolutePath();
-				cliArgsXmlObfuscator = new CliArgsXmlObfuscator(configurationFilePath);
+				String configurationFilePathString = args[0];
+				configurationFilePathString =
+						Paths.get(configurationFilePathString).toAbsolutePath().toString();
+				cliArgsXmlObfuscator = new CliArgsXmlObfuscator(configurationFilePathString);
 			}
 
 		} catch (final Exception exc) {
