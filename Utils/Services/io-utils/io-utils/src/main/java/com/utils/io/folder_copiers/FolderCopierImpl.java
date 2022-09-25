@@ -8,11 +8,9 @@ import com.utils.annotations.ApiMethod;
 import com.utils.io.folder_deleters.FactoryFolderDeleter;
 import com.utils.log.Logger;
 
-public class FolderCopierImpl implements FolderCopier {
+class FolderCopierImpl implements FolderCopier {
 
-	static final FolderCopierImpl INSTANCE = new FolderCopierImpl();
-
-	private FolderCopierImpl() {
+	FolderCopierImpl() {
 	}
 
 	@ApiMethod

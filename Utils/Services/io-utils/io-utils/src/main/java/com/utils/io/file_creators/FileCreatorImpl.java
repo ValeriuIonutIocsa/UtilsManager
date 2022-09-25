@@ -7,11 +7,9 @@ import java.nio.file.Paths;
 import com.utils.annotations.ApiMethod;
 import com.utils.log.Logger;
 
-public class FileCreatorImpl implements FileCreator {
+class FileCreatorImpl implements FileCreator {
 
-	public static final FileCreatorImpl INSTANCE = new FileCreatorImpl();
-
-	private FileCreatorImpl() {
+	FileCreatorImpl() {
 	}
 
 	@ApiMethod

@@ -15,7 +15,7 @@ class FolderDeleterImplTest {
 		String folderPathString = "null";
 		folderPathString = Paths.get(folderPathString).toAbsolutePath().toString();
 		Assertions.assertTrue(IoUtils.directoryExists(folderPathString));
-		FolderDeleterImpl.INSTANCE.deleteFolder(folderPathString, true);
+		new FolderDeleterImpl().deleteFolder(folderPathString, true);
 		Assertions.assertFalse(IoUtils.directoryExists(folderPathString));
 	}
 }

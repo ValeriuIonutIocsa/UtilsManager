@@ -6,14 +6,13 @@ import java.nio.file.Paths;
 
 import com.utils.annotations.ApiMethod;
 import com.utils.io.IoUtils;
+import com.utils.io.PathUtils;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
-public final class FolderCreatorImpl implements FolderCreator {
+class FolderCreatorImpl implements FolderCreator {
 
-	static final FolderCreatorImpl INSTANCE = new FolderCreatorImpl();
-
-	private FolderCreatorImpl() {
+	FolderCreatorImpl() {
 	}
 
 	@ApiMethod
@@ -25,10 +24,34 @@ public final class FolderCreatorImpl implements FolderCreator {
 		final boolean success;
 		if (filePathString != null) {
 
-			final Path filePath = Paths.get(filePathString);
-			final Path parentFolderPath = filePath.getParent();
-			final String parentFolderPathString = parentFolderPath.toString();
-			success = createDirectories(parentFolderPathString, verbose);
+			final String parentFolderPathString = PathUtils.computeParentPathString(filePathString);
+			if (parentFolderPathString != null) {
+				success = createDirectories(parentFolderPathString, verbose);
+			} else {
+				success = true;
+			}
+
+		} else {
+			success = true;
+		}
+		return success;
+	}
+
+	@ApiMethod
+	@Override
+	public boolean createParentDirectoriesNoCheck(
+			final String filePathString,
+			final boolean verbose) {
+
+		final boolean success;
+		if (filePathString != null) {
+
+			final String parentFolderPathString = PathUtils.computeParentPathString(filePathString);
+			if (parentFolderPathString != null) {
+				success = createDirectoriesNoCheck(parentFolderPathString, verbose);
+			} else {
+				success = true;
+			}
 
 		} else {
 			success = true;

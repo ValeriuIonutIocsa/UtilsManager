@@ -4,7 +4,7 @@ import com.utils.annotations.ApiMethod;
 
 public final class FactoryFileCopier {
 
-	private static FileCopier instance = FileCopierImpl.INSTANCE;
+	private static FileCopier instance = new FileCopierImpl();
 
 	private FactoryFileCopier() {
 	}

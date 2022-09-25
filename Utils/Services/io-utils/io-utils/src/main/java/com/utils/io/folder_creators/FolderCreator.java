@@ -9,6 +9,11 @@ public interface FolderCreator {
 			String filePathString,
 			boolean verbose);
 
+    @ApiMethod
+    boolean createParentDirectoriesNoCheck(
+            String filePathString,
+            boolean verbose);
+
 	@ApiMethod
 	boolean createDirectories(
 			String directoryPathString,

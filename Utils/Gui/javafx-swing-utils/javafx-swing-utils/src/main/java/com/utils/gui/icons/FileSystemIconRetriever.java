@@ -3,7 +3,6 @@ package com.utils.gui.icons;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.nio.file.Path;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -17,19 +16,19 @@ import javafx.scene.image.Image;
 
 public class FileSystemIconRetriever {
 
-	private final Path filePath;
+	private final String filePathString;
 
 	public FileSystemIconRetriever(
-			final Path filePath) {
+			final String filePathString) {
 
-		this.filePath = filePath;
+		this.filePathString = filePathString;
 	}
 
 	@ApiMethod
 	public Image work() {
 
 		Image image = null;
-		final File file = filePath.toFile();
+		final File file = new File(filePathString);
 		final Icon icon = FileSystemView.getFileSystemView().getSystemIcon(file);
 		if (icon instanceof ImageIcon) {
 

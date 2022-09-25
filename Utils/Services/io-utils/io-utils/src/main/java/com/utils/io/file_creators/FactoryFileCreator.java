@@ -4,7 +4,7 @@ import com.utils.annotations.ApiMethod;
 
 public final class FactoryFileCreator {
 
-	private static FileCreator instance = FileCreatorImpl.INSTANCE;
+	private static FileCreator instance = new FileCreatorImpl();
 
 	private FactoryFileCreator() {
 	}

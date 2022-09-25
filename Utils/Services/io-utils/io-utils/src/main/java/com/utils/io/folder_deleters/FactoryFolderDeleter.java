@@ -4,7 +4,7 @@ import com.utils.annotations.ApiMethod;
 
 public final class FactoryFolderDeleter {
 
-	private static FolderDeleter instance = FolderDeleterImpl.INSTANCE;
+	private static FolderDeleter instance = new FolderDeleterImpl();
 
 	private FactoryFolderDeleter() {
 	}

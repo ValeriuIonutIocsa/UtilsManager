@@ -4,7 +4,7 @@ import com.utils.annotations.ApiMethod;
 
 public final class FactoryFolderCreator {
 
-	private static FolderCreator instance = FolderCreatorImpl.INSTANCE;
+	private static FolderCreator instance = new FolderCreatorImpl();
 
 	private FactoryFolderCreator() {
 	}

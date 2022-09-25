@@ -14,11 +14,9 @@ import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
-public final class FolderDeleterImpl implements FolderDeleter {
+class FolderDeleterImpl implements FolderDeleter {
 
-	static final FolderDeleterImpl INSTANCE = new FolderDeleterImpl();
-
-	private FolderDeleterImpl() {
+	FolderDeleterImpl() {
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package com.utils.io.ro_flag_clearers;
 
 public final class FactoryReadOnlyFlagClearer {
 
-	private static ReadOnlyFlagClearer instance = ReadOnlyFlagClearerImpl.INSTANCE;
+	private static ReadOnlyFlagClearer instance = new ReadOnlyFlagClearerImpl();
 
 	private FactoryReadOnlyFlagClearer() {
 	}

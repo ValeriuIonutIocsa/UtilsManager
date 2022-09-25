@@ -9,11 +9,9 @@ import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
-public final class FileDeleterImpl implements FileDeleter {
+class FileDeleterImpl implements FileDeleter {
 
-	static final FileDeleterImpl INSTANCE = new FileDeleterImpl();
-
-	private FileDeleterImpl() {
+	FileDeleterImpl() {
 	}
 
 	@Override

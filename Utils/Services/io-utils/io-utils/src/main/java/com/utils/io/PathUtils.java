@@ -242,4 +242,21 @@ public final class PathUtils {
 		}
 		return resultPathString;
 	}
+
+	@ApiMethod
+	public static String computeRelativePathString(
+			final String fromPathString,
+			final String toPathString) {
+
+		String relativePathString = null;
+		try {
+			final Path fromPath = Paths.get(fromPathString);
+			final Path toPath = Paths.get(toPathString);
+			final Path relativePath = fromPath.relativize(toPath);
+			relativePathString = relativePath.toString();
+
+		} catch (final Exception ignored) {
+		}
+		return relativePathString;
+	}
 }

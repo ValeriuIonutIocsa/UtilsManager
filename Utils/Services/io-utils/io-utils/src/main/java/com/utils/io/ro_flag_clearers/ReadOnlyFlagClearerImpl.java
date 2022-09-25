@@ -12,11 +12,9 @@ import com.utils.io.IoUtils;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
-public final class ReadOnlyFlagClearerImpl implements ReadOnlyFlagClearer {
+class ReadOnlyFlagClearerImpl implements ReadOnlyFlagClearer {
 
-	static final ReadOnlyFlagClearerImpl INSTANCE = new ReadOnlyFlagClearerImpl();
-
-	private ReadOnlyFlagClearerImpl() {
+	ReadOnlyFlagClearerImpl() {
 	}
 
 	@Override

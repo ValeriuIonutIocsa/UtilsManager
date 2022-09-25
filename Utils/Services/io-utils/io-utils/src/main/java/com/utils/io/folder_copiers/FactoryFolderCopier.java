@@ -2,9 +2,9 @@ package com.utils.io.folder_copiers;
 
 import com.utils.annotations.ApiMethod;
 
-public class FactoryFolderCopier {
+public final class FactoryFolderCopier {
 
-	private static FolderCopier instance = FolderCopierImpl.INSTANCE;
+	private static FolderCopier instance = new FolderCopierImpl();
 
 	private FactoryFolderCopier() {
 	}
