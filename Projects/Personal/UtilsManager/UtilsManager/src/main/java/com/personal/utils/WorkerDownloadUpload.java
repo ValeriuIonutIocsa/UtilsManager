@@ -46,7 +46,7 @@ class WorkerDownloadUpload {
 			rootFolderPathString = pathString;
 
 		} else {
-			final String folderPathString = PathUtils.computeFolderPathString(pathString);
+			final String folderPathString = PathUtils.computeParentPathString(pathString);
 			if (folderPathString != null) {
 				rootFolderPathString = computeRootFolderPathStringRec(folderPathString);
 			} else {

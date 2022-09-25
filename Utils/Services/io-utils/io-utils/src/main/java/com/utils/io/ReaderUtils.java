@@ -14,16 +14,23 @@ import org.apache.commons.io.IOUtils;
 import com.utils.annotations.ApiMethod;
 import com.utils.log.Logger;
 
-public class ReaderUtils {
+public final class ReaderUtils {
 
 	private ReaderUtils() {
 	}
 
 	public static BufferedReader openBufferedReader(
-            final String filePathString) throws Exception {
+			final String filePathString) throws IOException {
+
+		return openBufferedReader(filePathString, StandardCharsets.UTF_8);
+	}
+
+	public static BufferedReader openBufferedReader(
+			final String filePathString,
+			final Charset charset) throws IOException {
 
 		final Path filePath = Paths.get(filePathString);
-		return Files.newBufferedReader(filePath);
+		return Files.newBufferedReader(filePath, charset);
 	}
 
 	@ApiMethod

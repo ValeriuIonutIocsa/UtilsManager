@@ -42,7 +42,7 @@ public final class FactoryGradleRoot {
 		for (final String buildGradleFilePathString : buildGradleFilePathStringList) {
 
 			final String moduleFolderPathString =
-					PathUtils.computeParentPathString("build gradle file", buildGradleFilePathString);
+					PathUtils.computeParentPathString(buildGradleFilePathString);
 			final String moduleName = PathUtils.computeFileName(moduleFolderPathString);
 			moduleFolderPathsByNameMap.put(moduleName, moduleFolderPathString);
 		}

@@ -73,7 +73,7 @@ public class HBoxBrowsePathFile extends HBoxBrowsePath {
 
 		File initialDirectory = null;
 		final String pathString = getPathString();
-		final String parentPathString = PathUtils.computeParentPathString(null, pathString);
+		final String parentPathString = PathUtils.computeParentPathString(pathString);
 		if (IoUtils.directoryExists(parentPathString)) {
 			initialDirectory = new File(parentPathString);
 		}

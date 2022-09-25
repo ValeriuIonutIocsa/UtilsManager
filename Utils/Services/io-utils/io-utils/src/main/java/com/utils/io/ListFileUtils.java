@@ -23,7 +23,7 @@ public final class ListFileUtils {
 		final List<String> filePathStringList = new ArrayList<>();
 		try {
 			final Path directoryPath = Paths.get(directoryPathString);
-			try (final Stream<Path> fileListStream = Files.list(directoryPath)) {
+			try (Stream<Path> fileListStream = Files.list(directoryPath)) {
 
 				fileListStream.forEach(filePath -> {
 

@@ -117,7 +117,7 @@ class PathUtilsTest {
 			final String pathString,
 			final String expectedNormalizedPathString) {
 
-		final String normalizedPathString = PathUtils.computeNormalizedPathString("test path", pathString);
+		final String normalizedPathString = PathUtils.computeNormalizedPathString(pathString);
 		Assertions.assertEquals(expectedNormalizedPathString, normalizedPathString);
 	}
 

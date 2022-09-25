@@ -9,7 +9,8 @@ import com.jfoenix.controls.JFXProgressBar;
 import com.utils.gui.AbstractCustomControl;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.LayoutControlsFactories;
-import com.utils.io.IoUtils;
+import com.utils.io.ResourceFileUtils;
+import com.utils.io.WriterUtils;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 import com.utils.string.replacements.StringReplacements;
@@ -81,7 +82,7 @@ public class LevelGauge extends AbstractCustomControl<StackPane> {
 		progressBar.getStyleClass().add(styleClass);
 
 		try {
-			final String styleCssFileContentTemplate = IoUtils.resourceFileToString(
+			final String styleCssFileContentTemplate = ResourceFileUtils.resourceFileToString(
 					"com/utils/gui/objects/style_level_gauge_template.txt");
 			if (StringUtils.isBlank(styleCssFileContentTemplate)) {
 				throw new Exception();
@@ -97,7 +98,8 @@ public class LevelGauge extends AbstractCustomControl<StackPane> {
 					stringReplacements.performReplacements(styleCssFileContentTemplate);
 
 			final File styleCssFile = new File(tempFolderPathString, styleClass + ".css");
-			IoUtils.writeStringToFile(styleCssFile, styleCssFileContent, StandardCharsets.UTF_8);
+			final String styleCssFilePathString = styleCssFile.getAbsolutePath();
+			WriterUtils.stringToFile(styleCssFileContent, StandardCharsets.UTF_8, styleCssFilePathString);
 
 			progressBar.getStylesheets().clear();
 			progressBar.getStylesheets().add(styleCssFile.toURI().toURL().toExternalForm());

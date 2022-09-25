@@ -144,21 +144,7 @@ public final class PathUtils {
 	}
 
 	@ApiMethod
-	public static String computeFolderPathString(
-			final Path path) {
-
-		final String folderPathString;
-		final Path parentPath = path.getParent();
-		if (parentPath != null) {
-			folderPathString = parentPath.toString();
-		} else {
-			folderPathString = null;
-		}
-		return folderPathString;
-	}
-
-	@ApiMethod
-	public static String computeFolderPathString(
+	public static String computeParentPathString(
 			final String pathString) {
 
 		String folderPathString = null;
@@ -172,6 +158,22 @@ public final class PathUtils {
 		} catch (final Exception ignored) {
 		}
 		return folderPathString;
+	}
+
+	@ApiMethod
+	public static String computeNormalizedPathString(
+			final String pathString) {
+
+		String normalizedPathString = null;
+		try {
+			final Path path = Paths.get(pathString);
+			final Path absolutePath = path.toAbsolutePath();
+			final String absolutePathString = absolutePath.toString();
+			normalizedPathString = FilenameUtils.normalize(absolutePathString);
+
+		} catch (final Exception ignored) {
+		}
+		return normalizedPathString;
 	}
 
 	@ApiMethod
@@ -239,36 +241,5 @@ public final class PathUtils {
 			resultPathString = pathStringWoExt + suffix;
 		}
 		return resultPathString;
-	}
-
-	@ApiMethod
-	public static String computeParentPathString(
-			final String pathName,
-			final String pathString) {
-
-		String parentPathString = null;
-		final Path path = tryParsePath(pathName, pathString);
-		if (path != null) {
-
-			final Path parentPath = path.getParent();
-			parentPathString = parentPath.toString();
-		}
-		return parentPathString;
-	}
-
-	@ApiMethod
-	public static String computeNormalizedPathString(
-			final String pathName,
-			final String pathString) {
-
-		String normalizedPathString = null;
-		final Path path = tryParsePath(pathName, pathString);
-		if (path != null) {
-
-			final Path absolutePath = path.toAbsolutePath();
-			final String absolutePathString = absolutePath.toString();
-			normalizedPathString = FilenameUtils.normalize(absolutePathString);
-		}
-		return normalizedPathString;
 	}
 }
