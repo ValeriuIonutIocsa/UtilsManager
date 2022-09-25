@@ -11,7 +11,7 @@ class ClipboardUtilsTest extends AbstractCustomApplicationTest {
 	void testPutStringInClipBoard() {
 
 		final String string;
-		final int input = Integer.parseInt("1001");
+		final int input = Integer.parseInt("101");
 		if (input == 1) {
 			string = "Single line string.";
 		} else if (input == 2) {
