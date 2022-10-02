@@ -20,7 +20,7 @@ public final class XlsUtils {
 		FactoryFolderCreator.getInstance().createParentDirectories(pathString, true);
 		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(pathString, true);
 
-		try (final OutputStream outputStream = StreamUtils.openBufferedOutputStream(pathString)) {
+		try (OutputStream outputStream = StreamUtils.openBufferedOutputStream(pathString)) {
 
 			workbook.write(outputStream);
 		}

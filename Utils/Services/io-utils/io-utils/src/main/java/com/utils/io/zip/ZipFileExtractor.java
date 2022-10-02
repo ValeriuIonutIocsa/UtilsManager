@@ -69,7 +69,7 @@ public class ZipFileExtractor {
 
 			FactoryFolderCreator.getInstance().createDirectories(dstFolderPathString, true);
 
-			try (final FileSystem zipFileSystem =
+			try (FileSystem zipFileSystem =
 					ZipUtils.openZipFileSystem(zipArchiveFilePathString, useTempFile)) {
 
 				final List<Runnable> runnableList = new ArrayList<>();

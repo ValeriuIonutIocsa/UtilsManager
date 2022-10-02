@@ -37,7 +37,7 @@ public abstract class AbstractCsvWriter implements CsvWriter {
 
 		FactoryFolderCreator.getInstance().createParentDirectories(outputPathString, true);
 		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, true);
-		try (final PrintStream printStream = StreamUtils.openPrintStream(
+		try (PrintStream printStream = StreamUtils.openPrintStream(
 				outputPathString, false, StandardCharsets.UTF_8)) {
 
 			printStream.println("\"sep=,\"");

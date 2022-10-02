@@ -62,7 +62,7 @@ public final class ReaderUtils {
 			final String filePathString,
 			final Charset charset) throws Exception {
 
-		try (final InputStream inputStream = StreamUtils.openInputStream(filePathString)) {
+		try (InputStream inputStream = StreamUtils.openInputStream(filePathString)) {
 			return inputStreamToString(inputStream, charset.name());
 		}
 	}

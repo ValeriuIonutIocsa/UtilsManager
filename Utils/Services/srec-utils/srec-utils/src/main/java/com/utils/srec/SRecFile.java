@@ -224,7 +224,7 @@ public class SRecFile {
 			FactoryFolderCreator.getInstance().createParentDirectories(copySRecFilePathString, true);
 			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(copySRecFilePathString, true);
 
-			try (final PrintStream printStream =
+			try (PrintStream printStream =
 					StreamUtils.openPrintStream(copySRecFilePathString, false, StandardCharsets.UTF_8)) {
 
 				for (final SRecRecord sRecRecord : sRecRecordList) {

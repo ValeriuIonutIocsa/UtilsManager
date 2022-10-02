@@ -53,7 +53,7 @@ public final class ListFileUtils {
 			filePathStringList = new ArrayList<>();
 			try {
 				final Path directoryPath = Paths.get(directoryPathString);
-				try (final Stream<Path> fileListStream = Files.list(directoryPath)) {
+				try (Stream<Path> fileListStream = Files.list(directoryPath)) {
 
 					fileListStream.filter(filterPredicate).forEach(filePath -> {
 
@@ -78,7 +78,7 @@ public final class ListFileUtils {
 		final List<String> filePathStringList = new ArrayList<>();
 		try {
 			final Path directoryPath = Paths.get(directoryPathString);
-			try (final Stream<Path> fileListStream = Files.walk(directoryPath)) {
+			try (Stream<Path> fileListStream = Files.walk(directoryPath)) {
 				fileListStream.forEach(filePath -> {
 
 					final String filePathString = filePath.toString();
@@ -108,7 +108,7 @@ public final class ListFileUtils {
 			filePathStringList = new ArrayList<>();
 			try {
 				final Path directoryPath = Paths.get(directoryPathString);
-				try (final Stream<Path> fileListStream = Files.walk(directoryPath)) {
+				try (Stream<Path> fileListStream = Files.walk(directoryPath)) {
 					fileListStream.filter(filterPredicate).forEach(filePath -> {
 
 						final String filePathString = filePath.toString();

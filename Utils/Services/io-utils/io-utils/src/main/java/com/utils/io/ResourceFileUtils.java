@@ -8,7 +8,7 @@ import org.apache.commons.io.IOUtils;
 import com.utils.annotations.ApiMethod;
 import com.utils.log.Logger;
 
-public class ResourceFileUtils {
+public final class ResourceFileUtils {
 
 	private ResourceFileUtils() {
 	}

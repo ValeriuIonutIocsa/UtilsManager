@@ -61,14 +61,14 @@ class EncryptionUtilsTest {
 		Logger.printLine(encryptedFilePath);
 
 		final Cipher encryptCipher = EncryptionUtils.createEncryptCipher();
-		try (final OutputStream outputStream = new CipherOutputStream(
+		try (OutputStream outputStream = new CipherOutputStream(
 				new BufferedOutputStream(Files.newOutputStream(encryptedFilePath)), encryptCipher)) {
 			properties.store(outputStream, "test properties file for encryption");
 		}
 
 		final Properties decryptedProperties = new Properties();
 		final Cipher decryptCipher = EncryptionUtils.createDecryptCipher();
-		try (final InputStream inputStream = new CipherInputStream(
+		try (InputStream inputStream = new CipherInputStream(
 				new BufferedInputStream(Files.newInputStream(encryptedFilePath)), decryptCipher)) {
 			decryptedProperties.load(inputStream);
 		}

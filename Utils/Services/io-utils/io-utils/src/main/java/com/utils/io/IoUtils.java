@@ -92,7 +92,7 @@ public final class IoUtils {
 			final String filePathString) {
 
 		int lineCount = 0;
-		try (final BufferedReader bufferedReader = ReaderUtils.openBufferedReader(filePathString)) {
+		try (BufferedReader bufferedReader = ReaderUtils.openBufferedReader(filePathString)) {
 
 			while (bufferedReader.readLine() != null) {
 				lineCount++;
@@ -112,7 +112,7 @@ public final class IoUtils {
 
 		final File tempFile = File.createTempFile(StrUtils.createDateTimeString(), ".tmp");
 		tempFile.deleteOnExit();
-		try (final OutputStream outputStream = Files.newOutputStream(tempFile.toPath())) {
+		try (OutputStream outputStream = Files.newOutputStream(tempFile.toPath())) {
 			IOUtils.copy(inputStream, outputStream);
 		}
 		return tempFile;

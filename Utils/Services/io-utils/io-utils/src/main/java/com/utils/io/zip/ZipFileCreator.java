@@ -86,7 +86,7 @@ public class ZipFileCreator {
 
 			FactoryFolderCreator.getInstance().createParentDirectories(zipArchiveFilePathString, true);
 
-			try (final FileSystem zipFileSystem =
+			try (FileSystem zipFileSystem =
 					ZipUtils.createNewZipFileSystem(zipArchiveFilePathString, useTempFile)) {
 
 				if (folder) {
@@ -107,8 +107,8 @@ public class ZipFileCreator {
 										Logger.printLine("zipping file: " + filePath);
 									}
 
-									final Path relativeFilePath = srcFilePath.relativize(filePath);
-									final String relativeFilePathString = relativeFilePath.toString();
+									final String relativeFilePathString =
+											PathUtils.computeRelativePathString(srcFilePathString, srcFilePathString);
 									final Path zipFilePath = zipFileSystem.getPath(relativeFilePathString);
 									final Path zipFileParentFolderPath = zipFilePath.getParent();
 									if (zipFileParentFolderPath != null &&

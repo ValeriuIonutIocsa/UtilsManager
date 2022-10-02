@@ -1,6 +1,6 @@
 package com.utils.io;
 
-import java.nio.file.Path;
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,20 +39,18 @@ public final class IoTestUtils {
 
 			if (!IoUtils.directoryExists(filePathString)) {
 
-				final Path folderPath = Paths.get(folderPathString);
-				final Path filePath = Paths.get(filePathString);
-				final Path relativePath = folderPath.relativize(filePath);
-				final String relativePathString = relativePath.toString();
-				final Path otherFilePath = Paths.get(otherFolderPathString, relativePathString);
-				final String otherFilePathString = otherFilePath.toString();
+				final String relativePathString =
+						PathUtils.computeRelativePathString(folderPathString, filePathString);
+				final String otherFilePathString =
+						Paths.get(otherFolderPathString, relativePathString).toString();
 				matchedOtherFilePathStringSet.add(otherFilePathString);
 
 				final boolean contentEquals =
-						FileUtils.contentEquals(filePath.toFile(), otherFilePath.toFile());
+						FileUtils.contentEquals(new File(filePathString), new File(otherFilePathString));
 				if (!contentEquals) {
 					Logger.printWarning("The following files are different:" +
-							System.lineSeparator() + filePath +
-							System.lineSeparator() + otherFilePath);
+							System.lineSeparator() + filePathString +
+							System.lineSeparator() + otherFilePathString);
 				}
 
 				final FileCompareData fileCompareData = new FileCompareData(
@@ -75,19 +73,16 @@ public final class IoTestUtils {
 
 				if (!matchedOtherFilePathStringSet.contains(otherFilePathString)) {
 
-					final Path otherFolderPath = Paths.get(otherFolderPathString);
-					final Path otherFilePath = Paths.get(otherFilePathString);
-					final Path relativePath = otherFolderPath.relativize(otherFilePath);
-					final String relativePathString = relativePath.toString();
-					final Path filePath = Paths.get(folderPathString, relativePathString);
-					final String filePathString = filePath.toString();
+					final String relativePathString =
+							PathUtils.computeRelativePathString(otherFolderPathString, otherFilePathString);
+					final String filePathString = Paths.get(folderPathString, relativePathString).toString();
 
 					final boolean contentEquals =
-							FileUtils.contentEquals(filePath.toFile(), otherFilePath.toFile());
+							FileUtils.contentEquals(new File(filePathString), new File(otherFilePathString));
 					if (!contentEquals) {
 						Logger.printWarning("The following files are different:" +
-								System.lineSeparator() + filePath +
-								System.lineSeparator() + otherFilePath);
+								System.lineSeparator() + filePathString +
+								System.lineSeparator() + otherFilePathString);
 					}
 
 					final FileCompareData fileCompareData = new FileCompareData(

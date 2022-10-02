@@ -4,9 +4,9 @@ import com.utils.annotations.ApiMethod;
 
 public interface FolderCopier {
 
-    @ApiMethod
+	@ApiMethod
 	void copyFolder(
-			final String srcFolderPathString,
-			final String dstFolderPathString,
+			String srcFolderPathString,
+			String dstFolderPathString,
 			boolean verbose);
 }

@@ -16,7 +16,7 @@ class XmlDomCompressUtilsTest {
 	void testCompressXml() throws Exception {
 
 		final String resourceFilePathString = "com/utils/xml/dom/compress/test.xml";
-		try (final InputStream inputStream = ResourceFileUtils.resourceFileToInputStream(resourceFilePathString)) {
+		try (InputStream inputStream = ResourceFileUtils.resourceFileToInputStream(resourceFilePathString)) {
 
 			final Document document = XmlDomUtils.openDocument(inputStream);
 			final String xmlFileContents = XmlDomUtils.saveXmlFile(document, false, 4);

@@ -40,7 +40,7 @@ public final class WriterUtils {
 
 		FactoryFolderCreator.getInstance().createParentDirectories(filePathString, true);
 		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(filePathString, true);
-		try (final PrintStream printStream = StreamUtils.openPrintStream(filePathString, false, charset)) {
+		try (PrintStream printStream = StreamUtils.openPrintStream(filePathString, false, charset)) {
 			printStream.print(string);
 		}
 	}

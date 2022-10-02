@@ -45,16 +45,16 @@ public final class RmiSslUtils {
 
 			FactoryFolderCreator.getInstance().createParentDirectories(certificatePathString, true);
 
-			try (final InputStream inputStream =
+			try (InputStream inputStream =
 					ResourceFileUtils.resourceFileToInputStream(certificateResourceFilePath);
-					final OutputStream outputStream = StreamUtils.openOutputStream(certificatePathString)) {
+					OutputStream outputStream = StreamUtils.openOutputStream(certificatePathString)) {
 				IOUtils.copy(inputStream, outputStream);
 			}
 
 		} else {
-			try (final InputStream inputStream =
+			try (InputStream inputStream =
 					ResourceFileUtils.resourceFileToInputStream(certificateResourceFilePath);
-					final OutputStream outputStream = StreamUtils.openOutputStream(certificatePathString)) {
+					OutputStream outputStream = StreamUtils.openOutputStream(certificatePathString)) {
 				IOUtils.copy(inputStream, outputStream);
 			} catch (final Exception ignored) {
 			}
