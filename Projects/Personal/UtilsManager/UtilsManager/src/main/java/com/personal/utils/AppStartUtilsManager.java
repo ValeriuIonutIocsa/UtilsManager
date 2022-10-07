@@ -2,6 +2,8 @@ package com.personal.utils;
 
 import java.time.Instant;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.personal.utils.mode.FactoryMode;
 import com.personal.utils.mode.Mode;
 import com.utils.io.IoUtils;
@@ -51,7 +53,22 @@ final class AppStartUtilsManager {
 		Logger.printLine(pathString);
 
 		if (mode == Mode.CREATE) {
-			WorkerCreate.work(pathString);
+
+			final String packageName;
+			if (args.length >= 3) {
+				packageName = args[2];
+			} else {
+				packageName = null;
+			}
+
+			if (StringUtils.isBlank(packageName)) {
+
+				Logger.printError("invalid package name: " + packageName);
+				System.exit(-2);
+			}
+
+			WorkerCreate.work(pathString, packageName);
+
 		} else {
 			WorkerDownloadUpload.work(mode, pathString, start);
 		}

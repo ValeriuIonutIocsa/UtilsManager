@@ -1,5 +1,6 @@
 package com.personal.utils;
 
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,15 +13,18 @@ import com.personal.utils.gradle_roots.FactoryGradleRoot;
 import com.personal.utils.gradle_roots.GradleRoot;
 import com.utils.io.PathUtils;
 import com.utils.io.ReaderUtils;
+import com.utils.io.StreamUtils;
 import com.utils.io.WriterUtils;
 import com.utils.io.file_copiers.FactoryFileCopier;
 import com.utils.io.folder_copiers.FactoryFolderCopier;
+import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.log.Logger;
 
 class WorkerCreate {
 
 	static void work(
-			final String pathString) {
+			final String pathString,
+			final String packageName) {
 
 		copyRootFiles(pathString);
 
@@ -33,7 +37,9 @@ class WorkerCreate {
 		final String projectFolderPathString = Paths.get(pathString, projectRelativePath).toString();
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, projectFolderPathString, true);
-		replaceDependencies(projectFolderPathString, new ArrayList<>());
+		final String appInfo = createAppInfo(packageName);
+		replaceDependencies(projectFolderPathString, appInfo, new ArrayList<>());
+		createMainClass(projectFolderPathString, projectName, packageName);
 
 		final String allModulesProjectName = projectName + "AllModules";
 		final String allModulesProjectRelativePath = "/Projects/Personal/" +
@@ -42,7 +48,7 @@ class WorkerCreate {
 				Paths.get(pathString, allModulesProjectRelativePath).toString();
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, allModulesProjectFolderPathString, true);
-		replaceDependencies(allModulesProjectFolderPathString, Collections.singletonList(projectRelativePath));
+		replaceDependencies(allModulesProjectFolderPathString, "", Collections.singletonList(projectRelativePath));
 	}
 
 	private static void copyRootFiles(
@@ -67,8 +73,16 @@ class WorkerCreate {
 		FactoryFileCopier.getInstance().copyFile(rootFilePathString, dstRootFilePathString, true, true);
 	}
 
+	private static String createAppInfo(
+			final String packageName) {
+
+		return "    mainClass = '" + packageName + ".AppStart' + project.name" + System.lineSeparator() +
+				"    projectVersion = '0.0.1'" + System.lineSeparator() + System.lineSeparator();
+	}
+
 	private static void replaceDependencies(
 			final String projectFolderPathString,
+			final String appInfo,
 			final List<String> subProjectPathList) {
 
 		final String buildGradleFilePathString =
@@ -96,6 +110,8 @@ class WorkerCreate {
 
 			String buildGradleContents =
 					ReaderUtils.fileToString(buildGradleFilePathString, StandardCharsets.UTF_8);
+			buildGradleContents = StringUtils.replace(buildGradleContents,
+					"%%APP_INFO%%", appInfo);
 			buildGradleContents = StringUtils.replace(buildGradleContents,
 					"%%SUB_PROJECTS%%", subProjects);
 			WriterUtils.stringToFile(buildGradleContents, StandardCharsets.UTF_8,
@@ -140,6 +156,70 @@ class WorkerCreate {
 			Logger.printError("failed to replace dependencies in file:" +
 					System.lineSeparator() + settingsGradleFilePathString);
 			Logger.printException(exc);
+		}
+	}
+
+	private static void createMainClass(
+			final String projectFolderPathString,
+			final String projectName,
+			final String packageName) {
+
+		String mainClassPathString =
+				Paths.get(projectFolderPathString, "src", "main", "java").toString();
+		final String[] packageNameSplitPartArray = StringUtils.split(packageName, '.');
+		for (final String packageNameSplitPart : packageNameSplitPartArray) {
+			mainClassPathString = Paths.get(mainClassPathString, packageNameSplitPart).toString();
+		}
+		mainClassPathString = Paths.get(mainClassPathString, "AppStart" + projectName + ".java").toString();
+
+		final boolean success = FactoryFolderCreator.getInstance()
+				.createParentDirectories(mainClassPathString, true);
+		if (success) {
+
+			try (PrintStream printStream = StreamUtils.openPrintStream(mainClassPathString)) {
+
+				printStream.print("package ");
+				printStream.print(packageName);
+				printStream.print(';');
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("final class AppStart");
+				printStream.print(projectName);
+				printStream.print(" {");
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("\tprivate AppStart");
+				printStream.print(projectName);
+				printStream.print("() {");
+				printStream.println();
+
+				printStream.print("\t}");
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("\tpublic static void main(");
+				printStream.println();
+
+				printStream.print("\t\t\tfinal String[] args) {");
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("\t}");
+				printStream.println();
+
+				printStream.print("}");
+				printStream.println();
+
+			} catch (final Exception exc) {
+				Logger.printError("failed to write the main class file");
+				Logger.printException(exc);
+			}
 		}
 	}
 }
