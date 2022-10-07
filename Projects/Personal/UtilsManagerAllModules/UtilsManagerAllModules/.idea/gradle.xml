@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/../../../../Utils/Gui/javafx-web-utils/javafx-web-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Gui/medusa-utils/medusa-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/concurrency-utils/concurrency-utils" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/gradle-utils/gradle-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/html-utils/html-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/http-utils/http-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/influxdb-utils/influxdb-utils" />

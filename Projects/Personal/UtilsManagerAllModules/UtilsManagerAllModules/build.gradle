@@ -17,6 +17,7 @@ ext {
             ':medusa-utils',
             ':javafx-swing-utils',
             ':javafx-web-utils',
+            ':gradle-utils',
             ':http-utils',
             ':influxdb-utils',
             ':jdbc-utils-oracle-db',

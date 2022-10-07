@@ -8,6 +8,7 @@ final String[] subProjectsRelativePaths = [
         '/Utils/Gui/medusa-utils/medusa-utils',
         '/Utils/Gui/javafx-swing-utils/javafx-swing-utils',
         '/Utils/Gui/javafx-web-utils/javafx-web-utils',
+        '/Utils/Services/gradle-utils/gradle-utils',
         '/Utils/Services/http-utils/http-utils',
         '/Utils/Services/influxdb-utils/influxdb-utils',
         '/Utils/Services/jdbc-utils-oracle-db/jdbc-utils-oracle-db',
