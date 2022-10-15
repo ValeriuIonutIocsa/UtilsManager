@@ -1,9 +1,6 @@
 package com.utils.xls.workbook;
 
-import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -12,21 +9,23 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.utils.io.StreamUtils;
+
 public abstract class AbstractXlsxWorkbook implements XlsxWorkbook {
 
-	private final Path path;
+	private final String pathString;
 
 	protected AbstractXlsxWorkbook(
-			final Path path) {
+			final String pathString) {
 
-		this.path = path;
+		this.pathString = pathString;
 	}
 
 	@Override
 	public boolean parse() {
 
 		boolean success = false;
-		try (InputStream inputStream = new BufferedInputStream(Files.newInputStream(path));
+		try (InputStream inputStream = StreamUtils.openBufferedInputStream(pathString);
 				Workbook workbook = new XSSFWorkbook(inputStream)) {
 
 			parseWorkbook(workbook);
@@ -62,5 +61,4 @@ public abstract class AbstractXlsxWorkbook implements XlsxWorkbook {
 
 	protected abstract void handleError(
 			Exception exc);
-
 }

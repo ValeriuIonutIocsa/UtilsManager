@@ -33,21 +33,8 @@ public final class PathUtils {
 			final String firstPathString,
 			final String... otherPathStringArray) {
 
-		String resultPathString = null;
-		try {
-			final Path resultPath = Paths.get(firstPathString, otherPathStringArray);
-			resultPathString = resultPath.toString();
-
-		} catch (final Exception exc) {
-			final StringBuilder sbErrorMessage = new StringBuilder("failed to compute path:");
-			sbErrorMessage.append(System.lineSeparator()).append(firstPathString);
-			for (final String otherPathString : otherPathStringArray) {
-				sbErrorMessage.append(System.lineSeparator()).append(otherPathString);
-			}
-			Logger.printError(sbErrorMessage);
-			Logger.printException(exc);
-		}
-		return resultPathString;
+		return computePathString(null, false, null, false, true,
+				firstPathString, otherPathStringArray);
 	}
 
 	@ApiMethod
@@ -56,64 +43,68 @@ public final class PathUtils {
 			final String firstPathString,
 			final String... otherPathStringArray) {
 
-		String resultPathString = null;
-		try {
-			final Path resultPath = Paths.get(firstPathString, otherPathStringArray);
-			resultPathString = resultPath.toString();
-
-		} catch (final Exception exc) {
-			final StringBuilder sbErrorMessage = new StringBuilder("failed to compute ");
-			sbErrorMessage.append(pathName).append(" path:")
-					.append(System.lineSeparator()).append(firstPathString);
-			for (final String otherPathString : otherPathStringArray) {
-				sbErrorMessage.append(System.lineSeparator()).append(otherPathString);
-			}
-			Logger.printError(sbErrorMessage);
-			Logger.printException(exc);
-		}
-		return resultPathString;
+		return computePathString(pathName, false, null, false, true,
+				firstPathString, otherPathStringArray);
 	}
 
 	@ApiMethod
-	public static String computeNormalizedPathString(
-			final String firstPathString,
-			final String... otherPathStringArray) {
-
-		String normalizedPathString = null;
-		try {
-			final Path path = Paths.get(firstPathString, otherPathStringArray);
-			final Path absolutePath = path.toAbsolutePath();
-			final String absolutePathString = absolutePath.toString();
-			normalizedPathString = FilenameUtils.normalize(absolutePathString);
-
-		} catch (final Exception exc) {
-			final StringBuilder sbErrorMessage = new StringBuilder("failed to compute path:");
-			sbErrorMessage.append(System.lineSeparator()).append(firstPathString);
-			for (final String otherPathString : otherPathStringArray) {
-				sbErrorMessage.append(System.lineSeparator()).append(otherPathString);
-			}
-			Logger.printError(sbErrorMessage);
-			Logger.printException(exc);
-		}
-		return normalizedPathString;
-	}
-
-	@ApiMethod
-	public static String computeNamedNormalizedPathString(
+	public static String computeNormalizedPath(
 			final String pathName,
 			final String firstPathString,
 			final String... otherPathStringArray) {
 
-		String normalizedPathString = null;
+		return computePathString(pathName, true, null, true, true,
+				firstPathString, otherPathStringArray);
+	}
+
+	@ApiMethod
+	public static String computeAbsolutePath(
+			final String pathName,
+			final String rootFolderPathString,
+			final String firstPathString,
+			final String... otherPathStringArray) {
+
+		return computePathString(pathName, true, rootFolderPathString, true, true,
+				firstPathString, otherPathStringArray);
+	}
+
+	@ApiMethod
+	public static String computePathString(
+			final String pathName,
+			final boolean absolute,
+			final String rootFolderPathString,
+			final boolean normalize,
+			final boolean verbose,
+			final String firstPathString,
+			final String... otherPathStringArray) {
+
+		String pathString = null;
 		try {
-			final Path path = Paths.get(firstPathString, otherPathStringArray);
-			final Path absolutePath = path.toAbsolutePath();
-			final String absolutePathString = absolutePath.toString();
-			normalizedPathString = FilenameUtils.normalize(absolutePathString);
+			Path path = Paths.get(firstPathString, otherPathStringArray);
+
+			if (absolute) {
+
+				if (rootFolderPathString == null) {
+					path = path.toAbsolutePath();
+				} else {
+					if (!path.isAbsolute()) {
+						path = Paths.get(rootFolderPathString, path.toString());
+					}
+				}
+			}
+
+			pathString = path.toString();
+
+			if (normalize) {
+				pathString = FilenameUtils.normalize(pathString);
+			}
 
 		} catch (final Exception exc) {
 			final StringBuilder sbErrorMessage = new StringBuilder("failed to compute ");
-			sbErrorMessage.append(pathName).append(" path:")
+			if (pathName != null) {
+				sbErrorMessage.append(pathName).append(' ');
+			}
+			sbErrorMessage.append("path:")
 					.append(System.lineSeparator()).append(firstPathString);
 			for (final String otherPathString : otherPathStringArray) {
 				sbErrorMessage.append(System.lineSeparator()).append(otherPathString);
@@ -121,7 +112,7 @@ public final class PathUtils {
 			Logger.printError(sbErrorMessage);
 			Logger.printException(exc);
 		}
-		return normalizedPathString;
+		return pathString;
 	}
 
 	@ApiMethod
@@ -135,6 +126,7 @@ public final class PathUtils {
 	@ApiMethod
 	public static String computeFileName(
 			final String pathString) {
+
 		return FilenameUtils.getName(pathString);
 	}
 
@@ -150,7 +142,9 @@ public final class PathUtils {
 				folderPathString = parentPath.toString();
 			}
 
-		} catch (final Exception ignored) {
+		} catch (final Exception exc) {
+			Logger.printError("failed to compute parent path string");
+			Logger.printException(exc);
 		}
 		return folderPathString;
 	}
@@ -166,6 +160,7 @@ public final class PathUtils {
 	@ApiMethod
 	public static String computeExtension(
 			final String pathString) {
+
 		return FilenameUtils.getExtension(pathString);
 	}
 
@@ -175,6 +170,7 @@ public final class PathUtils {
 
 		String pathWoExt = null;
 		if (path != null) {
+
 			final String pathString = path.toString();
 			pathWoExt = computePathWoExt(pathString);
 		}
@@ -184,6 +180,7 @@ public final class PathUtils {
 	@ApiMethod
 	public static String computePathWoExt(
 			final String pathString) {
+
 		return FilenameUtils.removeExtension(pathString);
 	}
 
@@ -203,6 +200,7 @@ public final class PathUtils {
 	@ApiMethod
 	public static String computeFileNameWoExt(
 			final String pathString) {
+
 		return FilenameUtils.getBaseName(pathString);
 	}
 
@@ -234,7 +232,9 @@ public final class PathUtils {
 			final Path relativePath = fromPath.relativize(toPath);
 			relativePathString = relativePath.toString();
 
-		} catch (final Exception ignored) {
+		} catch (final Exception exc) {
+			Logger.printError("failed to compute relative path string");
+			Logger.printException(exc);
 		}
 		return relativePathString;
 	}

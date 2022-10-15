@@ -38,7 +38,7 @@ final class AppStartUtilsManager {
 		}
 
 		String pathString = args[1];
-		pathString = PathUtils.computeNormalizedPathString(pathString);
+		pathString = PathUtils.computeNormalizedPath(null, pathString);
 		if (!IoUtils.directoryExists(pathString)) {
 
 			Logger.printError("invalid path:" +

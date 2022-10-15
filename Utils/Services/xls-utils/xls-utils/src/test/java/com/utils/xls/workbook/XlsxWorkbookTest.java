@@ -1,8 +1,5 @@
 package com.utils.xls.workbook;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,8 +19,7 @@ class XlsxWorkbookTest {
 			throw new RuntimeException();
 		}
 
-		final Path excelFilePath = Paths.get(excelFilePathString);
-		final boolean success = new AbstractXlsxWorkbook(excelFilePath) {
+		final boolean success = new AbstractXlsxWorkbook(excelFilePathString) {
 
 			@Override
 			protected void parseWorkbook(

@@ -14,7 +14,7 @@ class PathUtilsTest {
 	List<DynamicTest> testComputeNormalizedPathString() {
 
 		final List<DynamicTest> dynamicTestList = new ArrayList<>();
-		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3, 4);
+		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3, 4, 5);
 		if (testCaseList.contains(1)) {
 			dynamicTestList.add(DynamicTest.dynamicTest("1 (regular normalized path)",
 					() -> testComputeNormalizedPathStringCommon(
@@ -31,13 +31,19 @@ class PathUtilsTest {
 			dynamicTestList.add(DynamicTest.dynamicTest("3 (relative path)",
 					() -> testComputeNormalizedPathStringCommon(
 							".\\file.txt",
-							"C:\\IVI\\Conti\\Main\\Utils\\Services\\io-utils\\io-utils\\file.txt")));
+							"C:\\IVI\\Prog\\JavaGradle\\UtilsManager\\Utils\\Services\\io-utils\\io-utils\\file.txt")));
 		}
 		if (testCaseList.contains(4)) {
 			dynamicTestList.add(DynamicTest.dynamicTest("4 (relative path with 2 dots)",
 					() -> testComputeNormalizedPathStringCommon(
 							"..\\..\\test\\file.txt",
-							"C:\\IVI\\Conti\\Main\\Utils\\Services\\test\\file.txt")));
+							"C:\\IVI\\Prog\\JavaGradle\\UtilsManager\\Utils\\Services\\test\\file.txt")));
+		}
+		if (testCaseList.contains(4)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("5 (relative path with invalid characters)",
+					() -> testComputeNormalizedPathStringCommon(
+							"..\\..\\te:st\\file.txt",
+							null)));
 		}
 		return dynamicTestList;
 	}
@@ -46,7 +52,7 @@ class PathUtilsTest {
 			final String pathString,
 			final String expectedNormalizedPathString) {
 
-		final String normalizedPathString = PathUtils.computeNormalizedPathString(pathString);
+		final String normalizedPathString = PathUtils.computeNormalizedPath(null, pathString);
 		Assertions.assertEquals(expectedNormalizedPathString, normalizedPathString);
 	}
 
