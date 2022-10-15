@@ -39,7 +39,7 @@ public final class IoTestUtils {
 			if (!IoUtils.directoryExists(filePathString)) {
 
 				final String relativePathString =
-						PathUtils.computeRelativePathString(folderPathString, filePathString);
+						PathUtils.computeRelativePath(folderPathString, filePathString);
 				final String otherFilePathString =
 						PathUtils.computePath(otherFolderPathString, relativePathString);
 				matchedOtherFilePathStringSet.add(otherFilePathString);
@@ -73,7 +73,7 @@ public final class IoTestUtils {
 				if (!matchedOtherFilePathStringSet.contains(otherFilePathString)) {
 
 					final String relativePathString =
-							PathUtils.computeRelativePathString(otherFolderPathString, otherFilePathString);
+							PathUtils.computeRelativePath(otherFolderPathString, otherFilePathString);
 					final String filePathString = PathUtils.computePath(folderPathString, relativePathString);
 
 					final boolean contentEquals =

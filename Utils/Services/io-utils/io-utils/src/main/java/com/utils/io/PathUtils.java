@@ -33,7 +33,7 @@ public final class PathUtils {
 			final String firstPathString,
 			final String... otherPathStringArray) {
 
-		return computePathString(null, false, null, false, true,
+		return computePath(null, false, null, false, true,
 				firstPathString, otherPathStringArray);
 	}
 
@@ -43,7 +43,7 @@ public final class PathUtils {
 			final String firstPathString,
 			final String... otherPathStringArray) {
 
-		return computePathString(pathName, false, null, false, true,
+		return computePath(pathName, false, null, false, true,
 				firstPathString, otherPathStringArray);
 	}
 
@@ -53,7 +53,7 @@ public final class PathUtils {
 			final String firstPathString,
 			final String... otherPathStringArray) {
 
-		return computePathString(pathName, true, null, true, true,
+		return computePath(pathName, true, null, true, true,
 				firstPathString, otherPathStringArray);
 	}
 
@@ -64,12 +64,12 @@ public final class PathUtils {
 			final String firstPathString,
 			final String... otherPathStringArray) {
 
-		return computePathString(pathName, true, rootFolderPathString, true, true,
+		return computePath(pathName, true, rootFolderPathString, true, true,
 				firstPathString, otherPathStringArray);
 	}
 
 	@ApiMethod
-	public static String computePathString(
+	public static String computePath(
 			final String pathName,
 			final boolean absolute,
 			final String rootFolderPathString,
@@ -131,7 +131,7 @@ public final class PathUtils {
 	}
 
 	@ApiMethod
-	public static String computeParentPathString(
+	public static String computeParentPath(
 			final String pathString) {
 
 		String folderPathString = null;
@@ -221,7 +221,7 @@ public final class PathUtils {
 	}
 
 	@ApiMethod
-	public static String computeRelativePathString(
+	public static String computeRelativePath(
 			final String fromPathString,
 			final String toPathString) {
 
