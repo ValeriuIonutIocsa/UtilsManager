@@ -2,7 +2,6 @@ package com.personal.utils;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +33,7 @@ class WorkerCreate {
 				"Projects\\Personal\\UtilsManager\\UtilsManager_EXE\\TemplateProject";
 
 		final String projectRelativePath = "/Projects/Personal/" + projectName + "/" + projectName;
-		final String projectFolderPathString = Paths.get(pathString, projectRelativePath).toString();
+		final String projectFolderPathString = PathUtils.computePath(pathString, projectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, projectFolderPathString, true);
 		final String appInfo = createAppInfo(packageName);
@@ -45,7 +44,7 @@ class WorkerCreate {
 		final String allModulesProjectRelativePath = "/Projects/Personal/" +
 				allModulesProjectName + "/" + allModulesProjectName;
 		final String allModulesProjectFolderPathString =
-				Paths.get(pathString, allModulesProjectRelativePath).toString();
+				PathUtils.computePath(pathString, allModulesProjectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, allModulesProjectFolderPathString, true);
 		replaceDependencies(allModulesProjectFolderPathString, "", Collections.singletonList(projectRelativePath));
@@ -69,7 +68,7 @@ class WorkerCreate {
 			final String pathString) {
 
 		final String rootFileName = PathUtils.computeFileName(rootFilePathString);
-		final String dstRootFilePathString = Paths.get(pathString, rootFileName).toString();
+		final String dstRootFilePathString = PathUtils.computePath(pathString, rootFileName);
 		FactoryFileCopier.getInstance().copyFile(rootFilePathString, dstRootFilePathString, true, true);
 	}
 
@@ -86,7 +85,7 @@ class WorkerCreate {
 			final List<String> subProjectPathList) {
 
 		final String buildGradleFilePathString =
-				Paths.get(projectFolderPathString, "build.gradle").toString();
+				PathUtils.computePath(projectFolderPathString, "build.gradle");
 		try {
 			final String subProjects;
 			if (subProjectPathList.isEmpty()) {
@@ -124,7 +123,7 @@ class WorkerCreate {
 		}
 
 		final String settingsGradleFilePathString =
-				Paths.get(projectFolderPathString, "settings.gradle").toString();
+				PathUtils.computePath(projectFolderPathString, "settings.gradle");
 		try {
 			final String subProjectPaths;
 			if (subProjectPathList.isEmpty()) {
@@ -165,12 +164,12 @@ class WorkerCreate {
 			final String packageName) {
 
 		String mainClassPathString =
-				Paths.get(projectFolderPathString, "src", "main", "java").toString();
+				PathUtils.computePath(projectFolderPathString, "src", "main", "java");
 		final String[] packageNameSplitPartArray = StringUtils.split(packageName, '.');
 		for (final String packageNameSplitPart : packageNameSplitPartArray) {
-			mainClassPathString = Paths.get(mainClassPathString, packageNameSplitPart).toString();
+			mainClassPathString = PathUtils.computePath(mainClassPathString, packageNameSplitPart);
 		}
-		mainClassPathString = Paths.get(mainClassPathString, "AppStart" + projectName + ".java").toString();
+		mainClassPathString = PathUtils.computePath(mainClassPathString, "AppStart" + projectName + ".java");
 
 		final boolean success = FactoryFolderCreator.getInstance()
 				.createParentDirectories(mainClassPathString, true);

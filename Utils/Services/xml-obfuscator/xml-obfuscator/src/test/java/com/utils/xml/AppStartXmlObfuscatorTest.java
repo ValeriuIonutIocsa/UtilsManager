@@ -1,7 +1,5 @@
 package com.utils.xml;
 
-import java.nio.file.Paths;
-
 import org.junit.jupiter.api.Test;
 
 class AppStartXmlObfuscatorTest {
@@ -9,8 +7,7 @@ class AppStartXmlObfuscatorTest {
 	@Test
 	void testWork() {
 
-		String cnfFilePathString = "cfg\\XmlObfuscatorCfg.xml";
-		cnfFilePathString = Paths.get(cnfFilePathString).toString();
+		final String cnfFilePathString = "cfg\\XmlObfuscatorCfg.xml";
 		AppStartXmlObfuscator.main(cnfFilePathString);
 	}
 }

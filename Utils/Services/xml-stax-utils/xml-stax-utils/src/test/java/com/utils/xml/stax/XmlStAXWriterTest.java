@@ -1,6 +1,5 @@
 package com.utils.xml.stax;
 
-import java.nio.file.Paths;
 import java.util.Stack;
 
 import javax.xml.stream.events.StartElement;
@@ -19,7 +18,7 @@ class XmlStAXWriterTest {
 	void testWrite() throws Exception {
 
 		final String tempXmlFilePathString =
-				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_stax_writer_test.xml").toString();
+				PathUtils.computePath(PathUtils.ROOT_PATH, "tmp", "xml_stax_writer_test.xml");
 		new AbstractXmlStAXWriter(tempXmlFilePathString, "    ") {
 
 			@Override

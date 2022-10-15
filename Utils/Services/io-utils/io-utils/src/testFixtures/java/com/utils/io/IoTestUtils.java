@@ -1,7 +1,6 @@
 package com.utils.io;
 
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,7 +41,7 @@ public final class IoTestUtils {
 				final String relativePathString =
 						PathUtils.computeRelativePathString(folderPathString, filePathString);
 				final String otherFilePathString =
-						Paths.get(otherFolderPathString, relativePathString).toString();
+						PathUtils.computePath(otherFolderPathString, relativePathString);
 				matchedOtherFilePathStringSet.add(otherFilePathString);
 
 				final boolean contentEquals =
@@ -75,7 +74,7 @@ public final class IoTestUtils {
 
 					final String relativePathString =
 							PathUtils.computeRelativePathString(otherFolderPathString, otherFilePathString);
-					final String filePathString = Paths.get(folderPathString, relativePathString).toString();
+					final String filePathString = PathUtils.computePath(folderPathString, relativePathString);
 
 					final boolean contentEquals =
 							FileUtils.contentEquals(new File(filePathString), new File(otherFilePathString));

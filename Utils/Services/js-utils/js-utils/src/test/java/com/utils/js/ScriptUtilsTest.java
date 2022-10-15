@@ -1,9 +1,7 @@
 package com.utils.js;
 
 import java.io.BufferedReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 import javax.script.Invocable;
@@ -54,9 +52,9 @@ class ScriptUtilsTest {
 
 		long result = -1;
 		try {
-			final Path jsPath = Paths.get(Objects.requireNonNull(
-					ScriptUtilsTest.class.getResource("/com/utils/js/fibonacci.js")).toURI());
-			try (BufferedReader reader = Files.newBufferedReader(jsPath)) {
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+					Objects.requireNonNull(Thread.currentThread().getContextClassLoader()
+							.getResourceAsStream("com/utils/js/fibonacci.js"))))) {
 
 				final ScriptEngine scriptEngine = ScriptUtils.createScriptEngine();
 				scriptEngine.eval(reader);

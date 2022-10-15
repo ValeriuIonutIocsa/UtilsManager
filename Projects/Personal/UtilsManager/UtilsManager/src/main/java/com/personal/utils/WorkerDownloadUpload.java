@@ -1,6 +1,5 @@
 package com.personal.utils;
 
-import java.nio.file.Paths;
 import java.time.Instant;
 
 import com.personal.utils.gradle_roots.FactoryGradleRoot;
@@ -41,7 +40,7 @@ class WorkerDownloadUpload {
 
 		final String rootFolderPathString;
 		final String commonBuildGradleFilePathString =
-				Paths.get(pathString, "common_build.gradle").toString();
+				PathUtils.computePath(pathString, "common_build.gradle");
 		if (IoUtils.fileExists(commonBuildGradleFilePathString)) {
 			rootFolderPathString = pathString;
 

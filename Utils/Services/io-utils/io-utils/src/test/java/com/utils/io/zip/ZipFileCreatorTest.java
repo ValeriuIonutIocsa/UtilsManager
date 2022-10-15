@@ -8,8 +8,8 @@ class ZipFileCreatorTest {
 	@Test
 	void testWork() {
 
-		final String srcFolderPathString = "D:\\IVI_MISC\\Misc\\mnf\\tmp\\abcd";
-		final String zipArchiveFilePathString = "D:\\IVI_MISC\\Misc\\mnf\\tmp\\abcd.zip";
+		final String srcFolderPathString = "D:\\IVI_MISC\\Misc\\nf\\tmp\\abcd";
+		final String zipArchiveFilePathString = "D:\\IVI_MISC\\Misc\\nf\\tmp\\abcd.zip";
 		final boolean useTempFile = true;
 		final boolean deleteExisting = true;
 		final int threadCount = 12;

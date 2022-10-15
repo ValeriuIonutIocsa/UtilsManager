@@ -1,7 +1,5 @@
 package com.utils.xml.dom;
 
-import java.nio.file.Paths;
-
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,7 +36,7 @@ class XmlDomUtilsTest {
 		Logger.printLine(str);
 
 		final String xmlFilePathString =
-				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml").toString();
+				PathUtils.computePath(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml");
 		Logger.printProgress("saving XMl file:");
 		Logger.printLine(xmlFilePathString);
 		XmlDomUtils.saveXmlFile(document, false, 4, xmlFilePathString);
@@ -48,7 +46,7 @@ class XmlDomUtilsTest {
 	void testParseAndSaveXmlFile() throws Exception {
 
 		final String xmlFilePathString =
-				Paths.get(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml").toString();
+				PathUtils.computePath(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml");
 		Logger.printProgress("parsing and saving XML file:");
 		Logger.printLine(xmlFilePathString);
 		final Document document = XmlDomUtils.openDocument(xmlFilePathString);

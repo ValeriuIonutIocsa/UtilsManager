@@ -11,77 +11,6 @@ import org.junit.jupiter.api.TestFactory;
 class PathUtilsTest {
 
 	@TestFactory
-	List<DynamicTest> testAppendFileNameSuffix() {
-
-		final List<DynamicTest> dynamicTestList = new ArrayList<>();
-		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3);
-		if (testCaseList.contains(1)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("1 (path with extension)",
-					() -> testAppendFileNameSuffixCommon(
-							"C:\\abc\\bcd\\file.txt", "_TMP",
-							"C:\\abc\\bcd\\file_TMP.txt")));
-		}
-		if (testCaseList.contains(2)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("2 (path without extension)",
-					() -> testAppendFileNameSuffixCommon(
-							"C:\\abc\\bcd\\file", "_TMP",
-							"C:\\abc\\bcd\\file_TMP")));
-		}
-		if (testCaseList.contains(3)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("2 (suffix with dot)",
-					() -> testAppendFileNameSuffixCommon(
-							"C:\\abc\\bcd\\file.txt", ".tmp",
-							"C:\\abc\\bcd\\file.tmp.txt")));
-		}
-		return dynamicTestList;
-	}
-
-	private static void testAppendFileNameSuffixCommon(
-			final String pathString,
-			final String suffix,
-			final String expectedResultPathString) {
-
-		final String resultPathString = PathUtils.appendFileNameSuffix(pathString, suffix);
-		Assertions.assertEquals(expectedResultPathString, resultPathString);
-	}
-
-	@TestFactory
-	List<DynamicTest> testTryParseAbsolutePathString() {
-
-		final List<DynamicTest> dynamicTestList = new ArrayList<>();
-		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3);
-		if (testCaseList.contains(1)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("1 (regular absolute path)",
-					() -> testTryParseAbsolutePathStringCommon(
-							"C:\\abc\\bcd\\file.txt", "C:\\abcd",
-							"C:\\abc\\bcd\\file.txt")));
-		}
-		if (testCaseList.contains(2)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("2 (path with 2 dots)",
-					() -> testTryParseAbsolutePathStringCommon(
-							"C:\\abc\\..\\bcd\\file.txt", "D:\\tmp",
-							"C:\\abc\\..\\bcd\\file.txt")));
-		}
-		if (testCaseList.contains(3)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("3 (relative path)",
-					() -> testTryParseAbsolutePathStringCommon(
-							".\\file.txt", "D:\\tmp",
-							"D:\\tmp\\.\\file.txt")));
-		}
-		return dynamicTestList;
-	}
-
-	private static void testTryParseAbsolutePathStringCommon(
-			final String pathString,
-			final String rootPathString,
-			final String expectedAbsolutePathString) {
-
-		final String absolutePathString = PathUtils.tryParseAbsolutePathString(
-				"test path", pathString, rootPathString);
-		Assertions.assertEquals(expectedAbsolutePathString, absolutePathString);
-	}
-
-	@TestFactory
 	List<DynamicTest> testComputeNormalizedPathString() {
 
 		final List<DynamicTest> dynamicTestList = new ArrayList<>();
@@ -165,5 +94,40 @@ class PathUtilsTest {
 
 		final String fileName = PathUtils.computeFileName(pathString);
 		Assertions.assertEquals(expectedFileName, fileName);
+	}
+
+	@TestFactory
+	List<DynamicTest> testAppendFileNameSuffix() {
+
+		final List<DynamicTest> dynamicTestList = new ArrayList<>();
+		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3);
+		if (testCaseList.contains(1)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("1 (path with extension)",
+					() -> testAppendFileNameSuffixCommon(
+							"C:\\abc\\bcd\\file.txt", "_TMP",
+							"C:\\abc\\bcd\\file_TMP.txt")));
+		}
+		if (testCaseList.contains(2)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("2 (path without extension)",
+					() -> testAppendFileNameSuffixCommon(
+							"C:\\abc\\bcd\\file", "_TMP",
+							"C:\\abc\\bcd\\file_TMP")));
+		}
+		if (testCaseList.contains(3)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("2 (suffix with dot)",
+					() -> testAppendFileNameSuffixCommon(
+							"C:\\abc\\bcd\\file.txt", ".tmp",
+							"C:\\abc\\bcd\\file.tmp.txt")));
+		}
+		return dynamicTestList;
+	}
+
+	private static void testAppendFileNameSuffixCommon(
+			final String pathString,
+			final String suffix,
+			final String expectedResultPathString) {
+
+		final String resultPathString = PathUtils.appendFileNameSuffix(pathString, suffix);
+		Assertions.assertEquals(expectedResultPathString, resultPathString);
 	}
 }

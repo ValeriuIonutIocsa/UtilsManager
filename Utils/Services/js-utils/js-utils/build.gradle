@@ -1,5 +1,7 @@
 ext {
-    subProjectNames = [':logger']
+    subProjectNames = [
+            ':logger'
+    ]
     compileClassPaths = []
     compileJarFilePaths = []
     testCompileClassPaths = []

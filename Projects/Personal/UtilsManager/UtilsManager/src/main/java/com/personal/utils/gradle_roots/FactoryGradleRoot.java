@@ -1,6 +1,5 @@
 package com.personal.utils.gradle_roots;
 
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ public final class FactoryGradleRoot {
 	public static GradleRoot newInstanceUtils() {
 
 		final String utilsRootPathString =
-				Paths.get("C:\\IVI\\Prog\\JavaGradle\\UtilsManager").toString();
+				PathUtils.computePath("C:\\IVI\\Prog\\JavaGradle\\UtilsManager");
 		return newInstance(utilsRootPathString);
 	}
 
@@ -26,11 +25,11 @@ public final class FactoryGradleRoot {
 			final String rootFolderPathString) {
 
 		final String commonBuildGradleFilePathString =
-				Paths.get(rootFolderPathString, "common_build.gradle").toString();
+				PathUtils.computePath(rootFolderPathString, "common_build.gradle");
 		final String commonSettingsGradleFilePathString =
-				Paths.get(rootFolderPathString, "common_settings.gradle").toString();
+				PathUtils.computePath(rootFolderPathString, "common_settings.gradle");
 		final String gitAttributesFilePathString =
-				Paths.get(rootFolderPathString, ".gitattributes").toString();
+				PathUtils.computePath(rootFolderPathString, ".gitattributes");
 
 		final Map<String, String> moduleFolderPathsByNameMap = new HashMap<>();
 		final List<String> buildGradleFilePathStringList =

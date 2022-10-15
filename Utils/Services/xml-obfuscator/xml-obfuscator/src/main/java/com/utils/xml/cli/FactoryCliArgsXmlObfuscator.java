@@ -1,7 +1,6 @@
 package com.utils.xml.cli;
 
-import java.nio.file.Paths;
-
+import com.utils.io.PathUtils;
 import com.utils.log.Logger;
 
 public final class FactoryCliArgsXmlObfuscator {
@@ -20,8 +19,7 @@ public final class FactoryCliArgsXmlObfuscator {
 			} else {
 
 				String configurationFilePathString = args[0];
-				configurationFilePathString =
-						Paths.get(configurationFilePathString).toAbsolutePath().toString();
+				configurationFilePathString = PathUtils.computePath(configurationFilePathString);
 				cliArgsXmlObfuscator = new CliArgsXmlObfuscator(configurationFilePathString);
 			}
 

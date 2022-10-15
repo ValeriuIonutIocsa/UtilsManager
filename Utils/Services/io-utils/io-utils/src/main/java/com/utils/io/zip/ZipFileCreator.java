@@ -17,6 +17,7 @@ import java.util.List;
 import com.utils.concurrency.no_progress.ConcurrencyUtilsSimpleRegular;
 import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
+import com.utils.io.file_copiers.FactoryFileCopier;
 import com.utils.io.file_deleters.FactoryFileDeleter;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.log.Logger;
@@ -88,10 +89,10 @@ public class ZipFileCreator {
 			try (FileSystem zipFileSystem =
 					ZipUtils.createNewZipFileSystem(zipArchiveFilePathString, useTempFile)) {
 
-				final Path srcFilePath = Paths.get(srcFilePathString);
 				if (folder) {
 
 					final List<Runnable> runnableList = new ArrayList<>();
+					final Path srcFilePath = Paths.get(srcFilePathString);
 					Files.walkFileTree(srcFilePath, new SimpleFileVisitor<>() {
 
 						@Override
@@ -144,8 +145,9 @@ public class ZipFileCreator {
 
 						final String srcFileName = PathUtils.computeFileName(srcFilePathString);
 						final Path zipFilePath = zipFileSystem.getPath(srcFileName);
-						Files.copy(srcFilePath, zipFilePath,
-								StandardCopyOption.COPY_ATTRIBUTES, StandardCopyOption.REPLACE_EXISTING);
+						final String zipFilePathString = zipFilePath.toString();
+						FactoryFileCopier.getInstance().copyFile(
+								srcFilePathString, zipFilePathString, true, false);
 						if (updateFileTimes) {
 							Files.setLastModifiedTime(zipFilePath, FileTime.from(Instant.now()));
 						}

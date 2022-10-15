@@ -1,12 +1,12 @@
 package com.utils.xml.xml_files;
 
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
 
+import com.utils.io.PathUtils;
 import com.utils.log.Logger;
 import com.utils.xml.dom.XmlDomUtils;
 import com.utils.xml.xml_files.obfuscate.FactoryObfuscation;
@@ -55,6 +55,6 @@ public final class FactoryXmlFile {
 		final Element inputPathElement =
 				XmlDomUtils.getFirstElementByTagName(xmlFileElement, pathElementTagName);
 		final String inputPathString = inputPathElement.getTextContent().trim();
-		return Paths.get(inputPathString).toAbsolutePath().toString();
+		return PathUtils.computePath(inputPathString);
 	}
 }
