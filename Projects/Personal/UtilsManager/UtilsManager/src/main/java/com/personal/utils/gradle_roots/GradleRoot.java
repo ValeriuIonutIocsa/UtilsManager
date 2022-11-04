@@ -25,11 +25,6 @@ public class GradleRoot {
 		this.moduleFolderPathsByNameMap = moduleFolderPathsByNameMap;
 	}
 
-	@Override
-	public String toString() {
-		return StrUtils.reflectionToString(this);
-	}
-
 	public void synchronizeFrom(
 			final GradleRoot srcGradleRoot) {
 
@@ -52,6 +47,11 @@ public class GradleRoot {
 						srcModuleFolderPathString, moduleFolderPathString, true);
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return StrUtils.reflectionToString(this);
 	}
 
 	public String getCommonBuildGradleFilePathString() {

@@ -127,7 +127,9 @@ public final class PathUtils {
 	public static String computeFileName(
 			final String pathString) {
 
-		return FilenameUtils.getName(pathString);
+		final Path path = Paths.get(pathString);
+		final Path fileName = path.getFileName();
+		return fileName.toString();
 	}
 
 	@ApiMethod
@@ -201,7 +203,8 @@ public final class PathUtils {
 	public static String computeFileNameWoExt(
 			final String pathString) {
 
-		return FilenameUtils.getBaseName(pathString);
+		final String fileName = computeFileName(pathString);
+		return FilenameUtils.getBaseName(fileName);
 	}
 
 	@ApiMethod

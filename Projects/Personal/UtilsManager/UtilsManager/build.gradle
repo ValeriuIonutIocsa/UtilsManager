@@ -5,7 +5,7 @@ ext {
     jarFolderPath = 'C:\\IVI\\Apps\\UtilsManager'
 
     subProjectNames = [
-            ':io-utils'
+            ':gradle-utils'
     ]
     compileClassPaths = []
     compileJarFilePaths = []

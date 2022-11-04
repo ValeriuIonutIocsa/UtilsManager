@@ -41,7 +41,7 @@ public final class FactoryGradleRoot {
 		for (final String buildGradleFilePathString : buildGradleFilePathStringList) {
 
 			final String moduleFolderPathString =
-					PathUtils.computeParentPathString(buildGradleFilePathString);
+					PathUtils.computeParentPath(buildGradleFilePathString);
 			final String moduleName = PathUtils.computeFileName(moduleFolderPathString);
 			moduleFolderPathsByNameMap.put(moduleName, moduleFolderPathString);
 		}

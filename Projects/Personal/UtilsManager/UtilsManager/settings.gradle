@@ -2,7 +2,7 @@ final String projectPath = file('.').getAbsolutePath()
 final String rootDirPath = file('../../../../').getAbsolutePath()
 gradle.ext.rootDirPath = rootDirPath
 final String[] subProjectsRelativePaths = [
-        '/Utils/Services/io-utils/io-utils'
+        '/Utils/Services/gradle-utils/gradle-utils'
 ]
 
 apply from: rootDirPath + '/common_settings.gradle'
