@@ -6,22 +6,26 @@ import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.string.StrUtils;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.StackPane;
-import javafx.util.StringConverter;
 
 public class ProgressIndicatorBar extends AbstractCustomControl<StackPane> {
 
-	private final SimpleDoubleProperty value;
+	private final ProgressBar progressBar;
+	private final Label progressBarLabel;
 
 	public ProgressIndicatorBar() {
 
-		value = new SimpleDoubleProperty();
+		progressBar = new ProgressBar();
+		progressBar.setPrefHeight(24);
+		progressBar.setMinHeight(24);
+		progressBar.setPrefWidth(Double.MAX_VALUE);
+		progressBar.setProgress(0);
+
+		progressBarLabel = BasicControlsFactories.getInstance()
+				.createLabel("", "label-progress-indicator-bar");
 	}
 
 	@Override
@@ -36,51 +40,30 @@ public class ProgressIndicatorBar extends AbstractCustomControl<StackPane> {
 		stackPane.setPrefHeight(24);
 		stackPane.setMinHeight(24);
 
-		final Label label = BasicControlsFactories.getInstance()
-				.createLabel("loading", "label-progress-indicator-bar");
-		final SimpleStringProperty labelValue = new SimpleStringProperty();
-		Bindings.bindBidirectional(labelValue, value, new StringConverter<>() {
-
-			@Override
-			public String toString(
-					final Number number) {
-
-				final String str;
-				if (number == null) {
-					str = "";
-
-				} else {
-					final double n = (double) number;
-					if (n <= 0 || Double.isNaN(n)) {
-						str = "";
-					} else {
-						str = StrUtils.doubleToPercentageString(n, 2);
-					}
-				}
-				return str;
-			}
-
-			@Override
-			public Number fromString(
-					final String string) {
-				return null;
-			}
-		});
-		label.textProperty().bind(labelValue);
-
-		final ProgressBar progressBar = new ProgressBar();
-		progressBar.setPrefHeight(24);
-		progressBar.setMinHeight(24);
-		progressBar.setPrefWidth(Double.MAX_VALUE);
-		progressBar.progressProperty().bind(value);
-
-		stackPane.getChildren().setAll(progressBar, label);
+		stackPane.getChildren().setAll(progressBar, progressBarLabel);
 
 		return stackPane;
 	}
 
 	public void updateValue(
 			final double value) {
-		GuiUtils.run(() -> this.value.setValue(value));
+
+		GuiUtils.run(() -> {
+
+			final double progress;
+			final String progressString;
+			if (value <= 0 || Double.isNaN(value)) {
+
+				progress = 0;
+				progressString = "";
+
+			} else {
+				progress = value;
+				progressString = StrUtils.doubleToPercentageString(value, 2);
+			}
+
+			progressBar.setProgress(progress);
+			progressBarLabel.setText(progressString);
+		});
 	}
 }
