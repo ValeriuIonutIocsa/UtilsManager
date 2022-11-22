@@ -44,23 +44,6 @@ public final class IoUtils {
 	}
 
 	@ApiMethod
-	public static long fileSize(
-			final String filePathString) {
-
-		long size = -1;
-		try {
-			final Path filePath = Paths.get(filePathString);
-			size = Files.size(filePath);
-
-		} catch (final Exception exc) {
-			Logger.printError("failed to compute size of file:" +
-					System.lineSeparator() + filePathString);
-			Logger.printException(exc);
-		}
-		return size;
-	}
-
-	@ApiMethod
 	public static long fileLastModifiedTime(
 			final String filePathString) {
 
