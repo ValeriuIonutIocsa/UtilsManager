@@ -871,7 +871,8 @@ public class CustomTableView<
 	@ApiMethod
 	public TableColumn<TableRowDataT, Object> getColumnByName(
 			final String columnName) {
-		return columnsByNameMap.getOrDefault(columnName, null);
+
+		return columnsByNameMap.get(columnName);
 	}
 
 	@ApiMethod

@@ -40,7 +40,7 @@ public class GradleRoot {
 			final String moduleName = mapEntry.getKey();
 			final String moduleFolderPathString = mapEntry.getValue();
 			final String srcModuleFolderPathString =
-					srcGradleRoot.moduleFolderPathsByNameMap.getOrDefault(moduleName, null);
+					srcGradleRoot.moduleFolderPathsByNameMap.get(moduleName);
 			if (srcModuleFolderPathString != null) {
 
 				FactoryFolderCopier.getInstance().copyFolder(

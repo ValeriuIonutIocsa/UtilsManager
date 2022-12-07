@@ -55,8 +55,7 @@ public class XmlFile {
 						if (xmlEvent.isStartElement() || xmlEvent.isCharacters()) {
 
 							final String pathInXmlString = StringUtils.join(pathInXml, '/');
-							final Obfuscation obfuscation =
-									obfuscationsByXpathMap.getOrDefault(pathInXmlString, null);
+							final Obfuscation obfuscation = obfuscationsByXpathMap.get(pathInXmlString);
 							if (obfuscation != null) {
 								processXmlEvent(xmlEvent, obfuscation, obfuscatedToOriginalValuesMap);
 							} else {

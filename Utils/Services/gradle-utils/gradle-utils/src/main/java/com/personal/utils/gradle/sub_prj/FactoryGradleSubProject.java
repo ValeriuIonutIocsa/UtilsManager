@@ -55,7 +55,7 @@ public final class FactoryGradleSubProject {
 							final String parentSubProjectPathString = levelsInTreeMap.get(parentLevel);
 
 							GradleSubProject parentGradleSubProject =
-									gradleSubProjectsByPathMap.getOrDefault(parentSubProjectPathString, null);
+									gradleSubProjectsByPathMap.get(parentSubProjectPathString);
 							if (parentGradleSubProject == null) {
 								parentGradleSubProject = rootGradleSubProject;
 							}

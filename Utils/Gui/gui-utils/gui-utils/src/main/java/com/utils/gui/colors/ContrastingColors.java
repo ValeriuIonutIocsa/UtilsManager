@@ -44,7 +44,7 @@ public class ContrastingColors {
 	public Color computeContrastingColor(
 			final String name) {
 
-		Color color = colorsByNameMap.getOrDefault(name, null);
+		Color color = colorsByNameMap.get(name);
 		if (color == null) {
 
 			int index = names.indexOf(name);

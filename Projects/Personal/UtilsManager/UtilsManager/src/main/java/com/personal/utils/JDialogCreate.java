@@ -36,7 +36,7 @@ public class JDialogCreate extends JDialog {
 
 		setTitle("Choose dependencies to be added:");
 		setModal(true);
-		setSize(640, 750);
+		setSize(640, 900);
 		centerOnScreen(this);
 
 		final GridBagLayout gridBagLayout = new GridBagLayout();
@@ -55,6 +55,10 @@ public class JDialogCreate extends JDialog {
 
 		final TreeModel treeModel = new DefaultTreeModel(rootMutableTreeNode);
 		jCheckBoxTree.setModel(treeModel);
+
+		for (int i = 0; i < jCheckBoxTree.getRowCount(); i++) {
+			jCheckBoxTree.expandRow(i);
+		}
 
 		jCheckBoxTree.setRootVisible(false);
 		jCheckBoxTree.setShowsRootHandles(true);
@@ -78,8 +82,9 @@ public class JDialogCreate extends JDialog {
 		final Map<String, GradleSubProject> gradleSubProjectsByPathMap = new HashMap<>();
 		FactoryGradleSubProject.newInstance(projectPathString, gradleSubProjectsByPathMap);
 
+		final String projectName = PathUtils.computeFileName(projectPathString);
 		final MutableTreeNode rootMutableTreeNode = new DefaultMutableTreeNode(
-				new GradleProjectJTreeItem(projectPathString));
+				new GradleProjectJTreeItem(projectName, projectPathString));
 
 		final List<String> sortedProjectPathStringList = new ArrayList<>(gradleSubProjectsByPathMap.keySet());
 		sortedProjectPathStringList.sort(
@@ -89,12 +94,14 @@ public class JDialogCreate extends JDialog {
 
 			if (dependencyProjectPathString.contains(File.separator + "Utils" + File.separator)) {
 
+				final String dependencyProjectName = PathUtils.computeFileName(dependencyProjectPathString);
+
 				final MutableTreeNode dependencyMutableTreeNode = new DefaultMutableTreeNode(
-						new GradleProjectJTreeItem(dependencyProjectPathString));
+						new GradleProjectJTreeItem(dependencyProjectName, dependencyProjectPathString));
 				rootMutableTreeNode.insert(dependencyMutableTreeNode, 0);
 
-				createTreeNodesRec(dependencyProjectPathString,
-						gradleSubProjectsByPathMap, dependencyMutableTreeNode);
+				createTreeNodesRec(dependencyProjectPathString, gradleSubProjectsByPathMap,
+						dependencyMutableTreeNode);
 			}
 		}
 
@@ -116,18 +123,19 @@ public class JDialogCreate extends JDialog {
 			final Map<String, GradleSubProject> gradleSubProjectsByPathMap,
 			final MutableTreeNode parentMutableTreeNode) {
 
-		final GradleSubProject gradleSubProject =
-				gradleSubProjectsByPathMap.getOrDefault(projectPathString, null);
+		final GradleSubProject gradleSubProject = gradleSubProjectsByPathMap.get(projectPathString);
 		if (gradleSubProject != null) {
 
 			final Set<String> dependencyPathSet = gradleSubProject.getDependencyPathSet();
 			for (final String dependencyProjectPathString : dependencyPathSet) {
 
+				final String dependencyProjectName = PathUtils.computeFileName(dependencyProjectPathString);
+
 				final MutableTreeNode mutableTreeNode = new DefaultMutableTreeNode(
-						new GradleProjectJTreeItem(dependencyProjectPathString));
+						new GradleProjectJTreeItem(dependencyProjectName, dependencyProjectPathString));
 				parentMutableTreeNode.insert(mutableTreeNode, 0);
-				createTreeNodesRec(dependencyProjectPathString, gradleSubProjectsByPathMap,
-						mutableTreeNode);
+				createTreeNodesRec(dependencyProjectPathString,
+						gradleSubProjectsByPathMap, mutableTreeNode);
 			}
 		}
 	}

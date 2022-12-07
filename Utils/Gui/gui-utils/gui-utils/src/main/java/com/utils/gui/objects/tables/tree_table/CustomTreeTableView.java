@@ -771,7 +771,8 @@ public class CustomTreeTableView<
 	@ApiMethod
 	public TreeTableColumn<TableRowDataT, Object> getColumnByName(
 			final String columnName) {
-		return columnsByNameMap.getOrDefault(columnName, null);
+
+		return columnsByNameMap.get(columnName);
 	}
 
 	@ApiMethod

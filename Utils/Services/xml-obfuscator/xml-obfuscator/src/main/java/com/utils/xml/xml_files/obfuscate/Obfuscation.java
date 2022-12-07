@@ -97,8 +97,9 @@ public class Obfuscation {
 			final String firstPart = textContent.substring(0, splitIndex);
 			final String secondPart = textContent.substring(splitIndex);
 
-			obfuscatedTextContent = obfuscatedToOriginalValuesMap.getOrDefault(firstPart, null);
+			obfuscatedTextContent = obfuscatedToOriginalValuesMap.get(firstPart);
 			if (obfuscatedTextContent == null) {
+
 				final int obfuscatedValuesCount = obfuscatedToOriginalValuesMap.size();
 				obfuscatedTextContent = "val_" + obfuscatedValuesCount;
 				obfuscatedToOriginalValuesMap.put(firstPart, obfuscatedTextContent);
@@ -106,8 +107,9 @@ public class Obfuscation {
 			obfuscatedTextContent += secondPart;
 
 		} else {
-			obfuscatedTextContent = obfuscatedToOriginalValuesMap.getOrDefault(textContent, null);
+			obfuscatedTextContent = obfuscatedToOriginalValuesMap.get(textContent);
 			if (obfuscatedTextContent == null) {
+
 				final int obfuscatedValuesCount = obfuscatedToOriginalValuesMap.size();
 				obfuscatedTextContent = "val_" + obfuscatedValuesCount;
 				obfuscatedToOriginalValuesMap.put(textContent, obfuscatedTextContent);

@@ -1,20 +1,21 @@
 package com.personal.utils;
 
-import com.utils.io.PathUtils;
-
 public class GradleProjectJTreeItem {
 
+	private final String projectName;
 	private final String projectPathString;
 
 	GradleProjectJTreeItem(
+			final String projectName,
 			final String projectPathString) {
 
+		this.projectName = projectName;
 		this.projectPathString = projectPathString;
 	}
 
 	@Override
 	public String toString() {
-		return PathUtils.computeFileName(projectPathString);
+		return projectName;
 	}
 
 	public String getProjectPathString() {
