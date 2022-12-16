@@ -9,7 +9,10 @@ import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
 import com.utils.log.Logger;
 
-class WorkerDownloadUpload {
+final class WorkerDownloadUpload {
+
+	private WorkerDownloadUpload() {
+	}
 
 	static void work(
 			final Mode mode,

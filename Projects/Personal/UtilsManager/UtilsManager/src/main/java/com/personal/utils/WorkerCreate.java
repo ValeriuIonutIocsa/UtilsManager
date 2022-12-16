@@ -19,7 +19,10 @@ import com.utils.io.folder_copiers.FactoryFolderCopier;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.log.Logger;
 
-class WorkerCreate {
+final class WorkerCreate {
+
+	private WorkerCreate() {
+	}
 
 	static void work(
 			final String pathString,

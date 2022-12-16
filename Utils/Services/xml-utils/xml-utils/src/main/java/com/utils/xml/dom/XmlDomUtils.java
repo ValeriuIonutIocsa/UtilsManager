@@ -172,7 +172,7 @@ public final class XmlDomUtils {
 		for (int i = nodeList.getLength() - 1; i >= 0; i--) {
 
 			final Node childNode = nodeList.item(i);
-			final short nodeType = childNode.getNodeType();
+			final int nodeType = childNode.getNodeType();
 			if (nodeType == Node.ELEMENT_NODE) {
 				processTextNodesRec(childNode);
 

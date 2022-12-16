@@ -772,18 +772,6 @@ public final class StrUtils {
 	}
 
 	@ApiMethod
-	public static short tryParsePositiveShort(
-			final String shortString) {
-
-		short value = -1;
-		try {
-			value = Short.parseShort(shortString);
-		} catch (final Exception ignored) {
-		}
-		return value;
-	}
-
-	@ApiMethod
 	public static Integer tryParseInt(
 			final String intString) {
 

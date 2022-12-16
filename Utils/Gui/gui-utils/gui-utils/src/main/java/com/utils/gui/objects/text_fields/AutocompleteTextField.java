@@ -70,9 +70,9 @@ public class AutocompleteTextField extends TextField {
 
 						if (!entriesPopup.isShowing()) {
 
-							entriesPopup.show(AutocompleteTextField.this, Side.BOTTOM, 0, 0);
+							entriesPopup.show(this, Side.BOTTOM, 0, 0);
 							entriesPopup.hide();
-							entriesPopup.show(AutocompleteTextField.this, Side.BOTTOM, 0, 0);
+							entriesPopup.show(this, Side.BOTTOM, 0, 0);
 						}
 					}
 				}

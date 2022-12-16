@@ -9,6 +9,8 @@ import java.util.EventListener;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -30,30 +32,30 @@ public class JCheckBoxTree extends JTree {
 
 	// Defining data structure that will enable to fast check-indicate the state of each node
 	// It totally replaces the "selection" mechanism of the JTree
-	private class CheckedNode {
+	private static class CheckedNode {
 
 		boolean isSelected;
 		boolean hasChildren;
 		boolean allChildrenSelected;
 
 		public CheckedNode(
-				final boolean isSelected_,
-				final boolean hasChildren_,
-				final boolean allChildrenSelected_) {
+				final boolean isSelected,
+				final boolean hasChildren,
+				final boolean allChildrenSelected) {
 
-			isSelected = isSelected_;
-			hasChildren = hasChildren_;
-			allChildrenSelected = allChildrenSelected_;
+			this.isSelected = isSelected;
+			this.hasChildren = hasChildren;
+			this.allChildrenSelected = allChildrenSelected;
 		}
 	}
 
-	HashMap<TreePath, CheckedNode> nodesCheckingState;
-	HashSet<TreePath> checkedPaths = new HashSet<>();
+	Map<TreePath, CheckedNode> nodesCheckingState;
+	Set<TreePath> checkedPaths = new HashSet<>();
 
 	// Defining a new event type for the checking mechanism and preparing event-handling mechanism
 	protected EventListenerList listenerList = new EventListenerList();
 
-	public class CheckChangeEvent extends EventObject {
+	public static class CheckChangeEvent extends EventObject {
 
 		private static final long serialVersionUID = -8100230309044193368L;
 
@@ -169,12 +171,12 @@ public class JCheckBoxTree extends JTree {
 			final Object obj = node.getUserObject();
 			final TreePath tp = new TreePath(node.getPath());
 			final CheckedNode cn = nodesCheckingState.get(tp);
-			if (cn == null) {
-				return this;
+			if (cn != null) {
+
+				checkBox.setSelected(cn.isSelected);
+				checkBox.setText(obj.toString());
+				checkBox.setOpaque(cn.isSelected && cn.hasChildren && !cn.allChildrenSelected);
 			}
-			checkBox.setSelected(cn.isSelected);
-			checkBox.setText(obj.toString());
-			checkBox.setOpaque(cn.isSelected && cn.hasChildren && !cn.allChildrenSelected);
 			return this;
 		}
 	}
