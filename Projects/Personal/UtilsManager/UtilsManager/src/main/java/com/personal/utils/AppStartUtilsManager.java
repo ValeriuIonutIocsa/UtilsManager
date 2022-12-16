@@ -25,7 +25,11 @@ final class AppStartUtilsManager {
 
 		if (args.length < 2) {
 
-			Logger.printError("insufficient arguments");
+			Logger.printError("insufficient arguments" + System.lineSeparator() + System.lineSeparator() +
+                    "supported modes examples:" + System.lineSeparator() +
+                    "utils_manager download ." + System.lineSeparator() +
+                    "utils_manager upload ." + System.lineSeparator() +
+                    "utils_manager create . com.personal.package_name");
 			System.exit(-1);
 		}
 
