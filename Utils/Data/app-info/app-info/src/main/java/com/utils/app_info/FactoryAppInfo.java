@@ -70,11 +70,16 @@ public final class FactoryAppInfo {
 
 					final Manifest manifest = new Manifest(inputStream);
 					final Attributes mainAttributes = manifest.getMainAttributes();
-					buildTime = mainAttributes.getValue("Build-Time");
-					if (StringUtils.isNotBlank(buildTime)) {
+					final String implementationTitleAttribute =
+							mainAttributes.getValue("Implementation-Title");
+					if (appTitleDefault.equals(implementationTitleAttribute)) {
 
-						defaultBuildTime = true;
-						break;
+						buildTime = mainAttributes.getValue("Build-Time");
+						if (StringUtils.isNotBlank(buildTime)) {
+
+							defaultBuildTime = true;
+							break;
+						}
 					}
 				}
 			}

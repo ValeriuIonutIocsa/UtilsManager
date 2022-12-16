@@ -20,17 +20,20 @@ public class DataItemUInt extends AbstractDataItem<Integer> implements Comparabl
 	public void serializeToDataBase(
 			final int index,
 			final PreparedStatement preparedStatement) throws SQLException {
+
 		preparedStatement.setInt(index, value);
 	}
 
 	@Override
 	public String createCopyString() {
+
 		return StrUtils.positiveIntToString(value, false);
 	}
 
 	@Override
 	public int compareTo(
 			final DataItemUInt other) {
+
 		return Integer.compareUnsigned(value, other.value);
 	}
 
@@ -54,6 +57,7 @@ public class DataItemUInt extends AbstractDataItem<Integer> implements Comparabl
 
 	@Override
 	public String toString() {
+
 		return StrUtils.positiveIntToString(value, true);
 	}
 
