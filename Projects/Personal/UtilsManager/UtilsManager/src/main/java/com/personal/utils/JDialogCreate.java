@@ -27,6 +27,8 @@ import com.utils.io.PathUtils;
 
 public class JDialogCreate extends JDialog {
 
+	private static final long serialVersionUID = -4309781150215172007L;
+
 	private final JCheckBoxTree jCheckBoxTree;
 
 	JDialogCreate(

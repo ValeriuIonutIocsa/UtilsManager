@@ -886,7 +886,7 @@ public class CustomTableView<
 	}
 
 	@ApiMethod
-	public List<TableRowDataT> getUnfilteredItemList() {
+	public ObservableList<TableRowDataT> getUnfilteredItemList() {
 		return unfilteredItemList;
 	}
 }
