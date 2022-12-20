@@ -4,7 +4,11 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,7 +18,6 @@ import com.utils.io.PathUtils;
 import com.utils.io.ReaderUtils;
 import com.utils.io.StreamUtils;
 import com.utils.io.WriterUtils;
-import com.utils.io.file_copiers.FactoryFileCopier;
 import com.utils.io.folder_copiers.FactoryFolderCopier;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.log.Logger;
@@ -28,7 +31,30 @@ final class WorkerCreate {
 			final String pathString,
 			final String packageName) {
 
-		copyRootFiles(pathString);
+		final List<String> selectedTreePathList = JDialogCreate.display();
+
+		final Set<String> selectedModuleNameSet = new HashSet<>();
+		fillSelectedModuleNameSet(selectedTreePathList, selectedModuleNameSet);
+
+		final GradleRoot utilsGradleRoot = FactoryGradleRoot.newInstanceUtils();
+
+		final Map<String, String> moduleFolderPathsByNameMap = new HashMap<>();
+		final List<String> moduleRelativePathStringList = new ArrayList<>();
+		final String utilsRootFolderPathString = utilsGradleRoot.getRootFolderPathString();
+		final Map<String, String> utilsModuleFolderPathsByNameMap =
+				utilsGradleRoot.getModuleFolderPathsByNameMap();
+		for (final String selectedModuleName : selectedModuleNameSet) {
+
+			final String utilsModulePathString = utilsModuleFolderPathsByNameMap.get(selectedModuleName);
+			final String moduleRelativePathString =
+					PathUtils.computeRelativePath(utilsRootFolderPathString, utilsModulePathString);
+			moduleRelativePathStringList.add(moduleRelativePathString);
+			final String modulePathString = PathUtils.computePath(pathString, moduleRelativePathString);
+			moduleFolderPathsByNameMap.put(selectedModuleName, modulePathString);
+		}
+
+		final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(pathString, moduleFolderPathsByNameMap);
+		gradleRoot.synchronizeFrom(utilsGradleRoot);
 
 		final String projectName = PathUtils.computeFileName(pathString);
 
@@ -40,7 +66,7 @@ final class WorkerCreate {
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, projectFolderPathString, true);
 		final String appInfo = createAppInfo(packageName);
-		replaceDependencies(projectFolderPathString, appInfo, new ArrayList<>());
+		replaceDependencies(projectFolderPathString, appInfo, moduleRelativePathStringList);
 		createMainClass(projectFolderPathString, projectName, packageName);
 
 		final String allModulesProjectName = projectName + "AllModules";
@@ -53,26 +79,23 @@ final class WorkerCreate {
 		replaceDependencies(allModulesProjectFolderPathString, "", Collections.singletonList(projectRelativePath));
 	}
 
-	private static void copyRootFiles(
-			final String pathString) {
+	private static void fillSelectedModuleNameSet(
+			final List<String> selectedTreePathList,
+			final Set<String> selectedProjectNameSet) {
 
-		final GradleRoot utilsGradleRoot = FactoryGradleRoot.newInstanceUtils();
+		for (final String selectedTreePath : selectedTreePathList) {
 
-		final String commonBuildGradleFilePathString = utilsGradleRoot.getCommonBuildGradleFilePathString();
-		copyRootFile(commonBuildGradleFilePathString, pathString);
-		final String commonSettingsGradleFilePathString = utilsGradleRoot.getCommonSettingsGradleFilePathString();
-		copyRootFile(commonSettingsGradleFilePathString, pathString);
-		final String gitAttributesFilePathString = utilsGradleRoot.getGitAttributesFilePathString();
-		copyRootFile(gitAttributesFilePathString, pathString);
-	}
+			String selectedProjectName;
+			final int lastIndexOf = selectedTreePath.lastIndexOf('>');
+			if (lastIndexOf >= 0) {
+				selectedProjectName = selectedTreePath.substring(lastIndexOf + 1);
+			} else {
+				selectedProjectName = selectedTreePath;
+			}
+			selectedProjectNameSet.add(selectedProjectName);
+		}
 
-	private static void copyRootFile(
-			final String rootFilePathString,
-			final String pathString) {
-
-		final String rootFileName = PathUtils.computeFileName(rootFilePathString);
-		final String dstRootFilePathString = PathUtils.computePath(pathString, rootFileName);
-		FactoryFileCopier.getInstance().copyFile(rootFilePathString, dstRootFilePathString, true, true);
+		Logger.printLine("selected project names: " + selectedProjectNameSet);
 	}
 
 	private static String createAppInfo(
@@ -85,24 +108,24 @@ final class WorkerCreate {
 	private static void replaceDependencies(
 			final String projectFolderPathString,
 			final String appInfo,
-			final List<String> subProjectPathList) {
+			final List<String> subProjectRelativePathStringList) {
 
 		final String buildGradleFilePathString =
 				PathUtils.computePath(projectFolderPathString, "build.gradle");
 		try {
 			final String subProjects;
-			if (subProjectPathList.isEmpty()) {
+			if (subProjectRelativePathStringList.isEmpty()) {
 				subProjects = "[]";
 
 			} else {
 				final StringBuilder sbSubProjects = new StringBuilder("[");
-				for (int i = 0; i < subProjectPathList.size(); i++) {
+				for (int i = 0; i < subProjectRelativePathStringList.size(); i++) {
 
-					final String subProjectPath = subProjectPathList.get(i);
+					final String subProjectRelativePathString = subProjectRelativePathStringList.get(i);
 					sbSubProjects.append(System.lineSeparator()).append("            ");
-					final String subProjectName = PathUtils.computeFileName(subProjectPath);
+					final String subProjectName = PathUtils.computeFileName(subProjectRelativePathString);
 					sbSubProjects.append("':").append(subProjectName).append('\'');
-					if (i < subProjectPathList.size() - 1) {
+					if (i < subProjectRelativePathStringList.size() - 1) {
 						sbSubProjects.append(',');
 					}
 				}
@@ -129,17 +152,17 @@ final class WorkerCreate {
 				PathUtils.computePath(projectFolderPathString, "settings.gradle");
 		try {
 			final String subProjectPaths;
-			if (subProjectPathList.isEmpty()) {
+			if (subProjectRelativePathStringList.isEmpty()) {
 				subProjectPaths = "[]";
 
 			} else {
 				final StringBuilder sbSubProjectPaths = new StringBuilder("[");
-				for (int i = 0; i < subProjectPathList.size(); i++) {
+				for (int i = 0; i < subProjectRelativePathStringList.size(); i++) {
 
-					final String subProjectPath = subProjectPathList.get(i);
+					final String subProjectRelativePathString = subProjectRelativePathStringList.get(i);
 					sbSubProjectPaths.append(System.lineSeparator()).append("            ")
-							.append('\'').append(subProjectPath).append('\'');
-					if (i < subProjectPathList.size() - 1) {
+							.append('\'').append(subProjectRelativePathString).append('\'');
+					if (i < subProjectRelativePathStringList.size() - 1) {
 						sbSubProjectPaths.append(',');
 					}
 				}

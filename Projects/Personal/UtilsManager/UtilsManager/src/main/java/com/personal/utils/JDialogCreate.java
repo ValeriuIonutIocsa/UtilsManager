@@ -21,6 +21,8 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.personal.utils.gradle.sub_prj.FactoryGradleSubProject;
 import com.personal.utils.gradle.sub_prj.GradleSubProject;
 import com.utils.io.PathUtils;
@@ -77,7 +79,10 @@ public class JDialogCreate extends JDialog {
 		frame.setLocation(x, y);
 	}
 
-	static void display() {
+	/**
+	 * displays the dialog returns the selected paths in the JTree
+	 */
+	static List<String> display() {
 
 		final String projectPathString = "C:\\IVI\\Prog\\JavaGradle\\UtilsManager\\" +
 				"Projects\\Personal\\UtilsManagerAllModules\\UtilsManagerAllModules";
@@ -110,14 +115,18 @@ public class JDialogCreate extends JDialog {
 		final JDialogCreate jDialogCreate = new JDialogCreate(rootMutableTreeNode);
 		jDialogCreate.setVisible(true);
 
+		final List<String> selectedTreePathList = new ArrayList<>();
 		final TreePath[] checkedPaths = jDialogCreate.jCheckBoxTree.getCheckedPaths();
-		for (final TreePath treePath : checkedPaths) {
+		for (final TreePath checkedPath : checkedPaths) {
 
-			for (final Object pathPart : treePath.getPath()) {
-				System.out.print(pathPart + ",");
+			final List<String> treePathPartList = new ArrayList<>();
+			for (final Object treePathPart : checkedPath.getPath()) {
+				treePathPartList.add(treePathPart.toString());
 			}
-			System.out.println();
+			final String treePath = StringUtils.join(treePathPartList, '>');
+			selectedTreePathList.add(treePath);
 		}
+		return selectedTreePathList;
 	}
 
 	private static void createTreeNodesRec(

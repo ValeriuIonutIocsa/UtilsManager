@@ -8,17 +8,20 @@ import com.utils.string.StrUtils;
 
 public class GradleRoot {
 
+	private final String rootFolderPathString;
 	private final String commonBuildGradleFilePathString;
 	private final String commonSettingsGradleFilePathString;
 	private final String gitAttributesFilePathString;
 	private final Map<String, String> moduleFolderPathsByNameMap;
 
 	GradleRoot(
+			final String rootFolderPathString,
 			final String commonBuildGradleFilePathString,
 			final String commonSettingsGradleFilePathString,
 			final String gitAttributesFilePathString,
 			final Map<String, String> moduleFolderPathsByNameMap) {
 
+		this.rootFolderPathString = rootFolderPathString;
 		this.commonBuildGradleFilePathString = commonBuildGradleFilePathString;
 		this.commonSettingsGradleFilePathString = commonSettingsGradleFilePathString;
 		this.gitAttributesFilePathString = gitAttributesFilePathString;
@@ -54,6 +57,10 @@ public class GradleRoot {
 		return StrUtils.reflectionToString(this);
 	}
 
+	public String getRootFolderPathString() {
+		return rootFolderPathString;
+	}
+
 	public String getCommonBuildGradleFilePathString() {
 		return commonBuildGradleFilePathString;
 	}
@@ -64,5 +71,9 @@ public class GradleRoot {
 
 	public String getGitAttributesFilePathString() {
 		return gitAttributesFilePathString;
+	}
+
+	public Map<String, String> getModuleFolderPathsByNameMap() {
+		return moduleFolderPathsByNameMap;
 	}
 }

@@ -46,7 +46,24 @@ public final class FactoryGradleRoot {
 			moduleFolderPathsByNameMap.put(moduleName, moduleFolderPathString);
 		}
 
-		return new GradleRoot(commonBuildGradleFilePathString, commonSettingsGradleFilePathString,
+		return new GradleRoot(rootFolderPathString,
+				commonBuildGradleFilePathString, commonSettingsGradleFilePathString,
+				gitAttributesFilePathString, moduleFolderPathsByNameMap);
+	}
+
+	public static GradleRoot newInstance(
+			final String rootFolderPathString,
+			final Map<String, String> moduleFolderPathsByNameMap) {
+
+		final String commonBuildGradleFilePathString =
+				PathUtils.computePath(rootFolderPathString, "common_build.gradle");
+		final String commonSettingsGradleFilePathString =
+				PathUtils.computePath(rootFolderPathString, "common_settings.gradle");
+		final String gitAttributesFilePathString =
+				PathUtils.computePath(rootFolderPathString, ".gitattributes");
+
+		return new GradleRoot(rootFolderPathString,
+				commonBuildGradleFilePathString, commonSettingsGradleFilePathString,
 				gitAttributesFilePathString, moduleFolderPathsByNameMap);
 	}
 }

@@ -26,10 +26,10 @@ final class AppStartUtilsManager {
 		if (args.length < 2) {
 
 			Logger.printError("insufficient arguments" + System.lineSeparator() + System.lineSeparator() +
-                    "supported modes examples:" + System.lineSeparator() +
-                    "utils_manager download ." + System.lineSeparator() +
-                    "utils_manager upload ." + System.lineSeparator() +
-                    "utils_manager create . com.personal.package_name");
+					"supported modes examples:" + System.lineSeparator() +
+					"utils_manager download ." + System.lineSeparator() +
+					"utils_manager upload ." + System.lineSeparator() +
+					"utils_manager create . com.personal.package_name");
 			System.exit(-1);
 		}
 
@@ -70,6 +70,8 @@ final class AppStartUtilsManager {
 				Logger.printError("invalid package name: " + packageName);
 				System.exit(-2);
 			}
+
+			Logger.printLine("package name: " + packageName);
 
 			WorkerCreate.work(pathString, packageName);
 
