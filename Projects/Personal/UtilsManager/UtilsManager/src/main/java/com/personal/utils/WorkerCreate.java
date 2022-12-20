@@ -53,6 +53,14 @@ final class WorkerCreate {
 			moduleFolderPathsByNameMap.put(selectedModuleName, modulePathString);
 		}
 
+		final List<String> subProjectRelativePathStringList = new ArrayList<>();
+		for (final String moduleRelativePathString : moduleRelativePathStringList) {
+
+			final String subProjectRelativePathString =
+					"/" + StringUtils.replace(moduleRelativePathString, "\\", "/");
+			subProjectRelativePathStringList.add(subProjectRelativePathString);
+		}
+
 		final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(pathString, moduleFolderPathsByNameMap);
 		gradleRoot.synchronizeFrom(utilsGradleRoot);
 
@@ -66,7 +74,7 @@ final class WorkerCreate {
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, projectFolderPathString, true);
 		final String appInfo = createAppInfo(packageName);
-		replaceDependencies(projectFolderPathString, appInfo, moduleRelativePathStringList);
+		replaceDependencies(projectFolderPathString, appInfo, subProjectRelativePathStringList);
 		createMainClass(projectFolderPathString, projectName, packageName);
 
 		final String allModulesProjectName = projectName + "AllModules";
@@ -85,7 +93,7 @@ final class WorkerCreate {
 
 		for (final String selectedTreePath : selectedTreePathList) {
 
-			String selectedProjectName;
+			final String selectedProjectName;
 			final int lastIndexOf = selectedTreePath.lastIndexOf('>');
 			if (lastIndexOf >= 0) {
 				selectedProjectName = selectedTreePath.substring(lastIndexOf + 1);
