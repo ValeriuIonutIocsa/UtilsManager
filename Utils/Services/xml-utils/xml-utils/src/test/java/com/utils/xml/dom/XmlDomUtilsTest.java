@@ -10,7 +10,37 @@ import com.utils.log.Logger;
 class XmlDomUtilsTest {
 
 	@Test
+	void testRemoveElementsByTagName() throws Exception {
+
+		final Document document = createTestDocument();
+
+		Logger.printLine("initial document:");
+		Logger.printLine(XmlDomUtils.saveXmlFile(document, false, 4));
+
+		final Element documentElement = document.getDocumentElement();
+		XmlDomUtils.removeElementsByTagName(documentElement, "test3");
+
+		Logger.printNewLine();
+		Logger.printLine("edited document:");
+		Logger.printLine(XmlDomUtils.saveXmlFile(document, false, 4));
+	}
+
+	@Test
 	void testSaveXmlFile() throws Exception {
+
+		final Document document = createTestDocument();
+
+		final String str = XmlDomUtils.saveXmlFile(document, false, 4);
+		Logger.printLine(str);
+
+		final String xmlFilePathString =
+				PathUtils.computePath(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml");
+		Logger.printProgress("saving XMl file:");
+		Logger.printLine(xmlFilePathString);
+		XmlDomUtils.saveXmlFile(document, false, 4, xmlFilePathString);
+	}
+
+	private static Document createTestDocument() throws Exception {
 
 		final Document document = XmlDomUtils.createNewDocument();
 
@@ -32,14 +62,7 @@ class XmlDomUtilsTest {
 
 		document.appendChild(test1Element);
 
-		final String str = XmlDomUtils.saveXmlFile(document, false, 4);
-		Logger.printLine(str);
-
-		final String xmlFilePathString =
-				PathUtils.computePath(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml");
-		Logger.printProgress("saving XMl file:");
-		Logger.printLine(xmlFilePathString);
-		XmlDomUtils.saveXmlFile(document, false, 4, xmlFilePathString);
+		return document;
 	}
 
 	@Test

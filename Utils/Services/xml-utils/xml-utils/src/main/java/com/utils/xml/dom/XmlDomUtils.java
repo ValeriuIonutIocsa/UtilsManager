@@ -312,7 +312,9 @@ public final class XmlDomUtils {
 
 			final List<Element> elementList = getElementsByTagName(parentElement, tagName);
 			for (final Element element : elementList) {
-				parentElement.removeChild(element);
+
+				final Node parentNode = element.getParentNode();
+				parentNode.removeChild(element);
 			}
 		}
 	}

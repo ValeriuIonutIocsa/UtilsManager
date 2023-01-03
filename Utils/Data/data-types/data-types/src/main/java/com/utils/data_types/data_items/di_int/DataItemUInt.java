@@ -34,7 +34,7 @@ public class DataItemUInt extends AbstractDataItem<Integer> implements Comparabl
 	public int compareTo(
 			final DataItemUInt other) {
 
-		return Integer.compareUnsigned(value, other.value);
+		return Integer.compare(value, other.value);
 	}
 
 	@Override
