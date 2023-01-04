@@ -1,7 +1,7 @@
 package com.utils.gui.objects.browse;
 
 import java.io.File;
-import java.nio.file.Path;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,15 +23,15 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 
 	private final TextField pathTextField;
 
-	private Path initialDirectoryPath;
+	private String initialDirectoryPathString;
 
 	HBoxBrowsePath(
 			final String name,
 			final String initialValue,
-			final Path initialDirectoryPath) {
+			final String initialDirectoryPathString) {
 
 		this.name = name;
-		this.initialDirectoryPath = initialDirectoryPath;
+		this.initialDirectoryPathString = initialDirectoryPathString;
 
 		pathTextField = BasicControlsFactories.getInstance().createTextField("");
 		if (StringUtils.isNotBlank(initialValue)) {
@@ -68,11 +68,8 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 	File getInitialDirectory() {
 
 		final File initialDirectory;
-		if (initialDirectoryPath != null) {
-			initialDirectory = initialDirectoryPath.toFile();
-		} else {
-			initialDirectory = new File(PathUtils.ROOT_PATH);
-		}
+		initialDirectory = new File(
+				Objects.requireNonNullElseGet(initialDirectoryPathString, PathUtils::createRootPath));
 		return initialDirectory;
 	}
 
@@ -84,9 +81,9 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 		return name;
 	}
 
-	public void setInitialDirectoryPath(
-			final Path initialDirectoryPath) {
-		this.initialDirectoryPath = initialDirectoryPath;
+	public void setInitialDirectoryPathString(
+			final String initialDirectoryPathString) {
+		this.initialDirectoryPathString = initialDirectoryPathString;
 	}
 
 	public TextField getPathTextField() {

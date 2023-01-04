@@ -1,7 +1,6 @@
 package com.utils.gui.objects.browse;
 
 import java.io.File;
-import java.nio.file.Path;
 
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.io.IoUtils;
@@ -13,8 +12,8 @@ public class HBoxBrowsePathFolder extends HBoxBrowsePath {
 	public HBoxBrowsePathFolder(
 			final String name,
 			final String initialValue,
-			final Path initialDirectory) {
-		super(name, initialValue, initialDirectory);
+			final String initialDirectoryPathString) {
+		super(name, initialValue, initialDirectoryPathString);
 	}
 
 	@Override

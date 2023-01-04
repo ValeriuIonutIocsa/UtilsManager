@@ -12,9 +12,11 @@ import com.utils.log.Logger;
 
 public final class PathUtils {
 
-	public static final String ROOT_PATH = createRootPath();
+	private PathUtils() {
+	}
 
-	private static String createRootPath() {
+	@ApiMethod
+	public static String createRootPath() {
 
 		final String rootPath;
 		if (SystemUtils.IS_OS_WINDOWS) {
@@ -23,9 +25,6 @@ public final class PathUtils {
 			rootPath = "/mnt/d";
 		}
 		return rootPath;
-	}
-
-	private PathUtils() {
 	}
 
 	@ApiMethod

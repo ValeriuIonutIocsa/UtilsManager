@@ -1,7 +1,6 @@
 package com.utils.gui.objects.browse;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.List;
 
 import com.utils.gui.factories.BasicControlsFactories;
@@ -22,11 +21,11 @@ public class HBoxBrowsePathFile extends HBoxBrowsePath {
 	public HBoxBrowsePathFile(
 			final String name,
 			final String initialValue,
-			final Path initialDirectory,
+			final String initialDirectoryPathString,
 			final Mode mode,
 			final List<FileChooser.ExtensionFilter> extensionFilterList) {
 
-		super(name, initialValue, initialDirectory);
+		super(name, initialValue, initialDirectoryPathString);
 
 		this.mode = mode;
 		this.extensionFilterList = extensionFilterList;

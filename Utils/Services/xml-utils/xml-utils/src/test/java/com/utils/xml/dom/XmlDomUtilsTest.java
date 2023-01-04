@@ -34,7 +34,7 @@ class XmlDomUtilsTest {
 		Logger.printLine(str);
 
 		final String xmlFilePathString =
-				PathUtils.computePath(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml");
+				PathUtils.computePath(PathUtils.createRootPath(), "tmp", "xml_dom_utils_test.xml");
 		Logger.printProgress("saving XMl file:");
 		Logger.printLine(xmlFilePathString);
 		XmlDomUtils.saveXmlFile(document, false, 4, xmlFilePathString);
@@ -69,7 +69,7 @@ class XmlDomUtilsTest {
 	void testParseAndSaveXmlFile() throws Exception {
 
 		final String xmlFilePathString =
-				PathUtils.computePath(PathUtils.ROOT_PATH, "tmp", "xml_dom_utils_test.xml");
+				PathUtils.computePath(PathUtils.createRootPath(), "tmp", "xml_dom_utils_test.xml");
 		Logger.printProgress("parsing and saving XML file:");
 		Logger.printLine(xmlFilePathString);
 		final Document document = XmlDomUtils.openDocument(xmlFilePathString);

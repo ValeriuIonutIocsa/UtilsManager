@@ -324,7 +324,7 @@ public class BasicControlsFactoryImpl implements BasicControlsFactory {
 	public DirectoryChooser createDirectoryChooser(
 			final String title) {
 
-		final File initialDirectory = new File(PathUtils.ROOT_PATH);
+		final File initialDirectory = new File(PathUtils.createRootPath());
 		return createDirectoryChooser(title, initialDirectory);
 	}
 
@@ -348,7 +348,7 @@ public class BasicControlsFactoryImpl implements BasicControlsFactory {
 		if (initialDirectoryParam != null && initialDirectoryParam.exists()) {
 			initialDirectory = initialDirectoryParam;
 		} else {
-			initialDirectory = new File(PathUtils.ROOT_PATH);
+			initialDirectory = new File(PathUtils.createRootPath());
 		}
 		return initialDirectory;
 	}

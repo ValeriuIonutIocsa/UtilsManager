@@ -18,7 +18,7 @@ class XmlStAXWriterTest {
 	void testWrite() throws Exception {
 
 		final String tempXmlFilePathString =
-				PathUtils.computePath(PathUtils.ROOT_PATH, "tmp", "xml_stax_writer_test.xml");
+				PathUtils.computePath(PathUtils.createRootPath(), "tmp", "xml_stax_writer_test.xml");
 		new AbstractXmlStAXWriter(tempXmlFilePathString, "    ") {
 
 			@Override
