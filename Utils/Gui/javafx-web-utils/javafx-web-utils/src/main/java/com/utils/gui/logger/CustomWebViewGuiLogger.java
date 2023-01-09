@@ -6,7 +6,6 @@ import com.utils.gui.GuiUtils;
 import com.utils.gui.objects.web_view.CustomWebView;
 import com.utils.log.Logger;
 import com.utils.log.MessageConsumer;
-import com.utils.log.MessageLevel;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -58,23 +57,8 @@ public class CustomWebViewGuiLogger extends CustomWebView {
 
 	public void useAsLogger() {
 
-		Logger.setMessageConsumer((
-				messageLevel,
-				message) -> {
-
-			MessageConsumer.DEFAULT_MESSAGE_CONSUMER.accept(messageLevel, message);
-			final String text;
-			if (messageLevel == MessageLevel.PROGRESS || messageLevel == MessageLevel.STATUS) {
-				text = "<b>" + message + "</b><br>";
-			} else if (messageLevel == MessageLevel.WARNING) {
-				text = "<b><font color=\"DarkOrange\">" + message + "</font></b><br>";
-			} else if (messageLevel == MessageLevel.ERROR || messageLevel == MessageLevel.EXCEPTION) {
-				text = "<b><font color=\"red\">" + message + "</font></b><br>";
-			} else {
-				text = message + "<br>";
-			}
-			log(text);
-		});
+		final MessageConsumer oldMessageConsumer = Logger.getMessageConsumer();
+		Logger.setMessageConsumer(new MessageConsumerGuiLogger(oldMessageConsumer, this));
 	}
 
 	public void log(

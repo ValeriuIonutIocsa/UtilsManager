@@ -12,15 +12,24 @@ import com.utils.xls.row.XlsRow;
 public class XlsSheet {
 
 	private final String name;
+	private final int totalColumnWidth;
 	private final double[] columnWidthRatioArray;
 
 	private final List<XlsRow> xlsRowList;
 
 	public XlsSheet(
 			final String name,
+			final int totalColumnWidth,
 			final double[] columnWidthRatioArray) {
 
 		this.name = name;
+
+		if (totalColumnWidth > 0) {
+			this.totalColumnWidth = totalColumnWidth;
+		} else {
+			this.totalColumnWidth = 54_000;
+		}
+
 		this.columnWidthRatioArray = columnWidthRatioArray;
 
 		xlsRowList = new ArrayList<>();
@@ -58,14 +67,14 @@ public class XlsSheet {
 		return sheet;
 	}
 
-	private static void sizeColumns(
+	private void sizeColumns(
 			final Sheet sheet,
 			final double[] columnWidthRatioArray) {
 
 		for (int columnIndex = 0; columnIndex < columnWidthRatioArray.length; columnIndex++) {
 
 			final double columnWidthRatio = columnWidthRatioArray[columnIndex];
-			sheet.setColumnWidth(columnIndex, (int) Math.floor(54_000 * columnWidthRatio));
+			sheet.setColumnWidth(columnIndex, (int) Math.floor(totalColumnWidth * columnWidthRatio));
 		}
 	}
 
