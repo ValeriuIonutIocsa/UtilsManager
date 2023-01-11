@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="AppStartJavaFxHelloWorld" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="com.utils.gui.AppStartJavaFxHelloWorld" />
+    <module name="UtilsManagerAllModules.gui-utils.test" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.utils.gui.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
