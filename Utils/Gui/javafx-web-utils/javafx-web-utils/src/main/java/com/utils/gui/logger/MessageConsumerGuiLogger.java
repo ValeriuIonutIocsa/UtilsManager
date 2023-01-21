@@ -1,6 +1,7 @@
 package com.utils.gui.logger;
 
 import com.utils.log.AbstractMessageConsumer;
+import com.utils.log.Logger;
 import com.utils.log.MessageConsumer;
 import com.utils.log.MessageLevel;
 
@@ -11,8 +12,8 @@ class MessageConsumerGuiLogger extends AbstractMessageConsumer {
 	private final CustomWebViewGuiLogger customWebViewGuiLogger;
 
 	MessageConsumerGuiLogger(
-            final MessageConsumer oldMessageConsumer,
-            final CustomWebViewGuiLogger customWebViewGuiLogger) {
+			final MessageConsumer oldMessageConsumer,
+			final CustomWebViewGuiLogger customWebViewGuiLogger) {
 
 		this.oldMessageConsumer = oldMessageConsumer;
 
@@ -26,16 +27,24 @@ class MessageConsumerGuiLogger extends AbstractMessageConsumer {
 
 		oldMessageConsumer.printMessageSpecific(messageLevel, message);
 
-		final String text;
-		if (messageLevel == MessageLevel.PROGRESS || messageLevel == MessageLevel.STATUS) {
-			text = "<b>" + message + "</b><br>";
-		} else if (messageLevel == MessageLevel.WARNING) {
-			text = "<b><font color=\"DarkOrange\">" + message + "</font></b><br>";
-		} else if (messageLevel == MessageLevel.ERROR || messageLevel == MessageLevel.EXCEPTION) {
-			text = "<b><font color=\"red\">" + message + "</font></b><br>";
-		} else {
-			text = message + "<br>";
+		try {
+			final String text;
+			if (messageLevel == MessageLevel.PROGRESS || messageLevel == MessageLevel.STATUS) {
+				text = "<b>" + message + "</b><br>";
+			} else if (messageLevel == MessageLevel.WARNING) {
+				text = "<b><font color=\"DarkOrange\">" + message + "</font></b><br>";
+			} else if (messageLevel == MessageLevel.ERROR || messageLevel == MessageLevel.EXCEPTION) {
+				text = "<b><font color=\"red\">" + message + "</font></b><br>";
+			} else {
+				text = message + "<br>";
+			}
+			customWebViewGuiLogger.log(text);
+
+		} catch (final Throwable throwable) {
+			oldMessageConsumer.printMessageSpecific(
+					MessageLevel.ERROR, "error occurred while logging GUI line");
+			final String throwableString = Logger.exceptionToString(throwable);
+			oldMessageConsumer.printMessageSpecific(MessageLevel.EXCEPTION, throwableString);
 		}
-		customWebViewGuiLogger.log(text);
 	}
 }

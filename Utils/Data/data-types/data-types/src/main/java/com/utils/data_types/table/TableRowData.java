@@ -53,8 +53,16 @@ public interface TableRowData extends Serializable {
 			final DataItem<?> dataItem = dataItemArray[i];
 
 			if (dataItem != null) {
-				final String csvString = dataItem.createCsvString();
+
+				printStream.print('"');
+				String csvString = dataItem.createCsvString();
+				csvString = StringUtils.replaceChars(csvString, ',', ';');
+				csvString = StringUtils.replace(csvString, "\"", "\"\"");
+                if (csvString.length() > 32_000) {
+                    csvString = csvString.substring(0, 32_000) + "...";
+                }
 				printStream.print(csvString);
+				printStream.print('"');
 			}
 			if (i < dataItemArray.length - 1) {
 				printStream.print(',');
@@ -95,14 +103,12 @@ public interface TableRowData extends Serializable {
 			printStream.print('"');
 			final String columnName = tableColumnData.getSerializeName();
 			printStream.print(columnName);
-			printStream.print("\": \"");
+			printStream.print("\": ");
 
 			if (dataItem != null) {
-
-				final String csvString = dataItem.createCsvString();
-				printStream.print(csvString);
+				dataItem.writeToJson(printStream);
 			}
-			printStream.print('"');
+
 			if (i < notBlankColumnDataMap.size() - 1) {
 				printStream.print(',');
 			}
