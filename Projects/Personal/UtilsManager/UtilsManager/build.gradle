@@ -2,7 +2,7 @@ ext {
     mainClass = 'com.personal.utils.AppStart' + project.name
     projectVersion = '0.0.1'
     convertToExe = false
-    jarFolderPath = 'C:\\IVI\\Apps\\UtilsManager'
+    jarFolderPath = 'C:\\IVI\\Apps\\Scripts\\General\\UtilsManager'
 
     subProjectNames = [
             ':gradle-utils'
