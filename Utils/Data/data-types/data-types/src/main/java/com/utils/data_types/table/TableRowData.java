@@ -2,7 +2,9 @@ package com.utils.data_types.table;
 
 import java.io.PrintStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +13,8 @@ import com.utils.data_types.data_items.DataItem;
 import com.utils.xml.stax.XmlStAXWriter;
 
 public interface TableRowData extends Serializable {
+
+	int XLSX_CELL_CHARACTER_LIMIT = 32_000;
 
 	default DataItem<?>[] getDataItemArray() {
 		return getTableViewDataItemArray();
@@ -47,28 +51,53 @@ public interface TableRowData extends Serializable {
 	default void writeToCsv(
 			final PrintStream printStream) {
 
+		final List<List<String>> csvCellDataByColumnList = new ArrayList<>();
 		final DataItem<?>[] dataItemArray = getDataItemArray();
+		for (int i = 0; i < dataItemArray.length; i++) {
+			csvCellDataByColumnList.add(new ArrayList<>());
+		}
+
 		for (int i = 0; i < dataItemArray.length; i++) {
 
 			final DataItem<?> dataItem = dataItemArray[i];
+			final List<String> csvCellDataList = csvCellDataByColumnList.get(i);
 
 			if (dataItem != null) {
 
-				printStream.print('"');
-				String csvString = dataItem.createCsvString();
-				csvString = StringUtils.replaceChars(csvString, ',', ';');
-				csvString = StringUtils.replace(csvString, "\"", "\"\"");
-                if (csvString.length() > 32_000) {
-                    csvString = csvString.substring(0, 32_000) + "...";
-                }
-				printStream.print(csvString);
-				printStream.print('"');
-			}
-			if (i < dataItemArray.length - 1) {
-				printStream.print(',');
+				final String csvString = dataItem.createCsvString();
+				for (int j = 0; j < csvString.length(); j += TableRowData.XLSX_CELL_CHARACTER_LIMIT) {
+
+					String csvStringPart = csvString.substring(j,
+							Math.min(j + TableRowData.XLSX_CELL_CHARACTER_LIMIT, csvString.length()));
+					csvStringPart = StringUtils.replaceChars(csvStringPart, ',', ';');
+					csvStringPart = StringUtils.replace(csvStringPart, "\"", "\"\"");
+					csvCellDataList.add(csvStringPart);
+				}
 			}
 		}
-		printStream.println();
+
+		int maxRowCount = 1;
+		for (final List<String> csvCellDataList : csvCellDataByColumnList) {
+			maxRowCount = Math.max(maxRowCount, csvCellDataList.size());
+		}
+
+		for (int i = 0; i < maxRowCount; i++) {
+
+			for (final List<String> csvCellDataList : csvCellDataByColumnList) {
+
+				printStream.print('"');
+				if (i < csvCellDataList.size()) {
+
+					final String csvCellData = csvCellDataList.get(i);
+					printStream.print(csvCellData);
+				}
+				printStream.print('"');
+				if (i < dataItemArray.length - 1) {
+					printStream.print(',');
+				}
+			}
+			printStream.println();
+		}
 	}
 
 	default void writeToJson(

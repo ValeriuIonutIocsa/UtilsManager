@@ -1,0 +1,12 @@
+ext {
+    subProjectNames = [
+            ':writer-utils',
+            ':xls-utils'
+    ]
+    compileClassPaths = []
+    compileJarFilePaths = []
+    testCompileClassPaths = []
+    testCompileJarFilePaths = []
+}
+
+apply from: gradle.ext.rootDirPath + '/common_build.gradle'

@@ -33,6 +33,8 @@
             <option value="$PROJECT_DIR$/../../../../Utils/Services/math-utils/math-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/srec-utils/srec-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/swing-utils/swing-utils" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/writer-utils-xlsx/writer-utils-xlsx" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/writer-utils/writer-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/xls-utils/xls-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/xml-obfuscator/xml-obfuscator" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/xml-stax-utils/xml-stax-utils" />

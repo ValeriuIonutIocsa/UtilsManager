@@ -17,7 +17,6 @@ ext {
             ':medusa-utils',
             ':javafx-swing-utils',
             ':javafx-web-utils',
-            ':gradle-utils',
             ':http-utils',
             ':influxdb-utils',
             ':jdbc-utils-oracle-db',
@@ -25,7 +24,7 @@ ext {
             ':js-utils',
             ':math-utils',
             ':srec-utils',
-            ':xls-utils',
+            ':writer-utils-xlsx',
             ':xml-obfuscator'
     ]
     compileClassPaths = []
