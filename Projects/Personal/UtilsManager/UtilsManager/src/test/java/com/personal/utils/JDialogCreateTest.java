@@ -1,5 +1,7 @@
 package com.personal.utils;
 
+import java.util.HashSet;
+
 import org.junit.jupiter.api.Test;
 
 class JDialogCreateTest {
@@ -7,6 +9,6 @@ class JDialogCreateTest {
 	@Test
 	void testDisplay() {
 
-		JDialogCreate.display();
+		JDialogCreate.display(new HashSet<>(), new HashSet<>());
 	}
 }

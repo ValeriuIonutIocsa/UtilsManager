@@ -1,23 +1,27 @@
 package com.personal.utils;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.personal.utils.gradle_roots.FactoryGradleRoot;
 import com.personal.utils.gradle_roots.GradleRoot;
 import com.utils.io.PathUtils;
 import com.utils.io.ReaderUtils;
+import com.utils.io.ResourceFileUtils;
 import com.utils.io.StreamUtils;
 import com.utils.io.WriterUtils;
-import com.utils.io.file_copiers.FactoryFileCopier;
 import com.utils.io.folder_copiers.FactoryFolderCopier;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.log.Logger;
@@ -31,7 +35,9 @@ final class WorkerCreate {
 			final String pathString,
 			final String packageName) {
 
-		final Set<String> selectedModuleNameSet = JDialogCreate.display();
+		final Set<String> selectedModuleNameSet = new HashSet<>();
+		final Set<String> selectedModuleNameWoDepsSet = new HashSet<>();
+		JDialogCreate.display(selectedModuleNameSet, selectedModuleNameWoDepsSet);
 
 		final GradleRoot utilsGradleRoot = FactoryGradleRoot.newInstanceUtils();
 
@@ -43,9 +49,13 @@ final class WorkerCreate {
 		for (final String selectedModuleName : selectedModuleNameSet) {
 
 			final String utilsModulePathString = utilsModuleFolderPathsByNameMap.get(selectedModuleName);
+
 			final String moduleRelativePathString =
 					PathUtils.computeRelativePath(utilsRootFolderPathString, utilsModulePathString);
-			moduleRelativePathStringList.add(moduleRelativePathString);
+			if (selectedModuleNameWoDepsSet.contains(selectedModuleName)) {
+				moduleRelativePathStringList.add(moduleRelativePathString);
+			}
+
 			final String modulePathString = PathUtils.computePath(pathString, moduleRelativePathString);
 			moduleFolderPathsByNameMap.put(selectedModuleName, modulePathString);
 		}
@@ -239,19 +249,27 @@ final class WorkerCreate {
 	private static void createIntelliJSettingsFiles(
 			final String allModulesProjectFolderPathString) {
 
-		final String utilsRootPathString = FactoryGradleRoot.createUtilsRootPathString();
-		final String srcFolderPathString = PathUtils.computePath(utilsRootPathString,
-				"Projects", "Personal", "UtilsManagerAllModules", "UtilsManagerAllModules", ".idea");
-
 		final String dstFolderPathString =
 				PathUtils.computePath(allModulesProjectFolderPathString, ".idea");
+		final boolean createDirectoriesSuccess =
+				FactoryFolderCreator.getInstance().createDirectories(dstFolderPathString, true);
+		if (createDirectoriesSuccess) {
 
-		final String[] settingsFileNameArray = { "misc.xml", "saveactions_settings.xml" };
-		for (final String settingsFileName : settingsFileNameArray) {
+			final String[] settingsFileNameArray = { "gradle.xml", "misc.xml", "saveactions_settings.xml" };
+			for (final String settingsFileName : settingsFileNameArray) {
 
-			final String srcFilePathString = PathUtils.computePath(srcFolderPathString, settingsFileName);
-			final String dstFilePathString = PathUtils.computePath(dstFolderPathString, settingsFileName);
-			FactoryFileCopier.getInstance().copyFile(srcFilePathString, dstFilePathString, false, true);
+				final String dstFilePathString = PathUtils.computePath(dstFolderPathString, settingsFileName);
+				final String resourceFilePathString = "com/personal/utils/" + settingsFileName;
+				try (InputStream inputStream = ResourceFileUtils.resourceFileToInputStream(resourceFilePathString);
+						OutputStream outputStream = StreamUtils.openOutputStream(dstFilePathString)) {
+
+					IOUtils.copy(inputStream, outputStream);
+
+				} catch (final Exception exc) {
+					Logger.printError("failed to copy settings file: " + settingsFileName);
+					Logger.printException(exc);
+				}
+			}
 		}
 	}
 }

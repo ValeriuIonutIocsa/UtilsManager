@@ -3,4 +3,9 @@
   <component name="CheckStyle-IDEA-Module" serialisationVersion="2">
     <option name="activeLocationsIds" />
   </component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../../../../../UtilsManager/UtilsManager/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../UtilsManager/UtilsManager/src/main/resources" type="java-resource" />
+    </content>
+  </component>
 </module>

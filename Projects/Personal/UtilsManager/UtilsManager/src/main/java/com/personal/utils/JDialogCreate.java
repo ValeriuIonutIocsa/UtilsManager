@@ -85,7 +85,9 @@ public class JDialogCreate extends JDialog {
 	/**
 	 * displays the dialog returns the selected paths in the JTree
 	 */
-	static Set<String> display() {
+	static void display(
+			final Set<String> selectedModuleNameSet,
+			final Set<String> selectedModuleNameWoDepsSet) {
 
 		final String utilsRootPathString = FactoryGradleRoot.createUtilsRootPathString();
 		final String projectPathString = PathUtils.computePath(utilsRootPathString,
@@ -131,16 +133,7 @@ public class JDialogCreate extends JDialog {
 			selectedTreePathList.add(treePath);
 		}
 
-		final Set<String> selectedModuleNameSet = new HashSet<>();
 		fillSelectedModuleNameSet(selectedTreePathList, selectedModuleNameSet);
-
-		final Map<String, GradleSubProject> gradleSubProjectsByNameMap = new HashMap<>();
-		fillGradleSubProjectsByNameMap(gradleSubProjectsByPathMap, gradleSubProjectsByNameMap);
-
-		final Set<String> dependencyModuleNameSet = new HashSet<>();
-		fillDependencyModuleNameSet(selectedModuleNameSet, gradleSubProjectsByNameMap, dependencyModuleNameSet);
-
-		selectedModuleNameSet.removeAll(dependencyModuleNameSet);
 
 		Logger.printNewLine();
 		Logger.printLine("selected module names:");
@@ -148,7 +141,20 @@ public class JDialogCreate extends JDialog {
 			Logger.printLine(selectedModuleName);
 		}
 
-		return selectedModuleNameSet;
+		final Map<String, GradleSubProject> gradleSubProjectsByNameMap = new HashMap<>();
+		fillGradleSubProjectsByNameMap(gradleSubProjectsByPathMap, gradleSubProjectsByNameMap);
+
+		final Set<String> dependencyModuleNameSet = new HashSet<>();
+		fillDependencyModuleNameSet(selectedModuleNameSet, gradleSubProjectsByNameMap, dependencyModuleNameSet);
+
+		selectedModuleNameWoDepsSet.addAll(selectedModuleNameSet);
+		selectedModuleNameWoDepsSet.removeAll(dependencyModuleNameSet);
+
+		Logger.printNewLine();
+		Logger.printLine("selected module names without dependencies:");
+		for (final String selectedModuleName : selectedModuleNameWoDepsSet) {
+			Logger.printLine(selectedModuleName);
+		}
 	}
 
 	private static void createTreeNodesRec(
