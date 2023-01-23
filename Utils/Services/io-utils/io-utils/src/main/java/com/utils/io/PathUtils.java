@@ -99,17 +99,21 @@ public final class PathUtils {
 			}
 
 		} catch (final Exception exc) {
-			final StringBuilder sbErrorMessage = new StringBuilder("failed to compute ");
-			if (pathName != null) {
-				sbErrorMessage.append(pathName).append(' ');
+
+			if (verbose) {
+
+				final StringBuilder sbErrorMessage = new StringBuilder("failed to compute ");
+				if (pathName != null) {
+					sbErrorMessage.append(pathName).append(' ');
+				}
+				sbErrorMessage.append("path:")
+						.append(System.lineSeparator()).append(firstPathString);
+				for (final String otherPathString : otherPathStringArray) {
+					sbErrorMessage.append(System.lineSeparator()).append(otherPathString);
+				}
+				Logger.printError(sbErrorMessage);
+				Logger.printException(exc);
 			}
-			sbErrorMessage.append("path:")
-					.append(System.lineSeparator()).append(firstPathString);
-			for (final String otherPathString : otherPathStringArray) {
-				sbErrorMessage.append(System.lineSeparator()).append(otherPathString);
-			}
-			Logger.printError(sbErrorMessage);
-			Logger.printException(exc);
 		}
 		return pathString;
 	}
