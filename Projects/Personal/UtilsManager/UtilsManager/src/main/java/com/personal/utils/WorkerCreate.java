@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,6 +17,7 @@ import com.utils.io.PathUtils;
 import com.utils.io.ReaderUtils;
 import com.utils.io.StreamUtils;
 import com.utils.io.WriterUtils;
+import com.utils.io.file_copiers.FactoryFileCopier;
 import com.utils.io.folder_copiers.FactoryFolderCopier;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.log.Logger;
@@ -31,10 +31,7 @@ final class WorkerCreate {
 			final String pathString,
 			final String packageName) {
 
-		final List<String> selectedTreePathList = JDialogCreate.display();
-
-		final Set<String> selectedModuleNameSet = new HashSet<>();
-		fillSelectedModuleNameSet(selectedTreePathList, selectedModuleNameSet);
+		final Set<String> selectedModuleNameSet = JDialogCreate.display();
 
 		final GradleRoot utilsGradleRoot = FactoryGradleRoot.newInstanceUtils();
 
@@ -66,8 +63,9 @@ final class WorkerCreate {
 
 		final String projectName = PathUtils.computeFileName(pathString);
 
-		final String templateProjectFolderPathString = "C:\\IVI\\Prog\\JavaGradle\\UtilsManager\\" +
-				"Projects\\Personal\\UtilsManager\\UtilsManager_EXE\\TemplateProject";
+		final String utilsRootPathString = FactoryGradleRoot.createUtilsRootPathString();
+		final String templateProjectFolderPathString = PathUtils.computePath(utilsRootPathString,
+				"Projects", "Personal", "UtilsManager", "UtilsManager_EXE", "TemplateProject");
 
 		final String projectRelativePath = "/Projects/Personal/" + projectName + "/" + projectName;
 		final String projectFolderPathString = PathUtils.computePath(pathString, projectRelativePath);
@@ -85,25 +83,7 @@ final class WorkerCreate {
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, allModulesProjectFolderPathString, true);
 		replaceDependencies(allModulesProjectFolderPathString, "", Collections.singletonList(projectRelativePath));
-	}
-
-	private static void fillSelectedModuleNameSet(
-			final List<String> selectedTreePathList,
-			final Set<String> selectedProjectNameSet) {
-
-		for (final String selectedTreePath : selectedTreePathList) {
-
-			final String selectedProjectName;
-			final int lastIndexOf = selectedTreePath.lastIndexOf('>');
-			if (lastIndexOf >= 0) {
-				selectedProjectName = selectedTreePath.substring(lastIndexOf + 1);
-			} else {
-				selectedProjectName = selectedTreePath;
-			}
-			selectedProjectNameSet.add(selectedProjectName);
-		}
-
-		Logger.printLine("selected project names: " + selectedProjectNameSet);
+		createIntelliJSettingsFiles(allModulesProjectFolderPathString);
 	}
 
 	private static String createAppInfo(
@@ -253,6 +233,25 @@ final class WorkerCreate {
 				Logger.printError("failed to write the main class file");
 				Logger.printException(exc);
 			}
+		}
+	}
+
+	private static void createIntelliJSettingsFiles(
+			final String allModulesProjectFolderPathString) {
+
+		final String utilsRootPathString = FactoryGradleRoot.createUtilsRootPathString();
+		final String srcFolderPathString = PathUtils.computePath(utilsRootPathString,
+				"Projects", "Personal", "UtilsManagerAllModules", "UtilsManagerAllModules", ".idea");
+
+		final String dstFolderPathString =
+				PathUtils.computePath(allModulesProjectFolderPathString, ".idea");
+
+		final String[] settingsFileNameArray = { "misc.xml", "saveactions_settings.xml" };
+		for (final String settingsFileName : settingsFileNameArray) {
+
+			final String srcFilePathString = PathUtils.computePath(srcFolderPathString, settingsFileName);
+			final String dstFilePathString = PathUtils.computePath(dstFolderPathString, settingsFileName);
+			FactoryFileCopier.getInstance().copyFile(srcFilePathString, dstFilePathString, false, true);
 		}
 	}
 }

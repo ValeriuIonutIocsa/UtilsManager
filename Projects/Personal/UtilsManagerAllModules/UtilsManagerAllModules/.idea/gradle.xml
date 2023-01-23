@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Gui/javafx-swing-utils/javafx-swing-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Gui/javafx-web-utils/javafx-web-utils" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Gui/jfx-utils/jfx-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Gui/medusa-utils/medusa-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/concurrency-utils/concurrency-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/gradle-utils/gradle-utils" />

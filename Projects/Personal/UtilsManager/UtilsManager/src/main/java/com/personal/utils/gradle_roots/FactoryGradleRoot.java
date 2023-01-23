@@ -16,9 +16,12 @@ public final class FactoryGradleRoot {
 
 	public static GradleRoot newInstanceUtils() {
 
-		final String utilsRootPathString =
-				PathUtils.computePath("C:\\IVI\\Prog\\JavaGradle\\UtilsManager");
+		final String utilsRootPathString = createUtilsRootPathString();
 		return newInstance(utilsRootPathString);
+	}
+
+	public static String createUtilsRootPathString() {
+		return "C:\\IVI\\Prog\\JavaGradle\\UtilsManager";
 	}
 
 	public static GradleRoot newInstance(

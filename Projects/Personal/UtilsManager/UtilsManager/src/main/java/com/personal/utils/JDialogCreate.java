@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +26,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.personal.utils.gradle.sub_prj.FactoryGradleSubProject;
 import com.personal.utils.gradle.sub_prj.GradleSubProject;
+import com.personal.utils.gradle_roots.FactoryGradleRoot;
 import com.utils.io.PathUtils;
+import com.utils.log.Logger;
 
 public class JDialogCreate extends JDialog {
 
@@ -82,10 +85,11 @@ public class JDialogCreate extends JDialog {
 	/**
 	 * displays the dialog returns the selected paths in the JTree
 	 */
-	static List<String> display() {
+	static Set<String> display() {
 
-		final String projectPathString = "C:\\IVI\\Prog\\JavaGradle\\UtilsManager\\" +
-				"Projects\\Personal\\UtilsManagerAllModules\\UtilsManagerAllModules";
+		final String utilsRootPathString = FactoryGradleRoot.createUtilsRootPathString();
+		final String projectPathString = PathUtils.computePath(utilsRootPathString,
+				"Projects", "Personal", "UtilsManagerAllModules", "UtilsManagerAllModules");
 		final Map<String, GradleSubProject> gradleSubProjectsByPathMap = new HashMap<>();
 		FactoryGradleSubProject.newInstance(projectPathString, gradleSubProjectsByPathMap);
 
@@ -126,7 +130,25 @@ public class JDialogCreate extends JDialog {
 			final String treePath = StringUtils.join(treePathPartList, '>');
 			selectedTreePathList.add(treePath);
 		}
-		return selectedTreePathList;
+
+		final Set<String> selectedModuleNameSet = new HashSet<>();
+		fillSelectedModuleNameSet(selectedTreePathList, selectedModuleNameSet);
+
+		final Map<String, GradleSubProject> gradleSubProjectsByNameMap = new HashMap<>();
+		fillGradleSubProjectsByNameMap(gradleSubProjectsByPathMap, gradleSubProjectsByNameMap);
+
+		final Set<String> dependencyModuleNameSet = new HashSet<>();
+		fillDependencyModuleNameSet(selectedModuleNameSet, gradleSubProjectsByNameMap, dependencyModuleNameSet);
+
+		selectedModuleNameSet.removeAll(dependencyModuleNameSet);
+
+		Logger.printNewLine();
+		Logger.printLine("selected module names:");
+		for (final String selectedModuleName : selectedModuleNameSet) {
+			Logger.printLine(selectedModuleName);
+		}
+
+		return selectedModuleNameSet;
 	}
 
 	private static void createTreeNodesRec(
@@ -147,6 +169,56 @@ public class JDialogCreate extends JDialog {
 				parentMutableTreeNode.insert(mutableTreeNode, 0);
 				createTreeNodesRec(dependencyProjectPathString,
 						gradleSubProjectsByPathMap, mutableTreeNode);
+			}
+		}
+	}
+
+	private static void fillSelectedModuleNameSet(
+			final List<String> selectedTreePathList,
+			final Set<String> selectedProjectNameSet) {
+
+		for (final String selectedTreePath : selectedTreePathList) {
+
+			final String selectedProjectName;
+			final int lastIndexOf = selectedTreePath.lastIndexOf('>');
+			if (lastIndexOf >= 0) {
+				selectedProjectName = selectedTreePath.substring(lastIndexOf + 1);
+			} else {
+				selectedProjectName = selectedTreePath;
+			}
+			selectedProjectNameSet.add(selectedProjectName);
+		}
+	}
+
+	private static void fillGradleSubProjectsByNameMap(
+			final Map<String, GradleSubProject> gradleSubProjectsByPathMap,
+			final Map<String, GradleSubProject> gradleSubProjectsByNameMap) {
+
+		for (final Map.Entry<String, GradleSubProject> mapEntry : gradleSubProjectsByPathMap.entrySet()) {
+
+			final String subProjectPath = mapEntry.getKey();
+			final GradleSubProject gradleSubProject = mapEntry.getValue();
+			final String subProjectName = PathUtils.computeFileName(subProjectPath);
+			gradleSubProjectsByNameMap.put(subProjectName, gradleSubProject);
+		}
+	}
+
+	private static void fillDependencyModuleNameSet(
+			final Set<String> selectedModuleNameSet,
+			final Map<String, GradleSubProject> gradleSubProjectsByNameMap,
+			final Set<String> dependencyModuleNameSet) {
+
+		for (final String selectedModuleName : selectedModuleNameSet) {
+
+			final GradleSubProject gradleSubProject = gradleSubProjectsByNameMap.get(selectedModuleName);
+			if (gradleSubProject != null) {
+
+				final Set<String> dependencyPathSet = gradleSubProject.getDependencyPathSet();
+				for (final String dependencyPath : dependencyPathSet) {
+
+					final String dependencyName = PathUtils.computeFileName(dependencyPath);
+					dependencyModuleNameSet.add(dependencyName);
+				}
 			}
 		}
 	}
