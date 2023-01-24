@@ -18,16 +18,20 @@ class WorkerDownloadUploadTest {
 		} else if (inputMode == 2) {
 			mode = Mode.UPLOAD;
 		} else {
-            throw new RuntimeException();
-        }
+			throw new RuntimeException();
+		}
 
 		final String pathString;
 		final int inputPathString = Integer.parseInt("1");
 		if (inputPathString == 1) {
+			pathString = "C:\\IVI\\Vitesco\\Main";
+
+		} else if (inputPathString == 11) {
 			pathString = "C:\\IVI\\Prog\\JavaGradle\\Scripts\\General\\GradleCnfMan";
+
 		} else {
-            throw new RuntimeException();
-        }
+			throw new RuntimeException();
+		}
 
 		final Instant start = Instant.now();
 

@@ -66,15 +66,21 @@ public class GradleRoot {
 	private void synchronizeIdeaSettingsFiles(
 			final GradleRoot srcGradleRoot) {
 
-        final String srcAllModulesFolderPathString = srcGradleRoot.createAllModulesFolderPathString();
-        final String srcIdeaFolderPathString =
-                PathUtils.computePath(srcAllModulesFolderPathString, ".idea");
+		final String srcAllModulesFolderPathString = srcGradleRoot.createAllModulesFolderPathString();
+		if (srcAllModulesFolderPathString != null) {
 
-        final String dstAllModulesFolderPathString = createAllModulesFolderPathString();
-        final String dstIdeaFolderPathString =
-                PathUtils.computePath(dstAllModulesFolderPathString, ".idea");
+			final String srcIdeaFolderPathString =
+					PathUtils.computePath(srcAllModulesFolderPathString, ".idea");
 
-		IdeaFilesSynchronizer.work(srcIdeaFolderPathString, dstIdeaFolderPathString);
+			final String dstAllModulesFolderPathString = createAllModulesFolderPathString();
+			if (dstAllModulesFolderPathString != null) {
+
+				final String dstIdeaFolderPathString =
+						PathUtils.computePath(dstAllModulesFolderPathString, ".idea");
+
+				IdeaFilesSynchronizer.work(srcIdeaFolderPathString, dstIdeaFolderPathString);
+			}
+		}
 	}
 
 	private String createAllModulesFolderPathString() {

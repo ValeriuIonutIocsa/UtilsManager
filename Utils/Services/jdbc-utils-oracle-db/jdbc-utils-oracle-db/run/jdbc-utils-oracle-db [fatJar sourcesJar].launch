@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.buildship.core.launch.runconfiguration">
     <listAttribute key="arguments"/>
-    <stringAttribute key="bad_container_name" value="\UtilsManager\r"/>
+    <stringAttribute key="bad_container_name" value="\jdbc-utils-oracle-db\r"/>
     <booleanAttribute key="build_scans_enabled" value="false"/>
     <stringAttribute key="gradle_distribution" value="GRADLE_DISTRIBUTION(WRAPPER)"/>
     <stringAttribute key="gradle_user_home" value=""/>
@@ -18,5 +18,5 @@
         <listEntry value="fatJar"/>
         <listEntry value="sourcesJar"/>
     </listAttribute>
-    <stringAttribute key="working_dir" value="${workspace_loc:/UtilsManager}"/>
+    <stringAttribute key="working_dir" value="${workspace_loc:/jdbc-utils-oracle-db}"/>
 </launchConfiguration>
