@@ -255,7 +255,12 @@ final class WorkerCreate {
 				FactoryFolderCreator.getInstance().createDirectories(dstFolderPathString, true);
 		if (createDirectoriesSuccess) {
 
-			final String[] settingsFileNameArray = { "gradle.xml", "misc.xml", "saveactions_settings.xml" };
+			final String[] settingsFileNameArray = {
+					"eclipseCodeFormatter.xml",
+					"gradle.xml",
+					"misc.xml",
+					"saveactions_settings.xml"
+			};
 			for (final String settingsFileName : settingsFileNameArray) {
 
 				final String dstFilePathString = PathUtils.computePath(dstFolderPathString, settingsFileName);
