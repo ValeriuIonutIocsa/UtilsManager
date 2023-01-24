@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.personal.utils.idea.IdeaFilesSynchronizer;
+import com.utils.io.file_copiers.FactoryFileCopier;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -249,33 +251,13 @@ final class WorkerCreate {
 	private static void createIntelliJSettingsFiles(
 			final String allModulesProjectFolderPathString) {
 
-		final String dstFolderPathString =
-				PathUtils.computePath(allModulesProjectFolderPathString, ".idea");
-		final boolean createDirectoriesSuccess =
-				FactoryFolderCreator.getInstance().createDirectories(dstFolderPathString, true);
-		if (createDirectoriesSuccess) {
+        final String utilsRootPathString = FactoryGradleRoot.createUtilsRootPathString();
+        final String srcIdeaFolderPathString = PathUtils.computePath(utilsRootPathString,
+                "Projects", "Personal", "UtilsManagerAllModules", "UtilsManagerAllModules", ".idea");
 
-			final String[] settingsFileNameArray = {
-                    "checkstyle-idea.xml",
-					"eclipseCodeFormatter.xml",
-					"gradle.xml",
-					"misc.xml",
-					"saveactions_settings.xml"
-			};
-			for (final String settingsFileName : settingsFileNameArray) {
+        final String dstIdeaFolderPathString =
+                PathUtils.computePath(allModulesProjectFolderPathString, ".idea");
 
-				final String dstFilePathString = PathUtils.computePath(dstFolderPathString, settingsFileName);
-				final String resourceFilePathString = "com/personal/utils/" + settingsFileName;
-				try (InputStream inputStream = ResourceFileUtils.resourceFileToInputStream(resourceFilePathString);
-						OutputStream outputStream = StreamUtils.openOutputStream(dstFilePathString)) {
-
-					IOUtils.copy(inputStream, outputStream);
-
-				} catch (final Exception exc) {
-					Logger.printError("failed to copy settings file: " + settingsFileName);
-					Logger.printException(exc);
-				}
-			}
-		}
+        IdeaFilesSynchronizer.work(srcIdeaFolderPathString, dstIdeaFolderPathString);
 	}
 }

@@ -24,7 +24,7 @@ class WorkerDownloadUploadTest {
 		final String pathString;
 		final int inputPathString = Integer.parseInt("1");
 		if (inputPathString == 1) {
-			pathString = "C:\\IVI\\Prog\\JavaGradle\\ImoWorldMapGenerator";
+			pathString = "C:\\IVI\\Prog\\JavaGradle\\Scripts\\General\\GradleCnfMan";
 		} else {
             throw new RuntimeException();
         }

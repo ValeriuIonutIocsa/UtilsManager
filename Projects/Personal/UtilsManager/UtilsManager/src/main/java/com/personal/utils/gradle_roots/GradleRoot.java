@@ -2,8 +2,11 @@ package com.personal.utils.gradle_roots;
 
 import java.util.Map;
 
+import com.personal.utils.idea.IdeaFilesSynchronizer;
+import com.utils.io.PathUtils;
 import com.utils.io.file_copiers.FactoryFileCopier;
 import com.utils.io.folder_copiers.FactoryFolderCopier;
+import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
 public class GradleRoot {
@@ -31,12 +34,9 @@ public class GradleRoot {
 	public void synchronizeFrom(
 			final GradleRoot srcGradleRoot) {
 
-		FactoryFileCopier.getInstance().copyFile(
-				srcGradleRoot.commonBuildGradleFilePathString, commonBuildGradleFilePathString, true, true);
-		FactoryFileCopier.getInstance().copyFile(
-				srcGradleRoot.commonSettingsGradleFilePathString, commonSettingsGradleFilePathString, true, true);
-		FactoryFileCopier.getInstance().copyFile(
-				srcGradleRoot.gitAttributesFilePathString, gitAttributesFilePathString, true, true);
+		synchronizeCommonFiles(srcGradleRoot);
+
+		synchronizeIdeaSettingsFiles(srcGradleRoot);
 
 		for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
 
@@ -52,6 +52,66 @@ public class GradleRoot {
 		}
 	}
 
+	private void synchronizeCommonFiles(
+			final GradleRoot srcGradleRoot) {
+
+		FactoryFileCopier.getInstance().copyFile(
+				srcGradleRoot.commonBuildGradleFilePathString, commonBuildGradleFilePathString, true, true);
+		FactoryFileCopier.getInstance().copyFile(
+				srcGradleRoot.commonSettingsGradleFilePathString, commonSettingsGradleFilePathString, true, true);
+		FactoryFileCopier.getInstance().copyFile(
+				srcGradleRoot.gitAttributesFilePathString, gitAttributesFilePathString, true, true);
+	}
+
+	private void synchronizeIdeaSettingsFiles(
+			final GradleRoot srcGradleRoot) {
+
+        final String srcAllModulesFolderPathString = srcGradleRoot.createAllModulesFolderPathString();
+        final String srcIdeaFolderPathString =
+                PathUtils.computePath(srcAllModulesFolderPathString, ".idea");
+
+        final String dstAllModulesFolderPathString = createAllModulesFolderPathString();
+        final String dstIdeaFolderPathString =
+                PathUtils.computePath(dstAllModulesFolderPathString, ".idea");
+
+		IdeaFilesSynchronizer.work(srcIdeaFolderPathString, dstIdeaFolderPathString);
+	}
+
+	private String createAllModulesFolderPathString() {
+
+		String allModulesPathString = null;
+		for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
+
+			final String moduleName = mapEntry.getKey();
+			if (moduleName.endsWith("AllModules")) {
+
+				allModulesPathString = mapEntry.getValue();
+				break;
+			}
+		}
+
+		if (allModulesPathString == null) {
+
+			final String rootModuleName = PathUtils.computeFileName(rootFolderPathString);
+			for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
+
+				final String moduleName = mapEntry.getKey();
+				if (rootModuleName.equals(moduleName)) {
+
+					allModulesPathString = mapEntry.getValue();
+					break;
+				}
+			}
+		}
+
+		if (allModulesPathString == null) {
+			Logger.printError("could not compute " +
+					"all modules folder path for project " + rootFolderPathString);
+		}
+
+		return allModulesPathString;
+	}
+
 	@Override
 	public String toString() {
 		return StrUtils.reflectionToString(this);
@@ -59,18 +119,6 @@ public class GradleRoot {
 
 	public String getRootFolderPathString() {
 		return rootFolderPathString;
-	}
-
-	public String getCommonBuildGradleFilePathString() {
-		return commonBuildGradleFilePathString;
-	}
-
-	public String getCommonSettingsGradleFilePathString() {
-		return commonSettingsGradleFilePathString;
-	}
-
-	public String getGitAttributesFilePathString() {
-		return gitAttributesFilePathString;
 	}
 
 	public Map<String, String> getModuleFolderPathsByNameMap() {
