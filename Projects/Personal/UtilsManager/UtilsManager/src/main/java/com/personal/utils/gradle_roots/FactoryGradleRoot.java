@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.utils.io.ListFileUtils;
 import com.utils.io.PathUtils;
+import com.utils.log.Logger;
 
 public final class FactoryGradleRoot {
 
@@ -49,13 +50,54 @@ public final class FactoryGradleRoot {
 			moduleFolderPathsByNameMap.put(moduleName, moduleFolderPathString);
 		}
 
+		final String allModulesFolderPathString = createAllModulesFolderPathString(
+				rootFolderPathString, moduleFolderPathsByNameMap);
+
 		return new GradleRoot(rootFolderPathString,
 				commonBuildGradleFilePathString, commonSettingsGradleFilePathString,
-				gitAttributesFilePathString, moduleFolderPathsByNameMap);
+				gitAttributesFilePathString, allModulesFolderPathString, moduleFolderPathsByNameMap);
+	}
+
+	private static String createAllModulesFolderPathString(
+			final String rootFolderPathString,
+			final Map<String, String> moduleFolderPathsByNameMap) {
+
+		String allModulesPathString = null;
+		for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
+
+			final String moduleName = mapEntry.getKey();
+			if (moduleName.endsWith("AllModules")) {
+
+				allModulesPathString = mapEntry.getValue();
+				break;
+			}
+		}
+
+		if (allModulesPathString == null) {
+
+			final String rootModuleName = PathUtils.computeFileName(rootFolderPathString);
+			for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
+
+				final String moduleName = mapEntry.getKey();
+				if (rootModuleName.equals(moduleName)) {
+
+					allModulesPathString = mapEntry.getValue();
+					break;
+				}
+			}
+		}
+
+		if (allModulesPathString == null) {
+			Logger.printError("could not compute " +
+					"all modules folder path for project " + rootFolderPathString);
+		}
+
+		return allModulesPathString;
 	}
 
 	public static GradleRoot newInstance(
 			final String rootFolderPathString,
+			final String allModulesProjectFolderPathString,
 			final Map<String, String> moduleFolderPathsByNameMap) {
 
 		final String commonBuildGradleFilePathString =
@@ -67,6 +109,6 @@ public final class FactoryGradleRoot {
 
 		return new GradleRoot(rootFolderPathString,
 				commonBuildGradleFilePathString, commonSettingsGradleFilePathString,
-				gitAttributesFilePathString, moduleFolderPathsByNameMap);
+				gitAttributesFilePathString, allModulesProjectFolderPathString, moduleFolderPathsByNameMap);
 	}
 }

@@ -6,7 +6,6 @@ import com.personal.utils.idea.IdeaFilesSynchronizer;
 import com.utils.io.PathUtils;
 import com.utils.io.file_copiers.FactoryFileCopier;
 import com.utils.io.folder_copiers.FactoryFolderCopier;
-import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
 public class GradleRoot {
@@ -15,19 +14,22 @@ public class GradleRoot {
 	private final String commonBuildGradleFilePathString;
 	private final String commonSettingsGradleFilePathString;
 	private final String gitAttributesFilePathString;
+	private final String allModulesFolderPathString;
 	private final Map<String, String> moduleFolderPathsByNameMap;
 
 	GradleRoot(
-			final String rootFolderPathString,
-			final String commonBuildGradleFilePathString,
-			final String commonSettingsGradleFilePathString,
-			final String gitAttributesFilePathString,
-			final Map<String, String> moduleFolderPathsByNameMap) {
+            final String rootFolderPathString,
+            final String commonBuildGradleFilePathString,
+            final String commonSettingsGradleFilePathString,
+            final String gitAttributesFilePathString,
+            final String allModulesFolderPathString,
+            final Map<String, String> moduleFolderPathsByNameMap) {
 
 		this.rootFolderPathString = rootFolderPathString;
 		this.commonBuildGradleFilePathString = commonBuildGradleFilePathString;
 		this.commonSettingsGradleFilePathString = commonSettingsGradleFilePathString;
 		this.gitAttributesFilePathString = gitAttributesFilePathString;
+		this.allModulesFolderPathString = allModulesFolderPathString;
 		this.moduleFolderPathsByNameMap = moduleFolderPathsByNameMap;
 	}
 
@@ -66,13 +68,13 @@ public class GradleRoot {
 	private void synchronizeIdeaSettingsFiles(
 			final GradleRoot srcGradleRoot) {
 
-		final String srcAllModulesFolderPathString = srcGradleRoot.createAllModulesFolderPathString();
+		final String srcAllModulesFolderPathString = srcGradleRoot.allModulesFolderPathString;
 		if (srcAllModulesFolderPathString != null) {
 
 			final String srcIdeaFolderPathString =
 					PathUtils.computePath(srcAllModulesFolderPathString, ".idea");
 
-			final String dstAllModulesFolderPathString = createAllModulesFolderPathString();
+			final String dstAllModulesFolderPathString = allModulesFolderPathString;
 			if (dstAllModulesFolderPathString != null) {
 
 				final String dstIdeaFolderPathString =
@@ -81,41 +83,6 @@ public class GradleRoot {
 				IdeaFilesSynchronizer.work(srcIdeaFolderPathString, dstIdeaFolderPathString);
 			}
 		}
-	}
-
-	private String createAllModulesFolderPathString() {
-
-		String allModulesPathString = null;
-		for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
-
-			final String moduleName = mapEntry.getKey();
-			if (moduleName.endsWith("AllModules")) {
-
-				allModulesPathString = mapEntry.getValue();
-				break;
-			}
-		}
-
-		if (allModulesPathString == null) {
-
-			final String rootModuleName = PathUtils.computeFileName(rootFolderPathString);
-			for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
-
-				final String moduleName = mapEntry.getKey();
-				if (rootModuleName.equals(moduleName)) {
-
-					allModulesPathString = mapEntry.getValue();
-					break;
-				}
-			}
-		}
-
-		if (allModulesPathString == null) {
-			Logger.printError("could not compute " +
-					"all modules folder path for project " + rootFolderPathString);
-		}
-
-		return allModulesPathString;
 	}
 
 	@Override

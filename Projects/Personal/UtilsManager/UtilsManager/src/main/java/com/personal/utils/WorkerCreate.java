@@ -1,7 +1,5 @@
 package com.personal.utils;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -12,16 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.personal.utils.idea.IdeaFilesSynchronizer;
-import com.utils.io.file_copiers.FactoryFileCopier;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.personal.utils.gradle_roots.FactoryGradleRoot;
 import com.personal.utils.gradle_roots.GradleRoot;
+import com.personal.utils.idea.IdeaFilesSynchronizer;
 import com.utils.io.PathUtils;
 import com.utils.io.ReaderUtils;
-import com.utils.io.ResourceFileUtils;
 import com.utils.io.StreamUtils;
 import com.utils.io.WriterUtils;
 import com.utils.io.folder_copiers.FactoryFolderCopier;
@@ -70,9 +65,6 @@ final class WorkerCreate {
 			subProjectRelativePathStringList.add(subProjectRelativePathString);
 		}
 
-		final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(pathString, moduleFolderPathsByNameMap);
-		gradleRoot.synchronizeFrom(utilsGradleRoot);
-
 		final String projectName = PathUtils.computeFileName(pathString);
 
 		final String utilsRootPathString = FactoryGradleRoot.createUtilsRootPathString();
@@ -87,15 +79,18 @@ final class WorkerCreate {
 		replaceDependencies(projectFolderPathString, appInfo, subProjectRelativePathStringList);
 		createMainClass(projectFolderPathString, projectName, packageName);
 
-		final String allModulesProjectName = projectName + "AllModules";
-		final String allModulesProjectRelativePath = "/Projects/Personal/" +
-				allModulesProjectName + "/" + allModulesProjectName;
-		final String allModulesProjectFolderPathString =
-				PathUtils.computePath(pathString, allModulesProjectRelativePath);
+        final String allModulesProjectName = projectName + "AllModules";
+        final String allModulesProjectRelativePath = "/Projects/Personal/" +
+                allModulesProjectName + "/" + allModulesProjectName;
+        final String allModulesProjectFolderPathString =
+                PathUtils.computePath(pathString, allModulesProjectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, allModulesProjectFolderPathString, true);
 		replaceDependencies(allModulesProjectFolderPathString, "", Collections.singletonList(projectRelativePath));
-		createIntelliJSettingsFiles(allModulesProjectFolderPathString);
+
+        final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(pathString,
+                allModulesProjectFolderPathString, moduleFolderPathsByNameMap);
+        gradleRoot.synchronizeFrom(utilsGradleRoot);
 	}
 
 	private static String createAppInfo(
@@ -246,18 +241,5 @@ final class WorkerCreate {
 				Logger.printException(exc);
 			}
 		}
-	}
-
-	private static void createIntelliJSettingsFiles(
-			final String allModulesProjectFolderPathString) {
-
-        final String utilsRootPathString = FactoryGradleRoot.createUtilsRootPathString();
-        final String srcIdeaFolderPathString = PathUtils.computePath(utilsRootPathString,
-                "Projects", "Personal", "UtilsManagerAllModules", "UtilsManagerAllModules", ".idea");
-
-        final String dstIdeaFolderPathString =
-                PathUtils.computePath(allModulesProjectFolderPathString, ".idea");
-
-        IdeaFilesSynchronizer.work(srcIdeaFolderPathString, dstIdeaFolderPathString);
 	}
 }

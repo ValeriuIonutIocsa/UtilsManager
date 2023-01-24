@@ -3,7 +3,6 @@ package com.personal.utils;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.io.File;
@@ -16,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JDialog;
+import javax.swing.JScrollPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
@@ -51,14 +51,14 @@ public class JDialogCreate extends JDialog {
 		gridBagLayout.rowWeights = new double[] { 1 };
 		getContentPane().setLayout(gridBagLayout);
 
-		jCheckBoxTree = new JCheckBoxTree();
 		final GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.fill = GridBagConstraints.BOTH;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		final ScrollPane scrollPane = new ScrollPane();
-		scrollPane.add(jCheckBoxTree);
-		getContentPane().add(scrollPane, gridBagConstraints);
+		final JScrollPane jScrollPane = new JScrollPane();
+		jCheckBoxTree = new JCheckBoxTree();
+		jScrollPane.setViewportView(jCheckBoxTree);
+		getContentPane().add(jScrollPane, gridBagConstraints);
 
 		final TreeModel treeModel = new DefaultTreeModel(rootMutableTreeNode);
 		jCheckBoxTree.setModel(treeModel);
