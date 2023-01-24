@@ -256,6 +256,7 @@ final class WorkerCreate {
 		if (createDirectoriesSuccess) {
 
 			final String[] settingsFileNameArray = {
+                    "checkstyle-idea.xml",
 					"eclipseCodeFormatter.xml",
 					"gradle.xml",
 					"misc.xml",
