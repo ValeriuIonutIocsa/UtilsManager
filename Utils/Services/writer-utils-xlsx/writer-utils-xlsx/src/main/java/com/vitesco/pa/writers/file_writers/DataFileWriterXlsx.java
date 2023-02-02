@@ -221,7 +221,6 @@ public class DataFileWriterXlsx extends AbstractDataFileWriter {
 					if (!Double.isNaN(doubleValue)) {
 
 						final XlsCell xlsCell = new XlsCellNumber(cellStyleDecimalNumber, doubleValue);
-						xlsCellsByColumnList.get(i).add(xlsCell);
 						xlsCellList.add(xlsCell);
 					}
 
