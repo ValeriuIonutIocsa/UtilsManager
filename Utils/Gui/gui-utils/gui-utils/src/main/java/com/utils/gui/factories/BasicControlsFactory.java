@@ -112,13 +112,13 @@ public interface BasicControlsFactory {
 			File initialDirectoryParam);
 
 	/**
-	 * @param extension
-	 *            case sensitive file extension (ex: xml, csv, html)
+	 * @param extensionArray
+	 *            case sensitive file extensions (ex: xml, csv, html)
 	 * @return a FileChooser ExtensionFilter that matches files of the given extension
 	 */
 	@ApiMethod
 	FileChooser.ExtensionFilter createExtensionFilter(
-			String extension);
+			String... extensionArray);
 
 	/**
 	 * @return a FileChooser ExtensionFilter that matches all file extensions

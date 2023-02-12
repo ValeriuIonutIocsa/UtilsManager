@@ -2,21 +2,49 @@ package com.utils.gui.screens;
 
 import java.util.List;
 
-import javafx.geometry.Rectangle2D;
+import com.utils.annotations.ApiMethod;
+
+import javafx.scene.Scene;
 import javafx.stage.Screen;
+import javafx.stage.Window;
 
 public final class ScreenUtils {
 
 	private ScreenUtils() {
 	}
 
-	public static Rectangle2D computeWidestScreenBounds() {
+	@ApiMethod
+	public static Screen computeScreen(
+			final Scene scene) {
 
-		final Screen screen = computeWidestScreen();
-		return screen.getBounds();
+		final Window window = scene.getWindow();
+		final double x = window.getX();
+		final double y = window.getY();
+		final double width = window.getWidth();
+		final double height = window.getHeight();
+		return computeScreen(x, y, width, height);
 	}
 
-	private static Screen computeWidestScreen() {
+	@ApiMethod
+	public static Screen computeScreen(
+			final double x,
+			final double y,
+			final double width,
+			final double height) {
+
+		final Screen screen;
+		final List<Screen> screenList = Screen.getScreensForRectangle(
+				x + width / 2, y + height / 2, 1, 1);
+		if (!screenList.isEmpty()) {
+			screen = screenList.get(0);
+		} else {
+			screen = computeWidestScreen();
+		}
+		return screen;
+	}
+
+	@ApiMethod
+	public static Screen computeWidestScreen() {
 
 		Screen widestScreen = Screen.getPrimary();
 		double maxScreenWidth = widestScreen.getVisualBounds().getWidth();

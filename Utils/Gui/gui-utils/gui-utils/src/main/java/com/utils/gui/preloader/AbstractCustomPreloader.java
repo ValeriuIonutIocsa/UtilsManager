@@ -2,7 +2,6 @@ package com.utils.gui.preloader;
 
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.LayoutControlsFactories;
-import com.utils.gui.stages.StageUtils;
 
 import javafx.application.Preloader;
 import javafx.scene.Scene;
@@ -38,6 +37,8 @@ public abstract class AbstractCustomPreloader extends Preloader {
 		primaryStage.setWidth(image.getWidth());
 		primaryStage.setHeight(image.getHeight() + 20);
 
+		centerOnScreen(primaryStage);
+
 		final VBox vBoxPrimary = LayoutControlsFactories.getInstance().createVBox();
 
 		final ImageView imageView = new ImageView(image);
@@ -51,13 +52,16 @@ public abstract class AbstractCustomPreloader extends Preloader {
 		scene.getStylesheets().add("com/utils/gui/preloader/preloader.css");
 		primaryStage.setScene(scene);
 
-		primaryStage.setOnShown(event -> StageUtils.centerOnScreen(primaryStage));
 		primaryStage.show();
 	}
 
 	protected abstract Image getImage();
 
+	protected abstract void centerOnScreen(
+			Stage primaryStage);
+
 	public static void hide() {
+
 		primaryStage.hide();
 	}
 }

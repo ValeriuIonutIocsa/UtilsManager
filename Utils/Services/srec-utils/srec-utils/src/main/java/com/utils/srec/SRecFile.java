@@ -178,7 +178,7 @@ public class SRecFile {
 
 	private static void patch(
 			final SRecPatcherSymbol sRecPatcherSymbol,
-			final List<SRecRecord> sRecRecordList,
+			final List<SRecRecord> sortedSRecRecordList,
 			final int recordIndex) {
 
 		int readingRecordIndex = recordIndex;
@@ -186,11 +186,11 @@ public class SRecFile {
 		int readByteCount = 0;
 		while (true) {
 
-			if (readingRecordIndex >= sRecRecordList.size()) {
+			if (readingRecordIndex >= sortedSRecRecordList.size()) {
 				break;
 			}
 
-			final SRecRecord readingSRecRecord = sRecRecordList.get(readingRecordIndex);
+			final SRecRecord readingSRecRecord = sortedSRecRecordList.get(readingRecordIndex);
 			final int readingOffset = (int) (readingStartAddress - readingSRecRecord.getStartAddress());
 			if (readingOffset < 0) {
 				break;
@@ -204,13 +204,14 @@ public class SRecFile {
 			}
 
 			final byte[] symbolContent = sRecPatcherSymbol.getSymbolContent();
-			data[readingOffset] = symbolContent[readByteCount];
-			readByteCount++;
 			if (readByteCount == symbolContent.length) {
 				break;
 			}
 
+			data[readingOffset] = symbolContent[readByteCount];
+
 			readingStartAddress++;
+			readByteCount++;
 		}
 	}
 

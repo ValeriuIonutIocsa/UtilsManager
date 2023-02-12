@@ -1,17 +1,20 @@
 package com.utils.gui.objects;
 
 import com.utils.gui.data.Dimensions;
+import com.utils.gui.screens.ScreenUtils;
 import com.utils.gui.stages.StageUtils;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class PopupWindow extends Stage {
 
 	public PopupWindow(
 			final Scene parentScene,
+			final Screen parentScreen,
 			final Modality modality,
 			final String title,
 			final Dimensions dimensions,
@@ -33,7 +36,18 @@ public class PopupWindow extends Stage {
 
 		setOnShown(event -> {
 
-			StageUtils.centerOnScreen(this);
+			final Screen screen;
+			if (parentScreen != null) {
+				screen = parentScreen;
+			} else {
+				screen = ScreenUtils.computeScreen(parentScene);
+			}
+			if (screen != null) {
+				StageUtils.centerOnScreen(this, screen);
+			} else {
+				StageUtils.centerOnScreen(this);
+			}
+
 			if (dimensions == null) {
 
 				final double height = getHeight();

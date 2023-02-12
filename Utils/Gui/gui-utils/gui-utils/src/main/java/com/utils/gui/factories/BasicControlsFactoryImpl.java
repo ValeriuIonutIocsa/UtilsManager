@@ -1,7 +1,9 @@
 package com.utils.gui.factories;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -308,9 +310,23 @@ public class BasicControlsFactoryImpl implements BasicControlsFactory {
 	@Override
 	@ApiMethod
 	public FileChooser.ExtensionFilter createExtensionFilter(
-			final String extension) {
-		return new FileChooser.ExtensionFilter(
-				extension.toUpperCase(Locale.US) + " file (*." + extension + ")", "*." + extension);
+			final String... extensionArray) {
+
+		final String firstDisplayName = Arrays.stream(extensionArray)
+				.map(extension -> extension.toUpperCase(Locale.US))
+				.collect(Collectors.joining(", "));
+
+		final String secondDisplayName = Arrays.stream(extensionArray)
+				.map(extension -> "*." + extension)
+				.collect(Collectors.joining(", "));
+
+		final String description = firstDisplayName + " file (" + secondDisplayName + ")";
+
+		final String[] processedExtensionArray = Arrays.stream(extensionArray)
+				.map(extension -> "*." + extension)
+				.toArray(value -> new String[extensionArray.length]);
+
+		return new FileChooser.ExtensionFilter(description, processedExtensionArray);
 	}
 
 	@Override

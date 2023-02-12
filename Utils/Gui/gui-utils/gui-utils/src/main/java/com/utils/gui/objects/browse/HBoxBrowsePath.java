@@ -1,37 +1,38 @@
 package com.utils.gui.objects.browse;
 
-import java.io.File;
-import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 
+import com.utils.annotations.ApiMethod;
 import com.utils.gui.AbstractCustomControl;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
-import com.utils.io.PathUtils;
 
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
+public class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 
 	private final String name;
 
 	private final TextField pathTextField;
 
 	private String initialDirectoryPathString;
+	private final BrowsePath browsePath;
 
 	HBoxBrowsePath(
 			final String name,
 			final String initialValue,
-			final String initialDirectoryPathString) {
+			final String initialDirectoryPathString,
+			final BrowsePath browsePath) {
 
 		this.name = name;
 		this.initialDirectoryPathString = initialDirectoryPathString;
+		this.browsePath = browsePath;
 
 		pathTextField = BasicControlsFactories.getInstance().createTextField("");
 		if (StringUtils.isNotBlank(initialValue)) {
@@ -43,6 +44,8 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 	protected HBox createRoot() {
 
 		final HBox hBoxRoot = LayoutControlsFactories.getInstance().createHBox();
+
+		browsePath.createInputTypeControls(hBoxRoot);
 
 		GuiUtils.addToHBox(hBoxRoot, pathTextField,
 				Pos.CENTER, Priority.ALWAYS, 0, 0, 0, 0);
@@ -57,35 +60,28 @@ public abstract class HBoxBrowsePath extends AbstractCustomControl<HBox> {
 
 	private void browse() {
 
-		final String pathString = browsePath();
+		final String existingPathString = computePathString();
+		final Scene scene = getRoot().getScene();
+		final String pathString = browsePath.browsePath(
+				name, existingPathString, initialDirectoryPathString, scene);
 		if (StringUtils.isNotBlank(pathString)) {
 			pathTextField.setText(pathString);
 		}
 	}
 
-	abstract String browsePath();
+	@ApiMethod
+	public String computePathString() {
 
-	File getInitialDirectory() {
-
-		final File initialDirectory;
-		initialDirectory = new File(
-				Objects.requireNonNullElseGet(initialDirectoryPathString, PathUtils::createRootPath));
-		return initialDirectory;
-	}
-
-	public String getPathString() {
 		return GuiUtils.computeTextInputControlPathString(pathTextField);
 	}
 
-	String getName() {
-		return name;
-	}
-
+	@ApiMethod
 	public void setInitialDirectoryPathString(
 			final String initialDirectoryPathString) {
 		this.initialDirectoryPathString = initialDirectoryPathString;
 	}
 
+	@ApiMethod
 	public TextField getPathTextField() {
 		return pathTextField;
 	}

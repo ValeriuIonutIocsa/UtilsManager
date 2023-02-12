@@ -7,38 +7,34 @@ import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
 
+import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 
-public class HBoxBrowsePathFile extends HBoxBrowsePath {
+class BrowsePathFile implements BrowsePath {
 
-	public enum Mode {
-		OPEN, SAVE
-	}
-
-	private final Mode mode;
+	private final BrowsePathFileMode mode;
 	private final List<FileChooser.ExtensionFilter> extensionFilterList;
 
-	public HBoxBrowsePathFile(
-			final String name,
-			final String initialValue,
-			final String initialDirectoryPathString,
-			final Mode mode,
+	BrowsePathFile(
+			final BrowsePathFileMode mode,
 			final List<FileChooser.ExtensionFilter> extensionFilterList) {
-
-		super(name, initialValue, initialDirectoryPathString);
 
 		this.mode = mode;
 		this.extensionFilterList = extensionFilterList;
 	}
 
 	@Override
-	String browsePath() {
+	public String browsePath(
+			final String name,
+			final String existingPathString,
+			final String initialDirectoryPathString,
+			final Scene scene) {
 
 		String pathString = null;
 
-		final String name = getName();
 		final String title = "Browse " + name + " file path:";
-		final File initialDirectory = getInitialDirectory();
+		final File initialDirectory = computeInitialDirectory(
+				existingPathString, initialDirectoryPathString);
 		final FileChooser fileChooser =
 				BasicControlsFactories.getInstance().createFileChooser(title, initialDirectory);
 
@@ -52,10 +48,10 @@ public class HBoxBrowsePathFile extends HBoxBrowsePath {
 		}
 
 		final File file;
-		if (mode == Mode.OPEN) {
-			file = fileChooser.showOpenDialog(getRoot().getScene().getWindow());
-		} else if (mode == Mode.SAVE) {
-			file = fileChooser.showSaveDialog(getRoot().getScene().getWindow());
+		if (mode == BrowsePathFileMode.OPEN) {
+			file = fileChooser.showOpenDialog(scene.getWindow());
+		} else if (mode == BrowsePathFileMode.SAVE) {
+			file = fileChooser.showSaveDialog(scene.getWindow());
 		} else {
 			file = null;
 		}
@@ -68,16 +64,17 @@ public class HBoxBrowsePathFile extends HBoxBrowsePath {
 	}
 
 	@Override
-	File getInitialDirectory() {
+	public File computeInitialDirectory(
+			final String existingPathString,
+			final String initialDirectoryPathString) {
 
 		File initialDirectory = null;
-		final String pathString = getPathString();
-		final String parentPathString = PathUtils.computeParentPath(pathString);
+		final String parentPathString = PathUtils.computeParentPath(existingPathString);
 		if (IoUtils.directoryExists(parentPathString)) {
 			initialDirectory = new File(parentPathString);
 		}
 		if (initialDirectory == null) {
-			initialDirectory = super.getInitialDirectory();
+			initialDirectory = BrowsePath.computeInitialDirectory(initialDirectoryPathString);
 		}
 		return initialDirectory;
 	}
