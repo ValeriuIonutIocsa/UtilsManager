@@ -219,9 +219,11 @@ File createOtherDestDir() {
         if (jarFolder.isDirectory()) {
             otherDestDir = jarFolder
         } else {
-            boolean jarFolderCreated = jarFolder.mkdir()
+            boolean jarFolderCreated = jarFolder.mkdirs()
             if (jarFolderCreated) {
                 otherDestDir = jarFolder
+            } else {
+                println 'failed to create JAR folder'
             }
         }
     }
