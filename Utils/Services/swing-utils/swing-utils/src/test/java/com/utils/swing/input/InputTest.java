@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.utils.log.Logger;
 
-public class InputTest {
+class InputTest {
 
 	@Test
 	void testReadAndPrintInput() {
