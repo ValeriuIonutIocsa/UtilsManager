@@ -3,9 +3,11 @@ package com.personal.utils.gradle_roots;
 import java.util.Map;
 
 import com.personal.utils.idea.IdeaFilesSynchronizer;
+import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
 import com.utils.io.file_copiers.FactoryFileCopier;
 import com.utils.io.folder_copiers.FactoryFolderCopier;
+import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.string.StrUtils;
 
 public class GradleRoot {
@@ -38,25 +40,20 @@ public class GradleRoot {
 
 		synchronizeCommonFiles(srcGradleRoot);
 
+		synchronizeBatchFiles(srcGradleRoot);
 		synchronizeIdeaSettingsFiles(srcGradleRoot);
 
-		for (final Map.Entry<String, String> mapEntry : srcGradleRoot.moduleFolderPathsByNameMap.entrySet()) {
+		for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
 
 			final String moduleName = mapEntry.getKey();
-			final String srcModuleFolderPathString = mapEntry.getValue();
+			final String moduleFolderPathString = mapEntry.getValue();
+			final String srcModuleFolderPathString =
+					srcGradleRoot.moduleFolderPathsByNameMap.get(moduleName);
+			if (srcModuleFolderPathString != null) {
 
-			String moduleFolderPathString = moduleFolderPathsByNameMap.get(moduleName);
-			if (moduleFolderPathString != null) {
-
-				final String srcRootFolderPathString = srcGradleRoot.getRootFolderPathString();
-				final String moduleFolderRelativePathString =
-						PathUtils.computeRelativePath(srcRootFolderPathString, srcModuleFolderPathString);
-				moduleFolderPathString = PathUtils.computePath(
-						rootFolderPathString, moduleFolderRelativePathString);
+				FactoryFolderCopier.getInstance().copyFolder(
+						srcModuleFolderPathString, moduleFolderPathString, true);
 			}
-
-			FactoryFolderCopier.getInstance().copyFolder(
-					srcModuleFolderPathString, moduleFolderPathString, true);
 		}
 	}
 
@@ -69,6 +66,35 @@ public class GradleRoot {
 				srcGradleRoot.commonSettingsGradleFilePathString, commonSettingsGradleFilePathString, true, true);
 		FactoryFileCopier.getInstance().copyFile(
 				srcGradleRoot.gitAttributesFilePathString, gitAttributesFilePathString, true, true);
+	}
+
+	private void synchronizeBatchFiles(
+			final GradleRoot srcGradleRoot) {
+
+		final String srcAllModulesFolderPathString = srcGradleRoot.allModulesFolderPathString;
+		if (srcAllModulesFolderPathString != null) {
+
+			final String srcGitPushPathString =
+					PathUtils.computePath(srcAllModulesFolderPathString, "git_push.bat");
+
+			final String dstAllModulesFolderPathString = allModulesFolderPathString;
+			if (dstAllModulesFolderPathString != null) {
+
+				final String dstGitPushPathString =
+						PathUtils.computePath(dstAllModulesFolderPathString, "git_push.bat");
+
+				if (IoUtils.fileExists(dstGitPushPathString)) {
+
+					final boolean createParentDirectoriesSuccess =
+							FactoryFolderCreator.getInstance().createParentDirectories(dstGitPushPathString, true);
+					if (createParentDirectoriesSuccess) {
+
+						FactoryFileCopier.getInstance().copyFile(
+								srcGitPushPathString, dstGitPushPathString, false, true);
+					}
+				}
+			}
+		}
 	}
 
 	private void synchronizeIdeaSettingsFiles(
