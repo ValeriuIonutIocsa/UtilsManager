@@ -18,12 +18,12 @@ public class GradleRoot {
 	private final Map<String, String> moduleFolderPathsByNameMap;
 
 	GradleRoot(
-            final String rootFolderPathString,
-            final String commonBuildGradleFilePathString,
-            final String commonSettingsGradleFilePathString,
-            final String gitAttributesFilePathString,
-            final String allModulesFolderPathString,
-            final Map<String, String> moduleFolderPathsByNameMap) {
+			final String rootFolderPathString,
+			final String commonBuildGradleFilePathString,
+			final String commonSettingsGradleFilePathString,
+			final String gitAttributesFilePathString,
+			final String allModulesFolderPathString,
+			final Map<String, String> moduleFolderPathsByNameMap) {
 
 		this.rootFolderPathString = rootFolderPathString;
 		this.commonBuildGradleFilePathString = commonBuildGradleFilePathString;
@@ -40,17 +40,23 @@ public class GradleRoot {
 
 		synchronizeIdeaSettingsFiles(srcGradleRoot);
 
-		for (final Map.Entry<String, String> mapEntry : moduleFolderPathsByNameMap.entrySet()) {
+		for (final Map.Entry<String, String> mapEntry : srcGradleRoot.moduleFolderPathsByNameMap.entrySet()) {
 
 			final String moduleName = mapEntry.getKey();
-			final String moduleFolderPathString = mapEntry.getValue();
-			final String srcModuleFolderPathString =
-					srcGradleRoot.moduleFolderPathsByNameMap.get(moduleName);
-			if (srcModuleFolderPathString != null) {
+			final String srcModuleFolderPathString = mapEntry.getValue();
 
-				FactoryFolderCopier.getInstance().copyFolder(
-						srcModuleFolderPathString, moduleFolderPathString, true);
+			String moduleFolderPathString = moduleFolderPathsByNameMap.get(moduleName);
+			if (moduleFolderPathString != null) {
+
+				final String srcRootFolderPathString = srcGradleRoot.getRootFolderPathString();
+				final String moduleFolderRelativePathString =
+						PathUtils.computeRelativePath(srcRootFolderPathString, srcModuleFolderPathString);
+				moduleFolderPathString = PathUtils.computePath(
+						rootFolderPathString, moduleFolderRelativePathString);
 			}
+
+			FactoryFolderCopier.getInstance().copyFolder(
+					srcModuleFolderPathString, moduleFolderPathString, true);
 		}
 	}
 

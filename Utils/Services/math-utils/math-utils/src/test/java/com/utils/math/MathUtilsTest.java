@@ -9,6 +9,10 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 
+import com.utils.test.DynamicTestOption;
+import com.utils.test.DynamicTestOptions;
+import com.utils.test.DynamicTestSuite;
+
 class MathUtilsTest {
 
 	@Test
@@ -21,30 +25,48 @@ class MathUtilsTest {
 	@TestFactory
 	List<DynamicTest> testRoundToNextMultiple() {
 
-		final List<DynamicTest> dynamicTestList = new ArrayList<>();
-		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3, 4);
-		if (testCaseList.contains(1)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("1",
-					() -> testRoundToNextMultipleCommon(13, 4, 16)));
-		}
-		if (testCaseList.contains(2)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("2",
-					() -> testRoundToNextMultipleCommon(8, 4, 8)));
-		}
-		if (testCaseList.contains(3)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("3",
-					() -> testRoundToNextMultipleCommon(19, 5, 20)));
-		}
-		return dynamicTestList;
+		final DynamicTestOptions<TestRoundToNextMultipleData> inputDynamicTestOptions =
+				new DynamicTestOptions<>("input", 1);
+
+		inputDynamicTestOptions.getDynamicTestOptionList().add(new DynamicTestOption<>(1, null,
+				new TestRoundToNextMultipleData(13, 4, 16)));
+		inputDynamicTestOptions.getDynamicTestOptionList().add(new DynamicTestOption<>(2, null,
+				new TestRoundToNextMultipleData(8, 4, 8)));
+		inputDynamicTestOptions.getDynamicTestOptionList().add(new DynamicTestOption<>(3, null,
+				new TestRoundToNextMultipleData(19, 5, 20)));
+
+		final DynamicTestSuite dynamicTestSuite = new DynamicTestSuite(DynamicTestSuite.Mode.ALL,
+				() -> testRoundToNextMultipleCommon(inputDynamicTestOptions),
+				inputDynamicTestOptions);
+
+		return dynamicTestSuite.createDynamicTestList();
 	}
 
 	private static void testRoundToNextMultipleCommon(
-			final int n,
-			final int d,
-			final int expectedResult) {
+			final DynamicTestOptions<TestRoundToNextMultipleData> inputDynamicTestOptions) {
 
-		final int result = MathUtils.roundToNextMultiple(n, d);
-		Assertions.assertEquals(expectedResult, result);
+		final TestRoundToNextMultipleData testRoundToNextMultipleData =
+				inputDynamicTestOptions.computeValue();
+		final int result = MathUtils.roundToNextMultiple(
+				testRoundToNextMultipleData.n, testRoundToNextMultipleData.d);
+		Assertions.assertEquals(testRoundToNextMultipleData.expectedResult, result);
+	}
+
+	private static class TestRoundToNextMultipleData {
+
+		private final int n;
+		private final int d;
+		private final int expectedResult;
+
+		public TestRoundToNextMultipleData(
+				final int n,
+				final int d,
+				final int expectedResult) {
+
+			this.n = n;
+			this.d = d;
+			this.expectedResult = expectedResult;
+		}
 	}
 
 	@TestFactory
