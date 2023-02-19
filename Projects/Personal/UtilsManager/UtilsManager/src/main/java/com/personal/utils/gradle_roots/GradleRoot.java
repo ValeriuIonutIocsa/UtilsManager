@@ -76,21 +76,23 @@ public class GradleRoot {
 
 			final String srcGitPushPathString =
 					PathUtils.computePath(srcAllModulesFolderPathString, "git_push.bat");
+			if (IoUtils.fileExists(srcGitPushPathString)) {
 
-			final String dstAllModulesFolderPathString = allModulesFolderPathString;
-			if (dstAllModulesFolderPathString != null) {
+				final String dstAllModulesFolderPathString = allModulesFolderPathString;
+				if (dstAllModulesFolderPathString != null) {
 
-				final String dstGitPushPathString =
-						PathUtils.computePath(dstAllModulesFolderPathString, "git_push.bat");
+					final String dstGitPushPathString =
+							PathUtils.computePath(dstAllModulesFolderPathString, "git_push.bat");
 
-				if (IoUtils.fileExists(dstGitPushPathString)) {
+					if (!IoUtils.fileExists(dstGitPushPathString)) {
 
-					final boolean createParentDirectoriesSuccess =
-							FactoryFolderCreator.getInstance().createParentDirectories(dstGitPushPathString, true);
-					if (createParentDirectoriesSuccess) {
+						final boolean createParentDirectoriesSuccess = FactoryFolderCreator.getInstance()
+								.createParentDirectories(dstGitPushPathString, true);
+						if (createParentDirectoriesSuccess) {
 
-						FactoryFileCopier.getInstance().copyFile(
-								srcGitPushPathString, dstGitPushPathString, false, true);
+							FactoryFileCopier.getInstance().copyFile(
+									srcGitPushPathString, dstGitPushPathString, false, true);
+						}
 					}
 				}
 			}
