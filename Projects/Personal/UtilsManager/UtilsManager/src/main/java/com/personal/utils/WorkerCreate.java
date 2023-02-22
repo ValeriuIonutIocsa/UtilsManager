@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.personal.utils.gradle_roots.FactoryGradleRoot;
 import com.personal.utils.gradle_roots.GradleRoot;
-import com.personal.utils.idea.IdeaFilesSynchronizer;
 import com.utils.io.PathUtils;
 import com.utils.io.ReaderUtils;
 import com.utils.io.StreamUtils;
@@ -78,19 +77,20 @@ final class WorkerCreate {
 		final String appInfo = createAppInfo(packageName);
 		replaceDependencies(projectFolderPathString, appInfo, subProjectRelativePathStringList);
 		createMainClass(projectFolderPathString, projectName, packageName);
+		createTestMainClass(projectFolderPathString, projectName, packageName);
 
-        final String allModulesProjectName = projectName + "AllModules";
-        final String allModulesProjectRelativePath = "/Projects/Personal/" +
-                allModulesProjectName + "/" + allModulesProjectName;
-        final String allModulesProjectFolderPathString =
-                PathUtils.computePath(pathString, allModulesProjectRelativePath);
+		final String allModulesProjectName = projectName + "AllModules";
+		final String allModulesProjectRelativePath = "/Projects/Personal/" +
+				allModulesProjectName + "/" + allModulesProjectName;
+		final String allModulesProjectFolderPathString =
+				PathUtils.computePath(pathString, allModulesProjectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, allModulesProjectFolderPathString, true);
 		replaceDependencies(allModulesProjectFolderPathString, "", Collections.singletonList(projectRelativePath));
 
-        final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(pathString,
-                allModulesProjectFolderPathString, moduleFolderPathsByNameMap);
-        gradleRoot.synchronizeFrom(utilsGradleRoot);
+		final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(pathString,
+				allModulesProjectFolderPathString, moduleFolderPathsByNameMap);
+		gradleRoot.synchronizeFrom(utilsGradleRoot);
 	}
 
 	private static String createAppInfo(
@@ -192,6 +192,9 @@ final class WorkerCreate {
 		}
 		mainClassPathString = PathUtils.computePath(mainClassPathString, "AppStart" + projectName + ".java");
 
+		Logger.printProgress("writing main class file:" +
+				System.lineSeparator() + mainClassPathString);
+
 		final boolean success = FactoryFolderCreator.getInstance()
 				.createParentDirectories(mainClassPathString, true);
 		if (success) {
@@ -230,6 +233,11 @@ final class WorkerCreate {
 
 				printStream.println();
 
+				printStream.print("        System.out.println(\"--> starting ");
+				printStream.print(projectName);
+				printStream.print("\");");
+				printStream.println();
+
 				printStream.print("\t}");
 				printStream.println();
 
@@ -238,6 +246,97 @@ final class WorkerCreate {
 
 			} catch (final Exception exc) {
 				Logger.printError("failed to write the main class file");
+				Logger.printException(exc);
+			}
+		}
+	}
+
+	private static void createTestMainClass(
+			final String projectFolderPathString,
+			final String projectName,
+			final String packageName) {
+
+		String testMainClassPathString =
+				PathUtils.computePath(projectFolderPathString, "src", "test", "java");
+		final String[] packageNameSplitPartArray = StringUtils.split(packageName, '.');
+		for (final String packageNameSplitPart : packageNameSplitPartArray) {
+			testMainClassPathString = PathUtils.computePath(testMainClassPathString, packageNameSplitPart);
+		}
+		testMainClassPathString = PathUtils.computePath(testMainClassPathString,
+				"AppStart" + projectName + "Test.java");
+
+		Logger.printProgress("writing main test class file:" +
+				System.lineSeparator() + testMainClassPathString);
+
+		final boolean success = FactoryFolderCreator.getInstance()
+				.createParentDirectories(testMainClassPathString, true);
+		if (success) {
+
+			try (PrintStream printStream = StreamUtils.openPrintStream(testMainClassPathString)) {
+
+				printStream.print("package ");
+				printStream.print(packageName);
+				printStream.print(';');
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("import org.junit.jupiter.api.Test;");
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("class AppStart");
+				printStream.print(projectName);
+				printStream.print("Test {");
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("\t@Test");
+				printStream.println();
+
+				printStream.print("\tvoid testMain() {");
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("\t\tfinal String[] args;");
+				printStream.println();
+
+				printStream.print("\t\tfinal int input = Integer.parseInt(\"1\");");
+				printStream.println();
+
+				printStream.print("\t\tif (input == 1) {");
+				printStream.println();
+
+				printStream.print("\t\t\targs = new String[] {};");
+				printStream.println();
+
+				printStream.print("\t\t} else {");
+				printStream.println();
+
+				printStream.print("\t\t\tthrow new RuntimeException();");
+				printStream.println();
+
+				printStream.print("\t\t}");
+				printStream.println();
+
+				printStream.println();
+
+				printStream.print("\t\tAppStart");
+				printStream.print(projectName);
+				printStream.print(".main(args);");
+				printStream.println();
+
+				printStream.print("\t}");
+				printStream.println();
+
+				printStream.print("}");
+				printStream.println();
+
+			} catch (final Exception exc) {
+				Logger.printError("failed to write the test main class file");
 				Logger.printException(exc);
 			}
 		}
