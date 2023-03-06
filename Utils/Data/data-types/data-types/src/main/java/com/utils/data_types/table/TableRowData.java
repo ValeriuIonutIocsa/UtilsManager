@@ -136,6 +136,8 @@ public interface TableRowData extends Serializable {
 
 			if (dataItem != null) {
 				dataItem.writeToJson(printStream);
+			} else {
+				printStream.print("\"\"");
 			}
 
 			if (i < notBlankColumnDataMap.size() - 1) {

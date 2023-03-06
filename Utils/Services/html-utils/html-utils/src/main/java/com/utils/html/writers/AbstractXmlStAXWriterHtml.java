@@ -2,14 +2,18 @@ package com.utils.html.writers;
 
 import java.io.OutputStream;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.utils.html.sections.HtmlSectionPlainText;
 import com.utils.xml.stax.AbstractXmlStAXWriter;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class AbstractXmlStAXWriterHtml extends AbstractXmlStAXWriter {
+public abstract class AbstractXmlStAXWriterHtml
+		extends AbstractXmlStAXWriter implements XmlStAXWriterHtml {
 
 	protected AbstractXmlStAXWriterHtml(
 			final OutputStream outputStream) {
+
 		super(outputStream, "");
 	}
 
@@ -43,20 +47,41 @@ public abstract class AbstractXmlStAXWriterHtml extends AbstractXmlStAXWriter {
 		xmlStAXWriter.writeAttribute("content", "IE=10; IE=9; IE=8; IE=7; IE=EDGE");
 		xmlStAXWriter.writeEndElement(metaTagName);
 
-		final String styleTagName = "style";
-		xmlStAXWriter.writeStartElement(styleTagName);
-		xmlStAXWriter.writeAttribute("type", "text/css");
-		xmlStAXWriter.writeAttribute("xml:space", "preserve");
-
 		final String cssString = createCssString();
-		new HtmlSectionPlainText(cssString).write(xmlStAXWriter);
+		if (StringUtils.isNotBlank(cssString)) {
 
-		xmlStAXWriter.writeEndElement(styleTagName);
+			final String styleTagName = "style";
+			xmlStAXWriter.writeStartElement(styleTagName);
+			xmlStAXWriter.writeAttribute("type", "text/css");
+			xmlStAXWriter.writeAttribute("xml:space", "preserve");
+			new HtmlSectionPlainText(cssString).write(xmlStAXWriter);
+
+			xmlStAXWriter.writeEndElement(styleTagName);
+		}
+
+		final String title = createTitle();
+		if (StringUtils.isNotBlank(title)) {
+
+			final String titleTagName = "title";
+			writeStartElement(titleTagName);
+			new HtmlSectionPlainText(title).write(xmlStAXWriter);
+
+			writeEndElement(titleTagName);
+		}
 	}
 
-	protected abstract String createCssString();
+	@Override
+	public String createCssString() {
+		return null;
+	}
 
-	protected void writeBodyAttributes(
+	@Override
+	public String createTitle() {
+		return null;
+	}
+
+	@Override
+	public void writeBodyAttributes(
 			final XmlStAXWriter xmlStAXWriter) {
 	}
 

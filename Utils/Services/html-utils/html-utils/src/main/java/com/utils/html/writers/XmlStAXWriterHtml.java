@@ -2,12 +2,7 @@ package com.utils.html.writers;
 
 import com.utils.xml.stax.XmlStAXWriter;
 
-public interface WriterHtml {
-
-	void writeToFile(
-			String outputPathString);
-
-	String writeToString();
+public interface XmlStAXWriterHtml extends XmlStAXWriter {
 
 	String createCssString();
 

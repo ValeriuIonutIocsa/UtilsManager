@@ -59,19 +59,48 @@ public abstract class AbstractWriterHtml implements WriterHtml {
 		new AbstractXmlStAXWriterHtml(outputStream) {
 
 			@Override
-			protected String createCssString() {
+			public String createCssString() {
+
 				return AbstractWriterHtml.this.createCssString();
+			}
+
+			@Override
+			public String createTitle() {
+
+				return AbstractWriterHtml.this.createTitle();
+			}
+
+			@Override
+			public void writeBodyAttributes(
+					final XmlStAXWriter xmlStAXWriter) {
+
+				AbstractWriterHtml.this.writeBodyAttributes(xmlStAXWriter);
 			}
 
 			@Override
 			protected void writeBody(
 					final XmlStAXWriter xmlStAXWriter) {
+
 				AbstractWriterHtml.this.writeBody(xmlStAXWriter);
 			}
+
 		}.writeXml();
 	}
 
-	protected abstract String createCssString();
+	@Override
+	public String createCssString() {
+		return null;
+	}
+
+	@Override
+	public String createTitle() {
+		return null;
+	}
+
+	@Override
+	public void writeBodyAttributes(
+			final XmlStAXWriter xmlStAXWriter) {
+	}
 
 	private void writeBody(
 			final XmlStAXWriter xmlStAXWriter) {
