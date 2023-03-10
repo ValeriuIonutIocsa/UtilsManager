@@ -499,7 +499,7 @@ public class CustomTableView<
 			applyFilters = true;
 
 		} else {
-			Logger.printError("filter type has to not be null to add column filter!");
+			Logger.printError("filter type has to not be null to add column filter");
 			applyFilters = false;
 		}
 
@@ -655,7 +655,7 @@ public class CustomTableView<
 				new ArrayList<>(getSelectionModel().getSelectedItems());
 		if (selectedItemList.isEmpty()) {
 			if (askForConfirmation) {
-				Logger.printWarning("no " + itemDisplayName + " is selected!");
+				Logger.printWarning("no " + itemDisplayName + " is selected");
 			}
 
 		} else {
@@ -683,6 +683,7 @@ public class CustomTableView<
 			if (keepGoing) {
 
 				if (itemRemover != null) {
+
 					final boolean success = itemRemover.apply(selectedItemList);
 					if (!success) {
 						keepGoing = false;
@@ -701,8 +702,7 @@ public class CustomTableView<
 						} else {
 							plural = "s";
 						}
-						Logger.printStatus("Successfully removed the " +
-								itemDisplayName + " item" + plural + "!");
+						Logger.printStatus("successfully removed the " + itemDisplayName + " item" + plural);
 					}
 					itemsRemoved = true;
 				}
@@ -715,6 +715,7 @@ public class CustomTableView<
 	public boolean removeSelectedItem(
 			final String itemDisplayName,
 			final boolean askForConfirmation) {
+
 		return removeSelectedItem(itemDisplayName, askForConfirmation, null);
 	}
 
@@ -728,12 +729,13 @@ public class CustomTableView<
 		final TableRowDataT selectedItem = getSelectionModel().getSelectedItem();
 		if (selectedItem == null) {
 			if (askForConfirmation) {
-				Logger.printWarning("no " + itemDisplayName + " is selected!");
+				Logger.printWarning("no " + itemDisplayName + " is selected");
 			}
 
 		} else {
 			boolean keepGoing = true;
 			if (askForConfirmation) {
+
 				final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
 						"Are you sure you wish to remove the selected " + itemDisplayName + " from the list?",
 						ButtonType.NO, ButtonType.YES);
@@ -759,7 +761,7 @@ public class CustomTableView<
 					if (askForConfirmation) {
 
 						Logger.printNewLine();
-						Logger.printStatus("Successfully removed the " + itemDisplayName + " item!");
+						Logger.printStatus("successfully removed the " + itemDisplayName + " item");
 						itemRemoved = true;
 					}
 				}

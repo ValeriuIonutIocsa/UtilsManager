@@ -47,7 +47,7 @@ public final class FactorySRecFile {
 									state = 1;
 								} else if (b != '\n' && b != '\r') {
 									Logger.printWarning("found unexpected character " + b +
-											" in the SREC file (expected S)!");
+											" in the SREC file (expected S)");
 								}
 							}
 
@@ -61,7 +61,7 @@ public final class FactorySRecFile {
 								if (sRecRecordType == null) {
 
 									Logger.printWarning("invalid record type " + recordTypeCode +
-											" in the SREC file!");
+											" in the SREC file");
 									state = 0;
 
 								} else {
@@ -177,7 +177,7 @@ public final class FactorySRecFile {
 		final int hexDigitValue;
 		final int b = inputStream.read();
 		if (b == -1) {
-			Logger.printWarning("unexpected end of stream while parsing the SREC file!");
+			Logger.printWarning("unexpected end of stream while parsing the SREC file");
 			hexDigitValue = -1;
 		} else if ('0' <= b && b <= '9') {
 			hexDigitValue = b - '0';
@@ -186,7 +186,7 @@ public final class FactorySRecFile {
 		} else if ('a' <= b && b <= 'f') {
 			hexDigitValue = b - 'a' + 10;
 		} else {
-			Logger.printWarning("invalid hex digit value " + b + " in the SREC file!");
+			Logger.printWarning("invalid hex digit value " + b + " in the SREC file");
 			hexDigitValue = -1;
 		}
 		return hexDigitValue;

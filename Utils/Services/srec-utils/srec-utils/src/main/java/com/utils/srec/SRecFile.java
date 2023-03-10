@@ -32,7 +32,7 @@ public class SRecFile {
 		long startAddress = -1;
 		for (final SRecRecord sRecRecord : sRecRecordList) {
 
-			final SRecRecordType sRecRecordType = sRecRecord.getsRecRecordType();
+			final SRecRecordType sRecRecordType = sRecRecord.getSRecRecordType();
 			if (sRecRecordType == SRecRecordType.S3) {
 
 				startAddress = sRecRecord.getStartAddress();
@@ -48,7 +48,7 @@ public class SRecFile {
 		for (int i = sRecRecordList.size() - 1; i >= 0; i--) {
 
 			final SRecRecord sRecRecord = sRecRecordList.get(i);
-			final SRecRecordType sRecRecordType = sRecRecord.getsRecRecordType();
+			final SRecRecordType sRecRecordType = sRecRecord.getSRecRecordType();
 			if (sRecRecordType == SRecRecordType.S3) {
 
 				endAddress = sRecRecord.getEndAddress();
@@ -242,5 +242,9 @@ public class SRecFile {
 	@Override
 	public String toString() {
 		return StrUtils.reflectionToString(this);
+	}
+
+	List<SRecRecord> getSRecRecordList() {
+		return sRecRecordList;
 	}
 }

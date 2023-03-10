@@ -518,7 +518,7 @@ public class CustomTreeTableView<
 			applyFilters = true;
 
 		} else {
-			Logger.printError("filter type has to not be null to add column filter!");
+			Logger.printError("filter type has to not be null to add column filter");
 			applyFilters = false;
 		}
 

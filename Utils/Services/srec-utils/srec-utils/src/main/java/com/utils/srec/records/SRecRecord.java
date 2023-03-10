@@ -63,7 +63,7 @@ public class SRecRecord {
 		return StrUtils.reflectionToString(this);
 	}
 
-	public SRecRecordType getsRecRecordType() {
+	public SRecRecordType getSRecRecordType() {
 		return sRecRecordType;
 	}
 

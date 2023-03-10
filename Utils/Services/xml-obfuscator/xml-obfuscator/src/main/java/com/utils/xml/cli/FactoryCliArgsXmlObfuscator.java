@@ -24,7 +24,7 @@ public final class FactoryCliArgsXmlObfuscator {
 			}
 
 		} catch (final Exception exc) {
-			Logger.printError("invalid command line arguments!");
+			Logger.printError("invalid command line arguments");
 			Logger.printException(exc);
 		}
 		return cliArgsXmlObfuscator;

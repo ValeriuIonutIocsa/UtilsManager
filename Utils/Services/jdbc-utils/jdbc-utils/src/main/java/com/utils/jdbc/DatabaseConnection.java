@@ -25,7 +25,7 @@ public abstract class DatabaseConnection {
 			}
 
 		} catch (final Exception exc) {
-			Logger.printError("error occurred while executing SQL statements!");
+			Logger.printError("error occurred while executing SQL statements");
 			Logger.printException(exc);
 		}
 		return success;

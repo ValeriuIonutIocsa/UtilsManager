@@ -30,7 +30,7 @@ abstract class AbstractDataSource implements DataSource {
 		Connection connection = null;
 		try {
 			if (databaseUrl == null) {
-				Logger.printWarning("The database URL is null!");
+				Logger.printWarning("the database URL is null");
 
 			} else {
 				final String databaseDriverAndUrl = driver + ":" + databaseUrl;
