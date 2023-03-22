@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/../../../../Utils/Services/influxdb-utils/influxdb-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/jdbc-utils-oracle-db/jdbc-utils-oracle-db" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/jdbc-utils-postgresql/jdbc-utils-postgresql" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/jdbc-utils-sql-lite/jdbc-utils-sql-lite" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/jdbc-utils/jdbc-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/js-utils/js-utils" />

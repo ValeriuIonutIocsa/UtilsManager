@@ -21,6 +21,7 @@ ext {
             ':http-utils',
             ':influxdb-utils',
             ':jdbc-utils-oracle-db',
+            ':jdbc-utils-postgresql',
             ':jdbc-utils-sql-lite',
             ':js-utils',
             ':math-utils',
