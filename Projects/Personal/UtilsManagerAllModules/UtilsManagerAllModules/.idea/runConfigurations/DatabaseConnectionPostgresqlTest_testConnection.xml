@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" factoryName="JUnit" folderName="jdbc-utils-postgresql" name="DataConnectionSupabaseTest.testConnection" nameIsGenerated="true" type="JUnit">
+    <configuration default="false" factoryName="JUnit" folderName="jdbc-utils-postgresql" name="DatabaseConnectionPostgresqlTest.testConnection" nameIsGenerated="true" type="JUnit">
         <module name="UtilsManagerAllModules.jdbc-utils-postgresql.test"/>
         <extension name="coverage">
             <pattern>
@@ -8,7 +8,7 @@
             </pattern>
         </extension>
         <option name="PACKAGE_NAME" value="com.utils.jdbc"/>
-        <option name="MAIN_CLASS_NAME" value="com.utils.jdbc.DataConnectionSupabaseTest"/>
+        <option name="MAIN_CLASS_NAME" value="com.utils.jdbc.DatabaseConnectionPostgresqlTest"/>
         <option name="METHOD_NAME" value="testConnection"/>
         <option name="TEST_OBJECT" value="method"/>
         <method v="2">
