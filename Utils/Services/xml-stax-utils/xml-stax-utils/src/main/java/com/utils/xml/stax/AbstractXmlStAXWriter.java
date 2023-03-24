@@ -252,4 +252,16 @@ public abstract class AbstractXmlStAXWriter implements XmlStAXWriter {
 			}
 		}
 	}
+
+	@Override
+	public void flush() {
+
+		try {
+			bufferedOutputStream.flush();
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to flush XML output stream");
+			Logger.printException(exc);
+		}
+	}
 }

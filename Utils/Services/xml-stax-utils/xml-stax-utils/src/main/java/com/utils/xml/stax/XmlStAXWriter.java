@@ -53,4 +53,7 @@ public interface XmlStAXWriter {
 	@ApiMethod
 	void writePlainText(
 			String text);
+
+	@ApiMethod
+	void flush();
 }
