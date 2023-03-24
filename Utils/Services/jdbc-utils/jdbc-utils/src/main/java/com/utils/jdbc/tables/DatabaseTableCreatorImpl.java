@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.utils.data_types.db.DatabaseTableColumn;
 import com.utils.data_types.db.DatabaseTableInfo;
+import com.utils.jdbc.utils.JdbcUtils;
 import com.utils.log.Logger;
 
 public class DatabaseTableCreatorImpl implements DatabaseTableCreator {
@@ -23,6 +24,11 @@ public class DatabaseTableCreatorImpl implements DatabaseTableCreator {
 			Logger.printProgress("creating table \"" + tableName + "\"");
 
 			final String sql = createSql(databaseTableInfo);
+			if (JdbcUtils.isDebugMode()) {
+
+				Logger.printProgress("executing SQL code:");
+				Logger.printLine(sql);
+			}
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 				preparedStatement.execute();
 			}

@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.function.Predicate;
 
 import com.utils.data_types.db.TableRowDataWithId;
 
@@ -12,18 +14,20 @@ public class DatabaseTableDataCreatorImplGenerateKeys<
 		TableRowDataT extends TableRowDataWithId>
 		extends DatabaseTableDataCreatorImpl<TableRowDataT> {
 
+	private final int generatedKeysColumnIndex;
+
+	public DatabaseTableDataCreatorImplGenerateKeys(
+			final int generatedKeysColumnIndex) {
+
+		this.generatedKeysColumnIndex = generatedKeysColumnIndex;
+	}
+
 	@Override
 	PreparedStatement createPreparedStatement(
 			final Connection connection,
 			final String sql) throws SQLException {
-		return connection.prepareStatement(sql, new int[] { 1 });
-	}
 
-	@Override
-	protected void exportData(
-			final PreparedStatement preparedStatement,
-			final List<TableRowDataT> tableRowDataList) throws SQLException {
-		super.exportData(preparedStatement, tableRowDataList);
+		return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	}
 
 	@Override
@@ -51,5 +55,11 @@ public class DatabaseTableDataCreatorImplGenerateKeys<
 				tableRowData.setId(generatedKey);
 			}
 		}
+	}
+
+	@Override
+	Predicate<Integer> createExcludedColumnIndexPredicate() {
+
+		return columnIndex -> columnIndex == generatedKeysColumnIndex;
 	}
 }

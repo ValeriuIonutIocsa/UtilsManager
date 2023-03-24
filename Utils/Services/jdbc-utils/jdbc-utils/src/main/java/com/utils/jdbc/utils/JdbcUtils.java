@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.function.Predicate;
 
 import com.utils.annotations.ApiMethod;
 import com.utils.csv.AbstractCsvWriter;
@@ -15,20 +16,29 @@ import com.utils.log.Logger;
 
 public final class JdbcUtils {
 
+	private static boolean debugMode;
+
 	private JdbcUtils() {
 	}
 
 	@ApiMethod
 	public static int serializeToDatabase(
 			final TableRowData element,
+			final Predicate<Integer> excludedColumnIndexPredicate,
 			final PreparedStatement preparedStatement) throws SQLException {
 
 		final DataItem<?>[] dataItemArray = element.getDataItemArray();
+		int index = 1;
 		for (int i = 0; i < dataItemArray.length; i++) {
 
-			final DataItem<?> dataItem = dataItemArray[i];
-			if (dataItem != null) {
-				dataItem.serializeToDataBase(i + 1, preparedStatement);
+			final boolean excludedColumnIndex = excludedColumnIndexPredicate.test(i);
+			if (!excludedColumnIndex) {
+
+				final DataItem<?> dataItem = dataItemArray[i];
+				if (dataItem != null) {
+					dataItem.serializeToDataBase(index, preparedStatement);
+				}
+				index++;
 			}
 		}
 		return dataItemArray.length;
@@ -116,5 +126,14 @@ public final class JdbcUtils {
 			}
 		};
 		csvWriter.writeCsv();
+	}
+
+	public static void setDebugMode(
+			final boolean debugMode) {
+		JdbcUtils.debugMode = debugMode;
+	}
+
+	public static boolean isDebugMode() {
+		return debugMode;
 	}
 }

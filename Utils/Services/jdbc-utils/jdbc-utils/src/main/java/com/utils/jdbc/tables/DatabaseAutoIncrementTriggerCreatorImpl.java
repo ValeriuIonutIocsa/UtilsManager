@@ -3,6 +3,7 @@ package com.utils.jdbc.tables;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import com.utils.jdbc.utils.JdbcUtils;
 import com.utils.log.Logger;
 
 public class DatabaseAutoIncrementTriggerCreatorImpl implements DatabaseAutoIncrementTriggerCreator {
@@ -20,6 +21,11 @@ public class DatabaseAutoIncrementTriggerCreatorImpl implements DatabaseAutoIncr
 			Logger.printProgress("creating trigger \"" + triggerName + "\"");
 
 			final String sql = createSql(triggerName, sequenceName, tableName, columnName);
+			if (JdbcUtils.isDebugMode()) {
+
+				Logger.printProgress("executing SQL code:");
+				Logger.printLine(sql);
+			}
 			try (Statement statement = connection.createStatement()) {
 				statement.execute(sql);
 			}

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import com.utils.data_types.db.DatabaseTableInfo;
+import com.utils.jdbc.utils.JdbcUtils;
 import com.utils.log.Logger;
 
 public class DatabaseTableDeleterImpl implements DatabaseTableDeleter {
@@ -20,6 +21,11 @@ public class DatabaseTableDeleterImpl implements DatabaseTableDeleter {
 			Logger.printProgress("deleting data from table \"" + tableName + "\"");
 
 			final String sql = createSql(databaseTableInfo, whereClause);
+			if (JdbcUtils.isDebugMode()) {
+
+				Logger.printProgress("executing SQL code:");
+				Logger.printLine(sql);
+			}
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
 				setParameters(preparedStatement);

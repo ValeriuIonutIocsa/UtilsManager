@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
+import com.utils.jdbc.utils.JdbcUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -40,6 +41,11 @@ public class DatabaseTableDataReaderImpl<
 			ProgressIndicators.getInstance().update(0);
 
 			final String sql = createSql(databaseTableInfo, columnIndices, whereClause);
+			if (JdbcUtils.isDebugMode()) {
+
+				Logger.printProgress("executing SQL code:");
+				Logger.printLine(sql);
+			}
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
 				setParameters(preparedStatement);

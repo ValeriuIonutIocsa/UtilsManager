@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.utils.data_types.db.DatabaseTableColumn;
 import com.utils.data_types.db.DatabaseTableInfo;
+import com.utils.jdbc.utils.JdbcUtils;
 import com.utils.log.Logger;
 
 public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator {
@@ -26,6 +27,11 @@ public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator 
 			Logger.printProgress("creating table \"" + tableName + "\"");
 
 			final String sql = createSql(databaseTableInfo, indexName, columnIndices);
+			if (JdbcUtils.isDebugMode()) {
+
+				Logger.printProgress("executing SQL code:");
+				Logger.printLine(sql);
+			}
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 				preparedStatement.execute();
 			}

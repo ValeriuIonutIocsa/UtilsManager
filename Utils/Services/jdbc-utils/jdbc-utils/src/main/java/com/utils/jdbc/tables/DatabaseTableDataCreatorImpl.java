@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.function.Predicate;
 
 import com.utils.data_types.db.DatabaseTableColumn;
 import com.utils.data_types.db.DatabaseTableInfo;
@@ -35,10 +36,17 @@ public class DatabaseTableDataCreatorImpl<
 			final boolean oldAutoCommit = connection.getAutoCommit();
 			connection.setAutoCommit(false);
 
-			final String sql = createSql(databaseTableInfo);
+			final Predicate<Integer> excludedColumnIndexPredicate = createExcludedColumnIndexPredicate();
+
+			final String sql = createSql(databaseTableInfo, excludedColumnIndexPredicate);
+			if (JdbcUtils.isDebugMode()) {
+
+				Logger.printProgress("executing SQL code:");
+				Logger.printLine(sql);
+			}
 			try (PreparedStatement preparedStatement = createPreparedStatement(connection, sql)) {
 
-				exportData(preparedStatement, tableRowDataList);
+				exportData(tableRowDataList, excludedColumnIndexPredicate, preparedStatement);
 				connection.commit();
 				if (verbose) {
 					Logger.printStatus("Successfully exported data to table \"" + tableName + "\".");
@@ -72,12 +80,14 @@ public class DatabaseTableDataCreatorImpl<
 	PreparedStatement createPreparedStatement(
 			final Connection connection,
 			final String sql) throws SQLException {
+
 		return connection.prepareStatement(sql);
 	}
 
 	protected void exportData(
-			final PreparedStatement preparedStatement,
-			final List<TableRowDataT> tableRowDataList) throws SQLException {
+			final List<TableRowDataT> tableRowDataList,
+			final Predicate<Integer> excludedColumnIndexPredicate,
+			final PreparedStatement preparedStatement) throws SQLException {
 
 		int index = 0;
 		int startIndex = 0;
@@ -94,7 +104,7 @@ public class DatabaseTableDataCreatorImpl<
 				batchRowCount = 0;
 			}
 
-			JdbcUtils.serializeToDatabase(tableRowData, preparedStatement);
+			JdbcUtils.serializeToDatabase(tableRowData, excludedColumnIndexPredicate, preparedStatement);
 			preparedStatement.addBatch();
 			batchRowCount++;
 		}
@@ -106,11 +116,13 @@ public class DatabaseTableDataCreatorImpl<
 			final List<TableRowDataT> tableRowDataList,
 			final int startIndex,
 			final int batchRowCount) throws SQLException {
+
 		preparedStatement.executeBatch();
 	}
 
 	static String createSql(
-			final DatabaseTableInfo databaseTableInfo) {
+			final DatabaseTableInfo databaseTableInfo,
+			final Predicate<Integer> excludedColumnIndexPredicate) {
 
 		final StringBuilder sbSql = new StringBuilder(200);
 
@@ -121,11 +133,15 @@ public class DatabaseTableDataCreatorImpl<
 		final int columnCount = columns.length;
 		for (int i = 0; i < columnCount; i++) {
 
-			final DatabaseTableColumn column = columns[i];
-			final String columnName = column.getName();
-			sbSql.append('"').append(columnName).append('"');
-			if (i < columnCount - 1) {
-				sbSql.append(", ");
+			final boolean excludedColumnIndex = excludedColumnIndexPredicate.test(i);
+			if (!excludedColumnIndex) {
+
+				final DatabaseTableColumn column = columns[i];
+				final String columnName = column.getName();
+				sbSql.append('"').append(columnName).append('"');
+				if (i < columnCount - 1) {
+					sbSql.append(", ");
+				}
 			}
 		}
 
@@ -133,13 +149,22 @@ public class DatabaseTableDataCreatorImpl<
 
 		for (int i = 0; i < columnCount; i++) {
 
-			sbSql.append('?');
-			if (i < columnCount - 1) {
-				sbSql.append(", ");
+			final boolean excludedColumnIndex = excludedColumnIndexPredicate.test(i);
+			if (!excludedColumnIndex) {
+
+				sbSql.append('?');
+				if (i < columnCount - 1) {
+					sbSql.append(", ");
+				}
 			}
 		}
 
 		sbSql.append(')');
 		return sbSql.toString();
+	}
+
+	Predicate<Integer> createExcludedColumnIndexPredicate() {
+
+		return columnIndex -> false;
 	}
 }

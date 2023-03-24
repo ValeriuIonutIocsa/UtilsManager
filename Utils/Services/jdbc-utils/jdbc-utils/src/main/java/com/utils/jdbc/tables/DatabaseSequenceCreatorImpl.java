@@ -3,6 +3,7 @@ package com.utils.jdbc.tables;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import com.utils.jdbc.utils.JdbcUtils;
 import com.utils.log.Logger;
 
 public class DatabaseSequenceCreatorImpl implements DatabaseSequenceCreator {
@@ -18,6 +19,11 @@ public class DatabaseSequenceCreatorImpl implements DatabaseSequenceCreator {
 			Logger.printProgress("creating sequence \"" + sequenceName + "\"");
 
 			final String sql = createSql(sequenceName, cacheSize);
+			if (JdbcUtils.isDebugMode()) {
+
+				Logger.printProgress("executing SQL code:");
+				Logger.printLine(sql);
+			}
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 				preparedStatement.execute();
 			}

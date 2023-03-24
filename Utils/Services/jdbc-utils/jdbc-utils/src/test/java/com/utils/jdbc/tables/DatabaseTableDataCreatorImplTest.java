@@ -13,11 +13,11 @@ class DatabaseTableDataCreatorImplTest {
 
 		final DatabaseTableInfo databaseTableInfo = createDatabaseTableInfo();
 
-		final String sql = DatabaseTableDataCreatorImpl.createSql(databaseTableInfo);
+		final String sql = DatabaseTableDataCreatorImpl.createSql(databaseTableInfo, columnIndex -> false);
 		Logger.printLine(sql);
 	}
 
-	private DatabaseTableInfo createDatabaseTableInfo() {
+	private static DatabaseTableInfo createDatabaseTableInfo() {
 
 		final DatabaseTableColumn[] columns = {
 				new DatabaseTableColumn("UserName", "VARCHAR2(100) NOT NULL"),

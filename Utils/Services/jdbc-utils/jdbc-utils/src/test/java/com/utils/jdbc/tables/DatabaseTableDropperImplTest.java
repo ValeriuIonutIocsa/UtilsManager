@@ -17,7 +17,7 @@ class DatabaseTableDropperImplTest {
 		Logger.printLine(sql);
 	}
 
-	private DatabaseTableInfo createDatabaseTableInfo() {
+	private static DatabaseTableInfo createDatabaseTableInfo() {
 
 		final DatabaseTableColumn[] columns = {
 				new DatabaseTableColumn("UserName", "VARCHAR2(100) NOT NULL"),
