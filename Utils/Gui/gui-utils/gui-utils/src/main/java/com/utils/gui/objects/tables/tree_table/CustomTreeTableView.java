@@ -246,7 +246,8 @@ public class CustomTreeTableView<
 		}
 	}
 
-	protected void pasteKeyCombinationPressed() {
+	@Override
+	public void pasteKeyCombinationPressed() {
 	}
 
 	private void createTreeTableColumns(

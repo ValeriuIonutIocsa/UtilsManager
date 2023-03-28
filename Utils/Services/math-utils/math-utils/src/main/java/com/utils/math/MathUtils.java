@@ -195,7 +195,7 @@ public final class MathUtils {
 	public static int roundToNearestPowerOfTwo(
 			final int n) {
 
-		int result;
+		final int result;
 		if (n < 1) {
 			result = 1;
 
@@ -222,7 +222,7 @@ public final class MathUtils {
 	public static long roundToNearestPowerOfTwo(
 			final long n) {
 
-		long result;
+		final long result;
 		if (n < 1) {
 			result = 1;
 

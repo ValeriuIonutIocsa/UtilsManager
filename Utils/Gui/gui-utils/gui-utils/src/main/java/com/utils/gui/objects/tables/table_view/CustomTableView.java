@@ -237,7 +237,8 @@ public class CustomTableView<
 		}
 	}
 
-	protected void pasteKeyCombinationPressed() {
+	@Override
+	public void pasteKeyCombinationPressed() {
 	}
 
 	public void createTableColumns(

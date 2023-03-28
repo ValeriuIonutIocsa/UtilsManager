@@ -24,9 +24,8 @@ public final class SRecUtils {
 	public static String writePatchDataCsv(
 			final String csvName,
 			final List<SRecPatcherSymbol> sRecPatcherSymbolList,
-			final String outputSRecFilePathString) {
+			final String patchDataCsvPathString) {
 
-		final String patchDataCsvPathString = outputSRecFilePathString + ".csv";
 		new AbstractCsvWriter(csvName, patchDataCsvPathString) {
 
 			@Override

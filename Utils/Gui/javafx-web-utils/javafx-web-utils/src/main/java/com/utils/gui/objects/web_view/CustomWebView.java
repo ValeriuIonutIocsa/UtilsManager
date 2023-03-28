@@ -37,7 +37,7 @@ public class CustomWebView extends AbstractCustomControl<WebView> {
 			final WebView webView) {
 
 		webView.addEventFilter(KeyEvent.KEY_PRESSED, (
-				KeyEvent event) -> {
+				final KeyEvent event) -> {
 
 			if (event.isControlDown() && event.getCode() == KeyCode.C) {
 
