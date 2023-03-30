@@ -29,8 +29,7 @@ public final class IdeaFilesSynchronizer {
 					"checkstyle-idea.xml",
 					"eclipseCodeFormatter.xml",
 					"gradle.xml",
-					"misc.xml",
-					"saveactions_settings.xml"
+					"misc.xml"
 			};
 			for (final String settingsFileName : settingsFileNameArray) {
 
