@@ -23,10 +23,10 @@ public class DataFileWriterJson extends AbstractDataFileWriter {
 			final List<DataTable> dataTableList) {
 
 		final boolean folderCreationSuccess = FactoryFolderCreator.getInstance()
-				.createParentDirectories(outputPathString, true);
+				.createParentDirectories(outputPathString, false, true);
 		if (folderCreationSuccess) {
 
-			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, true);
+			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, false, true);
 
 			try (OutputStream outputStream = StreamUtils.openBufferedOutputStream(outputPathString)) {
 				write(outputStream, dataTableList);

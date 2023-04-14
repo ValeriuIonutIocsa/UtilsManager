@@ -73,7 +73,7 @@ final class WorkerCreate {
 		final String projectRelativePath = "/Projects/Personal/" + projectName + "/" + projectName;
 		final String projectFolderPathString = PathUtils.computePath(pathString, projectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
-				templateProjectFolderPathString, projectFolderPathString, true);
+				templateProjectFolderPathString, projectFolderPathString, true, true);
 		final String appInfo = createAppInfo(packageName);
 		replaceDependencies(projectFolderPathString, appInfo, subProjectRelativePathStringList);
 		createMainClass(projectFolderPathString, projectName, packageName);
@@ -85,7 +85,7 @@ final class WorkerCreate {
 		final String allModulesProjectFolderPathString =
 				PathUtils.computePath(pathString, allModulesProjectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
-				templateProjectFolderPathString, allModulesProjectFolderPathString, true);
+				templateProjectFolderPathString, allModulesProjectFolderPathString, true, true);
 		replaceDependencies(allModulesProjectFolderPathString, "", Collections.singletonList(projectRelativePath));
 
 		final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(pathString,
@@ -196,7 +196,7 @@ final class WorkerCreate {
 				System.lineSeparator() + mainClassPathString);
 
 		final boolean success = FactoryFolderCreator.getInstance()
-				.createParentDirectories(mainClassPathString, true);
+				.createParentDirectories(mainClassPathString, false, true);
 		if (success) {
 
 			try (PrintStream printStream = StreamUtils.openPrintStream(mainClassPathString)) {
@@ -269,7 +269,7 @@ final class WorkerCreate {
 				System.lineSeparator() + testMainClassPathString);
 
 		final boolean success = FactoryFolderCreator.getInstance()
-				.createParentDirectories(testMainClassPathString, true);
+				.createParentDirectories(testMainClassPathString, false, true);
 		if (success) {
 
 			try (PrintStream printStream = StreamUtils.openPrintStream(testMainClassPathString)) {

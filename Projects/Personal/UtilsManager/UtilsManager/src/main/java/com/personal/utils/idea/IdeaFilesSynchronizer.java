@@ -22,7 +22,7 @@ public final class IdeaFilesSynchronizer {
 			final String dstIdeaFolderPathString) {
 
 		final boolean createDirectoriesSuccess =
-				FactoryFolderCreator.getInstance().createDirectories(dstIdeaFolderPathString, true);
+				FactoryFolderCreator.getInstance().createDirectories(dstIdeaFolderPathString, false, true);
 		if (createDirectoriesSuccess) {
 
 			final String[] settingsFileNameArray = {
@@ -38,7 +38,7 @@ public final class IdeaFilesSynchronizer {
 				final String dstFilePathString =
 						PathUtils.computePath(dstIdeaFolderPathString, settingsFileName);
 				final boolean copyFileSuccess = FactoryFileCopier.getInstance()
-						.copyFile(srcFilePathString, dstFilePathString, false, true);
+						.copyFile(srcFilePathString, dstFilePathString, false, true, true);
 				if (copyFileSuccess && "gradle.xml".equals(settingsFileName)) {
 
 					editGradleXmlFile(dstFilePathString);

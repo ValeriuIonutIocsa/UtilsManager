@@ -52,7 +52,7 @@ public class GradleRoot {
 			if (srcModuleFolderPathString != null) {
 
 				FactoryFolderCopier.getInstance().copyFolder(
-						srcModuleFolderPathString, moduleFolderPathString, true);
+						srcModuleFolderPathString, moduleFolderPathString, true, true);
 			}
 		}
 	}
@@ -61,11 +61,11 @@ public class GradleRoot {
 			final GradleRoot srcGradleRoot) {
 
 		FactoryFileCopier.getInstance().copyFile(
-				srcGradleRoot.commonBuildGradleFilePathString, commonBuildGradleFilePathString, true, true);
+				srcGradleRoot.commonBuildGradleFilePathString, commonBuildGradleFilePathString, true, true, true);
 		FactoryFileCopier.getInstance().copyFile(
-				srcGradleRoot.commonSettingsGradleFilePathString, commonSettingsGradleFilePathString, true, true);
+				srcGradleRoot.commonSettingsGradleFilePathString, commonSettingsGradleFilePathString, true, true, true);
 		FactoryFileCopier.getInstance().copyFile(
-				srcGradleRoot.gitAttributesFilePathString, gitAttributesFilePathString, true, true);
+				srcGradleRoot.gitAttributesFilePathString, gitAttributesFilePathString, true, true, true);
 	}
 
 	private void synchronizeBatchFiles(
@@ -87,11 +87,11 @@ public class GradleRoot {
 					if (!IoUtils.fileExists(dstGitPushPathString)) {
 
 						final boolean createParentDirectoriesSuccess = FactoryFolderCreator.getInstance()
-								.createParentDirectories(dstGitPushPathString, true);
+								.createParentDirectories(dstGitPushPathString, false, true);
 						if (createParentDirectoriesSuccess) {
 
 							FactoryFileCopier.getInstance().copyFile(
-									srcGitPushPathString, dstGitPushPathString, false, true);
+									srcGitPushPathString, dstGitPushPathString, false, true, true);
 						}
 					}
 				}

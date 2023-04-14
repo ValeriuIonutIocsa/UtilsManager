@@ -70,8 +70,8 @@ public abstract class AbstractXmlStAXWriter implements XmlStAXWriter {
 		XMLEventWriter xmlEventWriter = null;
 
 		try {
-			FactoryFolderCreator.getInstance().createParentDirectories(xmlFilePathString, true);
-			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(xmlFilePathString, true);
+			FactoryFolderCreator.getInstance().createParentDirectories(xmlFilePathString, false, true);
+			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(xmlFilePathString, false, true);
 
 			bufferedOutputStream = new BufferedOutputStream(StreamUtils.openOutputStream(xmlFilePathString));
 

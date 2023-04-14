@@ -17,8 +17,8 @@ public final class XlsUtils {
 			final Workbook workbook,
 			final String pathString) throws Exception {
 
-		FactoryFolderCreator.getInstance().createParentDirectories(pathString, true);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(pathString, true);
+		FactoryFolderCreator.getInstance().createParentDirectories(pathString, false, true);
+		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(pathString, false, true);
 
 		try (OutputStream outputStream = StreamUtils.openBufferedOutputStream(pathString)) {
 

@@ -26,7 +26,7 @@ public class DataFileWriterCsv extends AbstractDataFileWriter {
 		if (dataTableCount > 1) {
 
 			final String outputPathWoExt = PathUtils.computePathWoExt(outputPathString);
-			FactoryFolderCreator.getInstance().createDirectories(outputPathWoExt, true);
+			FactoryFolderCreator.getInstance().createDirectories(outputPathWoExt, false, true);
 		}
 
 		for (final DataTable dataTable : dataTableList) {

@@ -78,6 +78,6 @@ class XmlStAXWriterTest {
 			}
 		}.readXml();
 
-		FactoryFileDeleter.getInstance().deleteFile(tempXmlFilePathString, true);
+		FactoryFileDeleter.getInstance().deleteFile(tempXmlFilePathString, false, true);
 	}
 }
