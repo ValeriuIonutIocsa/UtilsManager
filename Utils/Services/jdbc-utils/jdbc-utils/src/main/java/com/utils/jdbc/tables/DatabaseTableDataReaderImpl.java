@@ -9,12 +9,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
-import com.utils.jdbc.utils.JdbcUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.utils.data_types.db.DatabaseTableColumn;
 import com.utils.data_types.db.DatabaseTableInfo;
+import com.utils.jdbc.utils.JdbcUtils;
 import com.utils.log.Logger;
 import com.utils.log.progress.ProgressIndicators;
 
@@ -96,6 +96,10 @@ public class DatabaseTableDataReaderImpl<
 		return success;
 	}
 
+	/**
+	 * @param preparedStatement
+	 * @throws Exception
+	 */
 	protected void setParameters(
 			final PreparedStatement preparedStatement) throws Exception {
 	}

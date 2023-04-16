@@ -58,7 +58,7 @@ class MathUtilsTest {
 		private final int d;
 		private final int expectedResult;
 
-		public TestRoundToNextMultipleData(
+		TestRoundToNextMultipleData(
 				final int n,
 				final int d,
 				final int expectedResult) {

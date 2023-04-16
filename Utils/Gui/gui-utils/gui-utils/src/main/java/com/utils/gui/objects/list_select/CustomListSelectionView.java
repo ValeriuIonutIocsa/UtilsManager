@@ -129,6 +129,9 @@ abstract class CustomListSelectionView<
 		return vBoxLeft;
 	}
 
+	/**
+	 * @param vBoxLeft
+	 */
 	@ApiMethod
 	protected void addLeftHeader(
 			final VBox vBoxLeft) {
@@ -160,6 +163,9 @@ abstract class CustomListSelectionView<
 		return vBoxRight;
 	}
 
+	/**
+	 * @param vBoxRight
+	 */
 	@ApiMethod
 	protected void addRightHeader(
 			final VBox vBoxRight) {
