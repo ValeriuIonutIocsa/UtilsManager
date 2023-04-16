@@ -6,7 +6,7 @@ import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.help.StackPaneHelp;
 import com.utils.gui.icons.ImagesGuiUtils;
 import com.utils.gui.objects.messages.data.TableRowDataMessage;
-import com.utils.gui.objects.tables.tree_table.CustomTreeTableCell;
+import com.utils.gui.objects.tables.tree_table.AbstractCustomTreeTableCell;
 import com.utils.log.messages.MessageType;
 
 import javafx.geometry.Pos;
@@ -18,7 +18,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
-class CustomTreeTableCellMessages extends CustomTreeTableCell<TableRowDataMessage, Object> {
+class CustomTreeTableCellMessages extends AbstractCustomTreeTableCell<TableRowDataMessage, Object> {
 
 	private final UserActionRequiredHelper userActionRequiredHelper;
 	private String text;

@@ -9,16 +9,18 @@ import com.utils.html.sections.AbstractHtmlSection;
 import com.utils.html.sections.HtmlSection;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class HtmlSectionParent extends AbstractHtmlSection {
+public abstract class AbstractHtmlSectionParent extends AbstractHtmlSection {
 
 	private final String tagName;
+
 	private final Map<String, String> attributeMap;
 	private final List<HtmlSection> htmlSectionList;
 
-	protected HtmlSectionParent(
+	protected AbstractHtmlSectionParent(
 			final String tagName) {
 
 		this.tagName = tagName;
+
 		attributeMap = new HashMap<>();
 		htmlSectionList = new ArrayList<>();
 	}
@@ -48,17 +50,17 @@ public abstract class HtmlSectionParent extends AbstractHtmlSection {
 		}
 	}
 
-	public HtmlSectionParent addAttributeId(
+	public AbstractHtmlSectionParent addAttributeId(
 			final String attributeId) {
 		return addAttribute("id", attributeId);
 	}
 
-	public HtmlSectionParent addAttributeClass(
+	public AbstractHtmlSectionParent addAttributeClass(
 			final String attributeClass) {
 		return addAttribute("class", attributeClass);
 	}
 
-	public HtmlSectionParent addAttribute(
+	public AbstractHtmlSectionParent addAttribute(
 			final String name,
 			final String value) {
 
@@ -66,7 +68,7 @@ public abstract class HtmlSectionParent extends AbstractHtmlSection {
 		return this;
 	}
 
-	public HtmlSectionParent addHtmlSection(
+	public AbstractHtmlSectionParent addHtmlSection(
 			final HtmlSection htmlSection) {
 
 		htmlSectionList.add(htmlSection);

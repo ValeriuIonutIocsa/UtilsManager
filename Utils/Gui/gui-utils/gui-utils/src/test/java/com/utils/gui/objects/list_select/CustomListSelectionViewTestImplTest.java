@@ -11,7 +11,7 @@ import com.utils.gui.GuiUtils;
 
 import javafx.scene.layout.StackPane;
 
-class CustomListSelectionViewTest extends AbstractCustomApplicationTest {
+class CustomListSelectionViewTestImplTest extends AbstractCustomApplicationTest {
 
 	@Test
 	void testLayout() {
@@ -25,7 +25,7 @@ class CustomListSelectionViewTest extends AbstractCustomApplicationTest {
 		final List<TextWithLength> rightTableRowDataList = new ArrayList<>();
 		rightTableRowDataList.add(new TextWithLength("bcd"));
 
-		final CustomListSelectionView<Text, TextWithLength> customListSelectionView =
+		final AbstractCustomListSelectionView<Text, TextWithLength> customListSelectionView =
 				new CustomListSelectionViewTestImpl(leftTableRowDataList, rightTableRowDataList);
 
 		GuiUtils.run(() -> {

@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-abstract class CustomListSelectionView<
+abstract class AbstractCustomListSelectionView<
 		TableRowDataTLeft extends TableRowData,
 		TableRowDataTRight extends TableRowData>
 		extends AbstractCustomControl<GridPane> {
@@ -36,7 +36,7 @@ abstract class CustomListSelectionView<
 	private final Button buttonMoveToLeft;
 	private final Button buttonMoveAllToLeft;
 
-	CustomListSelectionView(
+	AbstractCustomListSelectionView(
 			final double leftSizeRatio,
 			final List<TableRowDataTLeft> leftItemList,
 			final List<TableRowDataTRight> rightItemList) {

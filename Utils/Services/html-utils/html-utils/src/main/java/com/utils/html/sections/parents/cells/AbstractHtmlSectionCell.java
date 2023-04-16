@@ -1,15 +1,16 @@
 package com.utils.html.sections.parents.cells;
 
-import com.utils.html.sections.parents.HtmlSectionParent;
+import com.utils.html.sections.parents.AbstractHtmlSectionParent;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class HtmlSectionCell extends HtmlSectionParent {
+public abstract class AbstractHtmlSectionCell extends AbstractHtmlSectionParent {
 
 	private int colSpan;
 	private int rowSpan;
 
-	HtmlSectionCell(
+	AbstractHtmlSectionCell(
 			final String tagName) {
+
 		super(tagName);
 	}
 
@@ -27,14 +28,14 @@ public abstract class HtmlSectionCell extends HtmlSectionParent {
 		}
 	}
 
-	public HtmlSectionCell addColSpan(
+	public AbstractHtmlSectionCell addColSpan(
 			final int colSpan) {
 
 		this.colSpan = colSpan;
 		return this;
 	}
 
-	public HtmlSectionCell addRowSpan(
+	public AbstractHtmlSectionCell addRowSpan(
 			final int rowSpan) {
 
 		this.rowSpan = rowSpan;

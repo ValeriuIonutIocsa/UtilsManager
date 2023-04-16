@@ -5,11 +5,11 @@ import java.sql.Connection;
 import com.utils.jdbc.data_sources.DataSource;
 import com.utils.log.Logger;
 
-public abstract class DatabaseConnection {
+public abstract class AbstractDatabaseConnection {
 
 	private final DataSource dataSource;
 
-	public DatabaseConnection(
+	public AbstractDatabaseConnection(
 			final DataSource dataSource) {
 
 		this.dataSource = dataSource;

@@ -4,9 +4,9 @@ import com.utils.html.sections.AbstractHtmlSection;
 import com.utils.html.sections.HtmlSectionPlainText;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class HtmlSectionScript extends AbstractHtmlSection {
+public abstract class AbstractHtmlSectionScript extends AbstractHtmlSection {
 
-	HtmlSectionScript() {
+	AbstractHtmlSectionScript() {
 	}
 
 	@Override

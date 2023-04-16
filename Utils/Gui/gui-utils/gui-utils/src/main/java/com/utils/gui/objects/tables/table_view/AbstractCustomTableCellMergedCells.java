@@ -16,9 +16,9 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-public abstract class CustomTableCellMergedCells<
+public abstract class AbstractCustomTableCellMergedCells<
 		TableRowDataMergedCellsT extends TableRowDataMergedCells<TableRowDataMergedCellsT>>
-		extends CustomTableCell<TableRowDataMergedCellsT, Object> {
+		extends AbstractCustomTableCell<TableRowDataMergedCellsT, Object> {
 
 	private static final Border BORDER_OTHERS = new Border(new BorderStroke(
 			Color.BLACK,
@@ -32,7 +32,7 @@ public abstract class CustomTableCellMergedCells<
 
 	private final boolean mergeColumn;
 
-	protected CustomTableCellMergedCells(
+	protected AbstractCustomTableCellMergedCells(
 			final boolean mergeColumn) {
 
 		this.mergeColumn = mergeColumn;

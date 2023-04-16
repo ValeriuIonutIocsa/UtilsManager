@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.utils.data_types.table.TableColumnData;
 
-class CustomListSelectionViewTestImpl extends CustomListSelectionViewOneToOne<Text, TextWithLength> {
+class CustomListSelectionViewTestImpl extends AbstractCustomListSelectionViewOneToOne<Text, TextWithLength> {
 
 	CustomListSelectionViewTestImpl(
 			final List<Text> leftTableRowDataList,

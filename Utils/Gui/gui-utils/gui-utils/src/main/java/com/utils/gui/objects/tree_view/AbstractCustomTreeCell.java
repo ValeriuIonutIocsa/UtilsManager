@@ -1,11 +1,11 @@
-package com.utils.gui.objects.list_view;
+package com.utils.gui.objects.tree_view;
 
 import com.utils.gui.GuiUtils;
 
-import javafx.scene.control.ListCell;
+import javafx.scene.control.TreeCell;
 
-public abstract class CustomListCell<
-		ObjectT> extends ListCell<ObjectT> {
+public abstract class AbstractCustomTreeCell<
+		ObjectT> extends TreeCell<ObjectT> {
 
 	@Override
 	protected void updateItem(

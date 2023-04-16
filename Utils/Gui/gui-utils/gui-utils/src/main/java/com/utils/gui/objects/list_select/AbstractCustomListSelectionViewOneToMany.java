@@ -7,14 +7,14 @@ import java.util.List;
 import com.utils.data_types.table.TableRowData;
 import com.utils.gui.objects.tables.table_view.CustomTableView;
 
-public abstract class CustomListSelectionViewOneToMany<
+public abstract class AbstractCustomListSelectionViewOneToMany<
 		TableRowDataTLeft extends TableRowData,
 		TableRowDataTRight extends TableRowData>
-		extends CustomListSelectionView<TableRowDataTLeft, TableRowDataTRight> {
+		extends AbstractCustomListSelectionView<TableRowDataTLeft, TableRowDataTRight> {
 
 	private final Comparator<TableRowDataTRight> rightItemComparator;
 
-	protected CustomListSelectionViewOneToMany(
+	protected AbstractCustomListSelectionViewOneToMany(
 			final double leftSizeRatio,
 			final List<TableRowDataTLeft> leftItemList,
 			final List<TableRowDataTRight> rightItemList,

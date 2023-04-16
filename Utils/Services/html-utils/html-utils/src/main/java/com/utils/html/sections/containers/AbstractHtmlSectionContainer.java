@@ -9,9 +9,9 @@ import com.utils.html.sections.HtmlSection;
 import com.utils.xml.stax.AbstractXmlStAXWriter;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class HtmlSectionContainer extends AbstractHtmlSection {
+public abstract class AbstractHtmlSectionContainer extends AbstractHtmlSection {
 
-	protected HtmlSectionContainer() {
+	protected AbstractHtmlSectionContainer() {
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public abstract class HtmlSectionContainer extends AbstractHtmlSection {
 
 			@Override
 			protected void write() {
-				HtmlSectionContainer.this.write(this);
+				AbstractHtmlSectionContainer.this.write(this);
 			}
 		}.writeXml();
 		return byteArrayOutputStream.toString();

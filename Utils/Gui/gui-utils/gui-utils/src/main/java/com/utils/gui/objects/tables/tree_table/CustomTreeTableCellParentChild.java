@@ -6,7 +6,7 @@ import javafx.css.PseudoClass;
 
 public class CustomTreeTableCellParentChild<
 		TableRowDataT extends TableRowDataParentChild>
-		extends CustomTreeTableCell<TableRowDataT, Object> {
+		extends AbstractCustomTreeTableCell<TableRowDataT, Object> {
 
 	private final static PseudoClass PSEUDO_CLASS_PARENT = PseudoClass.getPseudoClass("parent");
 
