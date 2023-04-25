@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-        <listEntry value="/gui-utils/src/test/java/com/utils/gui/objects/list_select/CustomListSelectionViewTestImplTest.java"/>
+        <listEntry value="/gui-utils/com/utils/gui/objects/list_select/CustomListSelectionViewTestImplTest.java"/>
     </listAttribute>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="1"/>

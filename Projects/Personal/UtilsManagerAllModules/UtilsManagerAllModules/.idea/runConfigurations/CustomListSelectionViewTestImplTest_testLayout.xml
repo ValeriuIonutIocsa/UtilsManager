@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" factoryName="JUnit" folderName="gui-utils" name="CustomListSelectionViewTest.testLayout" nameIsGenerated="true" type="JUnit">
+    <configuration default="false" factoryName="JUnit" folderName="gui-utils" name="CustomListSelectionViewTestImplTest.testLayout" nameIsGenerated="true" type="JUnit">
         <module name="UtilsManagerAllModules.gui-utils.test"/>
         <extension name="coverage">
             <pattern>
@@ -8,7 +8,7 @@
             </pattern>
         </extension>
         <option name="PACKAGE_NAME" value="com.utils.gui.objects.list_select"/>
-        <option name="MAIN_CLASS_NAME" value="com.utils.gui.objects.list_select.CustomListSelectionViewTest"/>
+        <option name="MAIN_CLASS_NAME" value="com.utils.gui.objects.list_select.CustomListSelectionViewTestImplTest"/>
         <option name="METHOD_NAME" value="testLayout"/>
         <option name="TEST_OBJECT" value="method"/>
         <method v="2">
