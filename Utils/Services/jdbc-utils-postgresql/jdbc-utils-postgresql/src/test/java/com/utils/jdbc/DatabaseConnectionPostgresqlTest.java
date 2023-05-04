@@ -10,7 +10,7 @@ class DatabaseConnectionPostgresqlTest {
 	@Test
 	void testConnection() {
 
-		final boolean success = new DatabaseConnectionPostgresql() {
+		final boolean success = new AbstractDatabaseConnectionPostgresql() {
 
 			@Override
 			protected boolean statements(

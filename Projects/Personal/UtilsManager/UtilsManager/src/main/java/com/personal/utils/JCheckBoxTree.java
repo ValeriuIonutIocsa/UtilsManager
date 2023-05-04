@@ -32,13 +32,13 @@ public class JCheckBoxTree extends JTree {
 
 	// Defining data structure that will enable to fast check-indicate the state of each node
 	// It totally replaces the "selection" mechanism of the JTree
-	private static class CheckedNode {
+	private final static class CheckedNode {
 
 		boolean isSelected;
 		boolean hasChildren;
 		boolean allChildrenSelected;
 
-		public CheckedNode(
+		private CheckedNode(
 				final boolean isSelected,
 				final boolean hasChildren,
 				final boolean allChildrenSelected) {
@@ -141,12 +141,12 @@ public class JCheckBoxTree extends JTree {
 
 	// Overriding cell renderer by a class that ignores the original "selection" mechanism
 	// It decides how to show the nodes due to the checking-mechanism
-	private class CheckBoxCellRenderer extends JPanel implements TreeCellRenderer {
+	private final class CheckBoxCellRenderer extends JPanel implements TreeCellRenderer {
 
 		private static final long serialVersionUID = -7341833835878991719L;
 		JCheckBox checkBox;
 
-		public CheckBoxCellRenderer() {
+		private CheckBoxCellRenderer() {
 
 			super();
 
