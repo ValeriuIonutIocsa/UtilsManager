@@ -12,7 +12,6 @@ import org.w3c.dom.html.HTMLAnchorElement;
 
 import com.utils.gui.AbstractCustomControl;
 import com.utils.gui.clipboard.ClipboardUtils;
-import com.utils.string.StrUtils;
 import com.utils.swing.desktop.DesktopUtils;
 
 import javafx.concurrent.Worker;
@@ -122,10 +121,5 @@ public class CustomWebView extends AbstractCustomControl<WebView> {
 
 	public void clear() {
 		getRoot().getEngine().loadContent("");
-	}
-
-	@Override
-	public String toString() {
-		return StrUtils.reflectionToString(this);
 	}
 }
