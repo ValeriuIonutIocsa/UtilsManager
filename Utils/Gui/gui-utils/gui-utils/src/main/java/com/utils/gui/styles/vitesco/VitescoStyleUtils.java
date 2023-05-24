@@ -46,7 +46,7 @@ public final class VitescoStyleUtils {
 		String guiThemeName = null;
 		try {
 			final String generalSettingsFilePathString = PathUtils.computePath(SystemUtils.USER_HOME,
-					"Documents", "ProjectAnalyzer", "GeneralSettings.xml");
+					"ProjectAnalyzer", "GeneralSettings.xml");
 			if (IoUtils.fileExists(generalSettingsFilePathString)) {
 
 				final Document document = XmlDomUtils.openDocument(generalSettingsFilePathString);
