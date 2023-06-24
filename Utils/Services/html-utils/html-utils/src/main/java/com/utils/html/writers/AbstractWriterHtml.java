@@ -56,7 +56,7 @@ public abstract class AbstractWriterHtml implements WriterHtml {
 	private void write(
 			final OutputStream outputStream) {
 
-		new AbstractXmlStAXWriterHtml(outputStream) {
+		new AbstractXmlStAXWriterHtml(outputStream, "") {
 
 			@Override
 			public String createCssString() {
