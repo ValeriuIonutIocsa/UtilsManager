@@ -2,7 +2,7 @@
     <configuration default="false" factoryName="Gradle" folderName="UtilsManagerAllModules" name="UtilsManagerAllModules [clean]" type="GradleRunConfiguration">
         <ExternalSystemSettings>
             <option name="executionName"/>
-            <option name="externalProjectPath" value="$PROJECT_DIR$/../../UtilsManagerAllModules/UtilsManagerAllModules"/>
+            <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Projects/Personal/UtilsManagerAllModules/UtilsManagerAllModules"/>
             <option name="externalSystemIdString" value="GRADLE"/>
             <option name="scriptParameters" value=""/>
             <option name="taskDescriptions">

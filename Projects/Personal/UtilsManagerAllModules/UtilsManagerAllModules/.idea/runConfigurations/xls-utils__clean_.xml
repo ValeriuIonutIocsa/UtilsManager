@@ -2,7 +2,7 @@
     <configuration default="false" factoryName="Gradle" folderName="xls-utils" name="xls-utils [clean]" type="GradleRunConfiguration">
         <ExternalSystemSettings>
             <option name="executionName"/>
-            <option name="externalProjectPath" value="$PROJECT_DIR$/../../xls-utils/xls-utils"/>
+            <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Utils/Services/xls-utils/xls-utils"/>
             <option name="externalSystemIdString" value="GRADLE"/>
             <option name="scriptParameters" value=""/>
             <option name="taskDescriptions">

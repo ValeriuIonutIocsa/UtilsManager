@@ -2,7 +2,7 @@
     <configuration default="false" factoryName="Gradle" folderName="controls-fx-utils" name="controls-fx-utils [clean]" type="GradleRunConfiguration">
         <ExternalSystemSettings>
             <option name="executionName"/>
-            <option name="externalProjectPath" value="$PROJECT_DIR$/../../controls-fx-utils/controls-fx-utils"/>
+            <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Utils/Gui/controls-fx-utils/controls-fx-utils"/>
             <option name="externalSystemIdString" value="GRADLE"/>
             <option name="scriptParameters" value=""/>
             <option name="taskDescriptions">
