@@ -47,9 +47,9 @@ dependencies {
         }
     }
 
-    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0-M1'
-    testFixturesRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0-M1'
-    testFixturesRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0-M1'
+    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testFixturesRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testFixturesRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0'
 
     for (String testCompileClassPath : testCompileClassPaths) {
 
@@ -64,9 +64,9 @@ dependencies {
         }
     }
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0-M1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0-M1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0-M1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0'
 
     for (String testCompileClassPath : testCompileClassPaths) {
 
@@ -142,7 +142,7 @@ task fatJar(type: Jar, dependsOn: compileJava) {
         if (otherDestDir != destDir) {
             copyFile(destDir.toString(), otherDestDir.toString(), archiveFileName.get().toString())
         }
-        if (project.hasProperty('covertToExe') && covertToExe) {
+        if (project.hasProperty('convertToExe') && convertToExe) {
             final File wrapperScriptFile = new File((String) "${destDir}/wrapper/Wrapper.java")
             if (wrapperScriptFile.exists()) {
                 exec {

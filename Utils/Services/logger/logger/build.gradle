@@ -3,7 +3,7 @@ ext {
             ':test-utils'
     ]
     compileClassPaths = [
-            'org.apache.commons:commons-lang3:3.12.0',
+            'org.apache.commons:commons-lang3:3.13.0',
             'org.jetbrains:annotations:24.0.1'
     ]
     compileJarFilePaths = []
