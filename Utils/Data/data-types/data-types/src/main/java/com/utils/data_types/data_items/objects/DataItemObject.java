@@ -54,7 +54,8 @@ public class DataItemObject<
 
 	@Override
 	public int hashCode() {
-		return 0;
+
+		return value.hashCode();
 	}
 
 	@Override

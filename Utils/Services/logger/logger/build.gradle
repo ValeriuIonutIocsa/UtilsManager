@@ -4,7 +4,8 @@ ext {
     ]
     compileClassPaths = [
             'org.apache.commons:commons-lang3:3.13.0',
-            'org.jetbrains:annotations:24.0.1'
+            'org.jetbrains:annotations:24.0.1',
+            'com.github.jbellis:jamm:0.4.0'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []

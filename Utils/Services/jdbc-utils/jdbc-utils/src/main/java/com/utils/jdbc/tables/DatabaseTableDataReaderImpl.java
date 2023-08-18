@@ -113,6 +113,7 @@ public class DatabaseTableDataReaderImpl<
 
 		final String columnsString;
 		if (ArrayUtils.getLength(columnIndices) > 0) {
+
 			final List<Integer> columnIndexList = new ArrayList<>();
 			for (final int columnIndex : columnIndices) {
 				columnIndexList.add(columnIndex);

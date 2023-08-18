@@ -5,7 +5,6 @@ import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.icons.ImagesGuiUtils;
-import com.utils.string.StrUtils;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -87,10 +86,5 @@ public class HBoxWebViewSearch extends AbstractCustomControl<HBox> {
 				BasicControlsFactories.getInstance().createTooltip("case sensitive search"));
 		GuiUtils.setDefaultBorder(caseSensitiveToggleButton);
 		return caseSensitiveToggleButton;
-	}
-
-	@Override
-	public String toString() {
-		return StrUtils.reflectionToString(this);
 	}
 }

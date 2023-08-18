@@ -12,6 +12,7 @@ import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 import com.utils.xml.stax.AbstractXmlStAXReader;
 import com.utils.xml.stax.AbstractXmlStAXWriter;
+import com.utils.xml.stax.ParseXmlEventResult;
 import com.utils.xml.xml_files.obfuscate.Obfuscation;
 
 public class XmlFile {
@@ -48,7 +49,7 @@ public class XmlFile {
 				new AbstractXmlStAXReader(inputPathString) {
 
 					@Override
-					protected void parseXmlEvent(
+					protected ParseXmlEventResult parseXmlEvent(
 							final Stack<String> pathInXml,
 							final XMLEvent xmlEvent) {
 
@@ -65,8 +66,8 @@ public class XmlFile {
 						} else {
 							writeXmlEvent(xmlEvent);
 						}
+						return ParseXmlEventResult.CONTINUE_READING;
 					}
-
 				}.readXml();
 			}
 

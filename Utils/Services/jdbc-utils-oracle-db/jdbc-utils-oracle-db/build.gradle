@@ -3,7 +3,7 @@ ext {
             ':jdbc-utils'
     ]
     compileClassPaths = [
-            'com.oracle.database.jdbc:ojdbc10-production:19.19.0.0'
+            'com.oracle.database.jdbc:ojdbc10-production:19.20.0.0'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []

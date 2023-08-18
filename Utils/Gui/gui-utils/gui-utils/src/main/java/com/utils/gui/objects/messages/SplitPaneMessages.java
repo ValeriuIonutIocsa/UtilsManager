@@ -66,7 +66,7 @@ public class SplitPaneMessages extends AbstractCustomControl<SplitPane> {
 				new CustomTreeTableView<>(tableColumnDataArray, true, true, true, true, 0);
 		customTreeTableView.setId("tree-table-view-messages");
 
-		customTreeTableView.getColumnList().get(0)
+		customTreeTableView.getColumnByName(TableRowDataMessage.MESSAGES_COLUMN_NAME)
 				.setCellFactory(param -> new CustomTreeTableCellMessages(userActionRequiredHelper));
 
 		return customTreeTableView;

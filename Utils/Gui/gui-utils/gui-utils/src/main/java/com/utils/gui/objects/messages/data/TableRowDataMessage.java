@@ -11,8 +11,10 @@ public class TableRowDataMessage implements TableRowData {
 
 	private static final long serialVersionUID = -4482668257460205647L;
 
+	public static final String MESSAGES_COLUMN_NAME = "Messages";
+
 	public static final TableColumnData[] COLUMNS = {
-			new TableColumnData("Messages", "Messages", 1.0)
+			new TableColumnData(MESSAGES_COLUMN_NAME, "Messages", 1.0)
 	};
 
 	@Override

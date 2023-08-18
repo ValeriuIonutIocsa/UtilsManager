@@ -59,7 +59,18 @@ public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator 
 			columnIndexList.add(columnIndex);
 		}
 
-		final List<String> columns = new ArrayList<>();
+		final List<String> columnList = new ArrayList<>();
+		fillColumnList(databaseTableInfo, columnIndexList, columnList);
+
+		final String columnsString = StringUtils.join(columnList, ',');
+		return "CREATE INDEX \"" + indexName + "\" ON \"" + tableName + "\"(" + columnsString + ")";
+	}
+
+	private static void fillColumnList(
+			final DatabaseTableInfo databaseTableInfo,
+			final List<Integer> columnIndexList,
+			final List<String> columnList) {
+
 		final DatabaseTableColumn[] databaseTableColumns = databaseTableInfo.getDatabaseTableColumnArray();
 		for (int columnIndex = 0; columnIndex < databaseTableColumns.length; columnIndex++) {
 
@@ -68,11 +79,8 @@ public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator 
 				final DatabaseTableColumn databaseTableColumn = databaseTableColumns[columnIndex];
 				final String columnName = databaseTableColumn.getName();
 				final String columnString = "\"" + columnName + "\"";
-				columns.add(columnString);
+				columnList.add(columnString);
 			}
 		}
-
-		final String columnsString = StringUtils.join(columns, ',');
-		return "CREATE INDEX \"" + indexName + "\" ON \"" + tableName + "\"(" + columnsString + ")";
 	}
 }
