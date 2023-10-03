@@ -141,12 +141,41 @@ public final class PathUtils {
 		return pathString;
 	}
 
+	/**
+	 * Gets the name minus the path from a full fileName.
+	 * <p>
+	 * This method will handle a file in either Unix or Windows format. The text after the last forward or backslash is
+	 * returned.
+	 * </p>
+	 *
+	 * <pre>
+	 * a/b/c.txt --&gt; c.txt
+	 * a.txt     --&gt; a.txt
+	 * a/b/c     --&gt; c
+	 * a/b/c/    --&gt; c
+	 * </pre>
+	 *
+	 * @param path
+	 *            the input path
+	 * @return the name of the file without the path
+	 */
 	@ApiMethod
 	public static String computeFileName(
 			final Path path) {
 
-		final String pathString = String.valueOf(path);
-		return computeFileName(pathString);
+		final String fileName;
+		if (path == null) {
+			fileName = null;
+
+		} else {
+			final Path fileNamePath = path.getFileName();
+			if (fileNamePath == null) {
+				fileName = null;
+			} else {
+				fileName = fileNamePath.toString();
+			}
+		}
+		return fileName;
 	}
 
 	/**
@@ -155,7 +184,7 @@ public final class PathUtils {
 	 * This method will handle a file in either Unix or Windows format. The text after the last forward or backslash is
 	 * returned.
 	 * </p>
-	 * 
+	 *
 	 * <pre>
 	 * a/b/c.txt --&gt; c.txt
 	 * a.txt     --&gt; a.txt
@@ -177,7 +206,12 @@ public final class PathUtils {
 
 		} else {
 			final Path path = Paths.get(pathString);
-			fileName = path.getFileName().toString();
+			final Path fileNamePath = path.getFileName();
+			if (fileNamePath == null) {
+				fileName = null;
+			} else {
+				fileName = fileNamePath.toString();
+			}
 		}
 		return fileName;
 	}

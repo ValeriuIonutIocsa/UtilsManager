@@ -17,15 +17,17 @@ public final class FactorySRecFile {
 	}
 
 	public static SRecFile newInstance(
-			final String sRecFilePathString) {
+			final String sRecFilePathString,
+			final String displayName) {
 
 		SRecFile sRecFile = null;
 		try {
-			Logger.printProgress("parsing SREC file:");
+			Logger.printProgress("parsing " + displayName + " file:");
 			Logger.printLine(sRecFilePathString);
 
 			if (!IoUtils.fileExists(sRecFilePathString)) {
-				Logger.printWarning("the SREC file does not exist");
+				Logger.printWarning("the " + displayName + " file does not exist:" +
+						System.lineSeparator() + sRecFilePathString);
 
 			} else {
 				final List<SRecRecord> sRecRecordList = new ArrayList<>();
@@ -47,13 +49,13 @@ public final class FactorySRecFile {
 									state = 1;
 								} else if (b != '\n' && b != '\r') {
 									Logger.printWarning("found unexpected character " + b +
-											" in the SREC file (expected S)");
+											" in the " + displayName + " file (expected S)");
 								}
 							}
 
 						} else if (state == 1) {
 
-							final int recordTypeCode = parseHexDigit(inputStream);
+							final int recordTypeCode = parseHexDigit(inputStream, displayName);
 							if (recordTypeCode == -1) {
 								state = -1;
 							} else {
@@ -61,7 +63,7 @@ public final class FactorySRecFile {
 								if (sRecRecordType == null) {
 
 									Logger.printWarning("invalid record type " + recordTypeCode +
-											" in the SREC file");
+											" in the " + sRecFilePathString + " file");
 									state = 0;
 
 								} else {
@@ -71,7 +73,7 @@ public final class FactorySRecFile {
 
 						} else if (state == 2) {
 
-							final int number = parseSRecNumber(inputStream);
+							final int number = parseSRecNumber(inputStream, displayName);
 							if (number == -1) {
 								state = -1;
 							} else {
@@ -82,7 +84,7 @@ public final class FactorySRecFile {
 						} else if (state == 3) {
 
 							final int addressByteCount = sRecRecordType.getAddressByteCount();
-							address = parseSRecLongNumber(inputStream, addressByteCount * 2);
+							address = parseSRecLongNumber(inputStream, addressByteCount * 2, displayName);
 							if (address == -1) {
 								state = -1;
 							} else {
@@ -94,7 +96,7 @@ public final class FactorySRecFile {
 							final byte[] data = new byte[byteCount];
 							for (int i = 0; i < byteCount; i++) {
 
-								final int dataByte = parseSRecNumber(inputStream);
+								final int dataByte = parseSRecNumber(inputStream, displayName);
 								if (dataByte == -1) {
 
 									state = -1;
@@ -112,7 +114,7 @@ public final class FactorySRecFile {
 
 						} else if (state == 5) {
 
-							final int checksum = parseSRecNumber(inputStream);
+							final int checksum = parseSRecNumber(inputStream, displayName);
 							if (checksum == -1) {
 								state = -1;
 							} else {
@@ -128,7 +130,7 @@ public final class FactorySRecFile {
 			}
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to parse SREC file:" +
+			Logger.printError("failed to parse " + displayName + " file:" +
 					System.lineSeparator() + sRecFilePathString);
 			Logger.printException(exc);
 		}
@@ -136,13 +138,14 @@ public final class FactorySRecFile {
 	}
 
 	private static int parseSRecNumber(
-			final InputStream inputStream) throws Exception {
+			final InputStream inputStream,
+			final String displayName) throws Exception {
 
 		int sRecNumber = 0;
 		final int numberLength = 2;
 		for (int i = 0; i < numberLength; i++) {
 
-			final int hexDigit = parseHexDigit(inputStream);
+			final int hexDigit = parseHexDigit(inputStream, displayName);
 			if (hexDigit == -1) {
 				sRecNumber = -1;
 				break;
@@ -155,12 +158,13 @@ public final class FactorySRecFile {
 
 	private static long parseSRecLongNumber(
 			final InputStream inputStream,
-			final int numberLength) throws Exception {
+			final int numberLength,
+			final String displayName) throws Exception {
 
 		long sRecNumber = 0;
 		for (int i = 0; i < numberLength; i++) {
 
-			final long hexDigit = parseHexDigit(inputStream);
+			final long hexDigit = parseHexDigit(inputStream, displayName);
 			if (hexDigit == -1) {
 				sRecNumber = -1;
 				break;
@@ -172,12 +176,13 @@ public final class FactorySRecFile {
 	}
 
 	private static int parseHexDigit(
-			final InputStream inputStream) throws Exception {
+			final InputStream inputStream,
+			final String displayName) throws Exception {
 
 		final int hexDigitValue;
 		final int b = inputStream.read();
 		if (b == -1) {
-			Logger.printWarning("unexpected end of stream while parsing the SREC file");
+			Logger.printWarning("unexpected end of stream while parsing the " + displayName + " file");
 			hexDigitValue = -1;
 		} else if ('0' <= b && b <= '9') {
 			hexDigitValue = b - '0';
@@ -186,7 +191,7 @@ public final class FactorySRecFile {
 		} else if ('a' <= b && b <= 'f') {
 			hexDigitValue = b - 'a' + 10;
 		} else {
-			Logger.printWarning("invalid hex digit value " + b + " in the SREC file");
+			Logger.printWarning("invalid hex digit value " + b + " in the " + displayName + " file");
 			hexDigitValue = -1;
 		}
 		return hexDigitValue;

@@ -52,7 +52,7 @@ class SRecFileTest {
 
 		final String sRecFilePathString = sRecFilePathDynamicTestOptions.computeValue();
 		try {
-			final SRecFile sRecFile = FactorySRecFile.newInstance(sRecFilePathString);
+			final SRecFile sRecFile = FactorySRecFile.newInstance(sRecFilePathString, "SREC");
 			Assertions.assertNotNull(sRecFile);
 
 			final String copySRecFilePathString =

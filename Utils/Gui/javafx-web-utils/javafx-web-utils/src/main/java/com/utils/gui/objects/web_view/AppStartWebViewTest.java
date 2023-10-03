@@ -9,6 +9,7 @@ final class AppStartWebViewTest {
 
 	public static void main(
 			final String[] args) {
+
 		Application.launch(ApplicationWebViewTest.class, args);
 	}
 }

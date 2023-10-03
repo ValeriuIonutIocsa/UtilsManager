@@ -1,5 +1,6 @@
 package com.personal.utils.gradle_roots;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +37,17 @@ public final class FactoryGradleRoot {
 				PathUtils.computePath(rootFolderPathString, ".gitattributes");
 
 		final Map<String, String> moduleFolderPathsByNameMap = new HashMap<>();
-		final List<String> buildGradleFilePathStringList =
-				ListFileUtils.listFilesRecursively(rootFolderPathString, filePath -> {
+		final List<String> buildGradleFilePathStringList = new ArrayList<>();
+		ListFileUtils.visitFilesRecursively(rootFolderPathString,
+				dirPath -> {
+				}, filePath -> {
 
 					final String fileName = PathUtils.computeFileName(filePath);
-					return StringUtils.equalsIgnoreCase(fileName, "build.gradle");
+					if (StringUtils.equalsIgnoreCase(fileName, "build.gradle")) {
+
+						final String filePathString = filePath.toString();
+						buildGradleFilePathStringList.add(filePathString);
+					}
 				});
 		for (final String buildGradleFilePathString : buildGradleFilePathStringList) {
 

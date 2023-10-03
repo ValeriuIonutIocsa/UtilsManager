@@ -59,8 +59,8 @@ public final class SRecUtils {
 		final Map<Long, Byte> patchedByteByAddressMap = new HashMap<>();
 		fillPatchedByteByAddressMap(patchDataCsvPathString, patchedByteByAddressMap);
 
-		final SRecFile outputSRecFile = FactorySRecFile.newInstance(outputSRecFilePathString);
-		final SRecFile sRecFile = FactorySRecFile.newInstance(sRecFilePathString);
+		final SRecFile outputSRecFile = FactorySRecFile.newInstance(outputSRecFilePathString, "patched SREC");
+		final SRecFile sRecFile = FactorySRecFile.newInstance(sRecFilePathString, "original SREC");
 
 		final List<SRecRecord> outputSRecRecordList = outputSRecFile.getSRecRecordList();
 		final List<SRecRecord> sRecRecordList = sRecFile.getSRecRecordList();
