@@ -193,7 +193,7 @@ public final class IoUtils {
 		boolean success = false;
 		try {
 			final ProcessBuilder processBuilder = new ProcessBuilder();
-			processBuilder.command("cmd", "/c", filePathString);
+			processBuilder.command("cmd", "/c", "start", filePathString);
 			processBuilder.inheritIO();
 			final Process process = processBuilder.start();
 			final int exitCode = process.waitFor();

@@ -937,7 +937,7 @@ public final class StrUtils {
 			final String string) {
 
 		final int value;
-		if (StringUtils.startsWith(string, "0x")) {
+		if (StringUtils.startsWithIgnoreCase(string, "0x")) {
 			value = StrUtils.tryParsePositiveIntFromHexString(string);
 		} else {
 			value = StrUtils.tryParsePositiveInt(string);
@@ -1000,7 +1000,7 @@ public final class StrUtils {
 			final String string) {
 
 		final long value;
-		if (StringUtils.startsWith(string, "0x")) {
+		if (StringUtils.startsWithIgnoreCase(string, "0x")) {
 			value = StrUtils.tryParsePositiveLongFromHexString(string);
 		} else {
 			value = StrUtils.tryParsePositiveLong(string);
