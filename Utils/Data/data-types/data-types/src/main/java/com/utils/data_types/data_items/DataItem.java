@@ -20,6 +20,9 @@ public interface DataItem<
 	String createCopyString();
 
 	void writeToJson(
+			String columnName,
+			boolean notLastAttribute,
+			int indentCount,
 			PrintStream printStream);
 
 	void writeToXml(

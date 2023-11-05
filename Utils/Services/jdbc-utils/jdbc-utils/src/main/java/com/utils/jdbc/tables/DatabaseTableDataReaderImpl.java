@@ -98,7 +98,9 @@ public class DatabaseTableDataReaderImpl<
 
 	/**
 	 * @param preparedStatement
+	 *            preparedStatement
 	 * @throws Exception
+	 *             Exception
 	 */
 	protected void setParameters(
 			final PreparedStatement preparedStatement) throws Exception {
@@ -114,23 +116,10 @@ public class DatabaseTableDataReaderImpl<
 		final String columnsString;
 		if (ArrayUtils.getLength(columnIndices) > 0) {
 
-			final List<Integer> columnIndexList = new ArrayList<>();
-			for (final int columnIndex : columnIndices) {
-				columnIndexList.add(columnIndex);
-			}
+			final List<String> columnList = new ArrayList<>();
+			fillColumnList(databaseTableInfo, columnIndices, columnList);
 
-			final List<String> columns = new ArrayList<>();
-			final DatabaseTableColumn[] databaseTableColumns = databaseTableInfo.getDatabaseTableColumnArray();
-			for (int columnIndex = 0; columnIndex < databaseTableColumns.length; columnIndex++) {
-
-				if (columnIndexList.contains(columnIndex)) {
-
-					final DatabaseTableColumn databaseTableColumn = databaseTableColumns[columnIndex];
-					final String columnName = databaseTableColumn.getName();
-					columns.add("\"" + columnName + "\"");
-				}
-			}
-			columnsString = StringUtils.join(columns, ',');
+			columnsString = StringUtils.join(columnList, ',');
 
 		} else {
 			columnsString = "*";
@@ -142,5 +131,27 @@ public class DatabaseTableDataReaderImpl<
 			sbSql.append(' ').append(whereClause);
 		}
 		return sbSql.toString();
+	}
+
+	private static void fillColumnList(
+			final DatabaseTableInfo databaseTableInfo,
+			final int[] columnIndices,
+			final List<String> columnList) {
+
+		final List<Integer> columnIndexList = new ArrayList<>();
+		for (final int columnIndex : columnIndices) {
+			columnIndexList.add(columnIndex);
+		}
+
+		final DatabaseTableColumn[] databaseTableColumns = databaseTableInfo.getDatabaseTableColumnArray();
+		for (int columnIndex = 0; columnIndex < databaseTableColumns.length; columnIndex++) {
+
+			if (columnIndexList.contains(columnIndex)) {
+
+				final DatabaseTableColumn databaseTableColumn = databaseTableColumns[columnIndex];
+				final String columnName = databaseTableColumn.getName();
+				columnList.add("\"" + columnName + "\"");
+			}
+		}
 	}
 }

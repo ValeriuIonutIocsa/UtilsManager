@@ -180,6 +180,38 @@ public final class MathUtils {
 	}
 
 	@ApiMethod
+	public static boolean checkAllPositive(
+			final int... numberArray) {
+
+		boolean allPositive = true;
+		for (final int number : numberArray) {
+
+			if (number < 0) {
+
+				allPositive = false;
+				break;
+			}
+		}
+		return allPositive;
+	}
+
+	@ApiMethod
+	public static boolean checkAllPositive(
+			final long... numberArray) {
+
+		boolean allPositive = true;
+		for (final long number : numberArray) {
+
+			if (number < 0) {
+
+				allPositive = false;
+				break;
+			}
+		}
+		return allPositive;
+	}
+
+	@ApiMethod
 	public static boolean checkPowerOfTwo(
 			final int n) {
 		return n != 0 && (n & (n - 1)) == 0;

@@ -641,13 +641,7 @@ public class CustomTableView<
 	@ApiMethod
 	public boolean removeSelectedItems(
 			final String itemDisplayName,
-			final boolean askForConfirmation) {
-		return removeSelectedItems(itemDisplayName, askForConfirmation, null);
-	}
-
-	@ApiMethod
-	public boolean removeSelectedItems(
-			final String itemDisplayName,
+			final String itemDisplayNamePlural,
 			final boolean askForConfirmation,
 			final Function<List<TableRowDataT>, Boolean> itemRemover) {
 
@@ -664,18 +658,8 @@ public class CustomTableView<
 			final int itemCount = selectedItemList.size();
 			if (askForConfirmation) {
 
-				final String itemCountString;
-				if (itemCount == 1) {
-					itemCountString = itemDisplayName;
-				} else {
-					itemCountString = itemCount + " " + itemDisplayName + " elements";
-				}
-				final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
-						"Are you sure you wish to remove the selected " + itemCountString + " from the list?",
-						ButtonType.NO, ButtonType.YES);
-				customAlertConfirm.showAndWait();
-
-				final ButtonType result = customAlertConfirm.getResult();
+				final ButtonType result = checkConfirmRemoveSelectedItems(
+						itemDisplayName, itemDisplayNamePlural, itemCount);
 				if (result == ButtonType.NO) {
 					keepGoing = false;
 				}
@@ -712,12 +696,23 @@ public class CustomTableView<
 		return itemsRemoved;
 	}
 
-	@ApiMethod
-	public boolean removeSelectedItem(
+	private static ButtonType checkConfirmRemoveSelectedItems(
 			final String itemDisplayName,
-			final boolean askForConfirmation) {
+			final String itemDisplayNamePlural,
+			final int itemCount) {
 
-		return removeSelectedItem(itemDisplayName, askForConfirmation, null);
+		final String itemCountString;
+		if (itemCount == 1) {
+			itemCountString = itemDisplayName;
+		} else {
+			itemCountString = itemCount + " " + itemDisplayNamePlural;
+		}
+		final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
+				"Are you sure you wish to remove the selected " + itemCountString + " from the list?",
+				ButtonType.NO, ButtonType.YES);
+		customAlertConfirm.showAndWait();
+
+		return customAlertConfirm.getResult();
 	}
 
 	@ApiMethod
@@ -737,12 +732,8 @@ public class CustomTableView<
 			boolean keepGoing = true;
 			if (askForConfirmation) {
 
-				final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
-						"Are you sure you wish to remove the selected " + itemDisplayName + " from the list?",
-						ButtonType.NO, ButtonType.YES);
-				customAlertConfirm.showAndWait();
-				final ButtonType buttonType = customAlertConfirm.getResult();
-				if (buttonType == ButtonType.NO) {
+				final ButtonType result = checkConfirmRemoveSelectedItem(itemDisplayName);
+				if (result == ButtonType.NO) {
 					keepGoing = false;
 				}
 			}
@@ -771,6 +762,17 @@ public class CustomTableView<
 		return itemRemoved;
 	}
 
+	private static ButtonType checkConfirmRemoveSelectedItem(
+			final String itemDisplayName) {
+
+		final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
+				"Are you sure you wish to remove the selected " + itemDisplayName + " from the list?",
+				ButtonType.NO, ButtonType.YES);
+		customAlertConfirm.showAndWait();
+
+		return customAlertConfirm.getResult();
+	}
+
 	@ApiMethod
 	public void setItems(
 			final Collection<TableRowDataT> itemsList) {
@@ -785,6 +787,7 @@ public class CustomTableView<
 	@ApiMethod
 	public void addItem(
 			final TableRowDataT item) {
+
 		addItem(item, unfilteredItemList.size());
 	}
 

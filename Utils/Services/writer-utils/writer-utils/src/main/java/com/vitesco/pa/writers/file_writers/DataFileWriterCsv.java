@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.utils.csv.AbstractCsvWriter;
-import com.utils.csv.CsvWriter;
 import com.utils.data_types.table.TableColumnData;
 import com.utils.data_types.table.TableRowData;
 import com.utils.io.PathUtils;
@@ -63,24 +62,7 @@ public class DataFileWriterCsv extends AbstractDataFileWriter {
 			} else {
 				outputPathString = outputPathStringParam;
 			}
-
-			final CsvWriter csvWriter = new AbstractCsvWriter(null, outputPathString) {
-
-				@Override
-				protected void write(
-						final PrintStream printStream) {
-
-					final TableColumnData[] columnsData = dataTable.getColumnsData();
-					final String headerLine = StringUtils.join(columnsData, ',');
-					printStream.println(headerLine);
-
-					final List<? extends TableRowData> rowDataList = dataTable.getRowDataList();
-					for (final TableRowData tableRowData : rowDataList) {
-						tableRowData.writeToCsv(printStream);
-					}
-				}
-			};
-			final boolean success = csvWriter.writeCsv();
+			final boolean success = new CsvWriterImpl(null, outputPathString, dataTable).writeCsv();
 			if (!success) {
 				throw new Exception();
 			}
@@ -88,6 +70,35 @@ public class DataFileWriterCsv extends AbstractDataFileWriter {
 		} catch (final Exception exc) {
 			Logger.printError("failed to generate the \"" + displayName + "\" data file");
 			Logger.printException(exc);
+		}
+	}
+
+	private static class CsvWriterImpl extends AbstractCsvWriter {
+
+		private final DataTable dataTable;
+
+		protected CsvWriterImpl(
+				final String name,
+				final String outputPathString,
+				final DataTable dataTable) {
+
+			super(name, outputPathString);
+
+			this.dataTable = dataTable;
+		}
+
+		@Override
+		protected void write(
+				final PrintStream printStream) {
+
+			final TableColumnData[] columnsData = dataTable.getColumnsData();
+			final String headerLine = StringUtils.join(columnsData, ',');
+			printStream.println(headerLine);
+
+			final List<? extends TableRowData> rowDataList = dataTable.getRowDataList();
+			for (final TableRowData tableRowData : rowDataList) {
+				tableRowData.writeToCsv(printStream);
+			}
 		}
 	}
 }

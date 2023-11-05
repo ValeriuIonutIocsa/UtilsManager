@@ -244,7 +244,8 @@ public final class PathUtils {
 			}
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to compute parent path string");
+			Logger.printError("failed to compute parent path, levels to go up: " + levelsToGoUp +
+					", from:" + System.lineSeparator() + pathString);
 			Logger.printException(exc);
 		}
 		return folderPathString;
@@ -335,9 +336,31 @@ public final class PathUtils {
 			relativePathString = relativePath.toString();
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to compute relative path string");
+			Logger.printError("failed to compute relative path string from:" +
+					System.lineSeparator() + fromPathString + System.lineSeparator() +
+					"to:" + System.lineSeparator() + toPathString);
 			Logger.printException(exc);
 		}
 		return relativePathString;
+	}
+
+	@ApiMethod
+	public static boolean checkAbsolutePath(
+			final String pathString) {
+
+		boolean absolutePath = false;
+		try {
+			if (StringUtils.isNotBlank(pathString)) {
+
+				final Path path = Paths.get(pathString);
+				absolutePath = path.isAbsolute();
+			}
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to check absolute path for:" +
+					System.lineSeparator() + pathString);
+			Logger.printException(exc);
+		}
+		return absolutePath;
 	}
 }

@@ -2,6 +2,7 @@ package com.utils.data_types.data_items;
 
 import java.io.PrintStream;
 
+import com.utils.json.JsonUtils;
 import com.utils.xml.stax.XmlStAXWriter;
 
 public abstract class AbstractDataItem<
@@ -19,12 +20,13 @@ public abstract class AbstractDataItem<
 
 	@Override
 	public void writeToJson(
-            final PrintStream printStream) {
+			final String columnName,
+			final boolean notLastAttribute,
+			final int indentCount,
+			final PrintStream printStream) {
 
-        printStream.print('"');
 		final String csvString = createCsvString();
-		printStream.print(csvString);
-        printStream.print('"');
+		JsonUtils.writeStringAttribute(columnName, csvString, notLastAttribute, indentCount, printStream);
 	}
 
 	@Override

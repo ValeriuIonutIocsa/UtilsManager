@@ -14,7 +14,7 @@ class XmlSafeParserTest {
 		final int input = Integer.parseInt("1");
 		if (input == 1) {
 			xmlFilePathString = "D:\\casdev\\td5\\0g\\h06\\000\\0GH06_0U0_000_t1_v3500\\" +
-					"_TC37x_non_OTA_NORMAL\\out\\T1Instrumentation\\Results_Real\\" +
+					"_TC37x_non_OTA_NORMAL\\out\\SPAInstrumentation\\Results_Real\\" +
 					"RunnableMeasurementResults_TestSafeParsing.xml";
 
 		} else {

@@ -180,7 +180,7 @@ public final class XmlDomUtils {
 
 				final String nodeValue = childNode.getNodeValue();
 				final String trimmedNodeVal = nodeValue.trim();
-				if (trimmedNodeVal.length() == 0) {
+				if (trimmedNodeVal.isEmpty()) {
 					parentNode.removeChild(childNode);
 				} else {
 					childNode.setNodeValue(trimmedNodeVal);

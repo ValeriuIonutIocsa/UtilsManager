@@ -1,5 +1,6 @@
 package com.vitesco.pa.writers.file_writers.data;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import com.utils.data_types.DataInfo;
 import com.utils.data_types.table.TableColumnData;
 import com.utils.data_types.table.TableRowData;
+import com.utils.json.JsonUtils;
 import com.utils.string.StrUtils;
 
 public class DataTable {
@@ -20,6 +22,7 @@ public class DataTable {
 	public DataTable(
 			final DataInfo dataInfo,
 			final Collection<? extends TableRowData> rowDataList) {
+
 		this(dataInfo, dataInfo.getColumnsData(), rowDataList);
 	}
 
@@ -27,6 +30,7 @@ public class DataTable {
 			final DataInfo dataInfo,
 			final TableColumnData[] columnsData,
 			final Collection<? extends TableRowData> rowDataList) {
+
 		this(dataInfo.getDisplayName(), dataInfo.getXmlRootElementTagName(), dataInfo.getXmlDataElementTagName(),
 				columnsData, rowDataList);
 	}
@@ -43,6 +47,20 @@ public class DataTable {
 		this.xmlDataElementTagName = xmlDataElementTagName;
 		this.columnsData = columnsData;
 		this.rowDataList = new ArrayList<>(rowDataList);
+	}
+
+	public void writeToJson(
+			final int indentCount,
+			final PrintStream printStream) {
+
+		JsonUtils.writeStringAttribute("Name", displayName, true, indentCount, printStream);
+
+		JsonUtils.writeListAttribute(xmlDataElementTagName, rowDataList, false,
+				indentCount, printStream, (
+						tableRowDataArg,
+						indentCountArg,
+						printStreamArg) -> tableRowDataArg.writeToJson(
+								columnsData, indentCountArg, printStreamArg));
 	}
 
 	@Override
