@@ -222,9 +222,10 @@ public class SRecFile {
 			Logger.printProgress("saving SREC file to:");
 			Logger.printLine(copySRecFilePathString);
 
-			FactoryFolderCreator.getInstance().createParentDirectories(copySRecFilePathString, false, true);
-			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(copySRecFilePathString, false, true);
-
+			FactoryFolderCreator.getInstance()
+					.createParentDirectories(copySRecFilePathString, false, true);
+			FactoryReadOnlyFlagClearer.getInstance()
+					.clearReadOnlyFlagFile(copySRecFilePathString, false, true);
 			try (PrintStream printStream =
 					StreamUtils.openPrintStream(copySRecFilePathString, false, StandardCharsets.UTF_8)) {
 

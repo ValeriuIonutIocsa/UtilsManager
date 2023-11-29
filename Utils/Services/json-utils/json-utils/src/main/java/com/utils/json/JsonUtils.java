@@ -46,7 +46,8 @@ public final class JsonUtils {
 		if (StringUtils.isNotBlank(name)) {
 
 			printStream.print('"');
-			printStream.print(name);
+			final String escapedName = escapeJsonString(name);
+			printStream.print(escapedName);
 			printStream.print("\": ");
 		}
 
@@ -95,7 +96,8 @@ public final class JsonUtils {
 		if (StringUtils.isNotBlank(name)) {
 
 			printStream.print('"');
-			printStream.print(name);
+			final String escapedName = escapeJsonString(name);
+			printStream.print(escapedName);
 			printStream.print("\": ");
 		}
 
@@ -131,13 +133,16 @@ public final class JsonUtils {
 		if (StringUtils.isNotBlank(name)) {
 
 			printStream.print('"');
-			printStream.print(name);
+			final String escapedName = escapeJsonString(name);
+			printStream.print(escapedName);
 			printStream.print("\": ");
 		}
 
 		printStream.print('"');
 		if (value != null) {
-			printStream.print(value);
+
+			final String escapedValue = escapeJsonString(value);
+			printStream.print(escapedValue);
 		}
 		printStream.print('"');
 
@@ -145,5 +150,23 @@ public final class JsonUtils {
 			printStream.print(',');
 		}
 		printStream.println();
+	}
+
+	private static String escapeJsonString(
+			final String jsonString) {
+
+		String escapedJsonString = jsonString;
+		if (escapedJsonString != null) {
+
+			escapedJsonString = escapedJsonString.replace("\\", "\\\\");
+			escapedJsonString = escapedJsonString.replace("\"", "\\\"");
+			escapedJsonString = escapedJsonString.replace("\b", "\\b");
+			escapedJsonString = escapedJsonString.replace("\f", "\\f");
+			escapedJsonString = escapedJsonString.replace("\n", "\\n");
+			escapedJsonString = escapedJsonString.replace("\r", "\\r");
+			escapedJsonString = escapedJsonString.replace("\t", "\\t");
+			escapedJsonString = escapedJsonString.replace("/", "\\/");
+		}
+		return escapedJsonString;
 	}
 }

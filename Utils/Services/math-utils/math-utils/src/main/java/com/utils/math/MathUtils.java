@@ -119,6 +119,23 @@ public final class MathUtils {
 		return (n + d - 1) / d * d;
 	}
 
+	/**
+	 * @param n1
+	 *            first number
+	 * @param n2
+	 *            second number
+	 * @return true if the first number is a multiple of the second number
+	 */
+	@ApiMethod
+	public static boolean checkMultiple(
+			final double n1,
+			final double n2) {
+
+		final double ratio = n1 / n2;
+		final double roundingDifference = ratio - Math.round(ratio);
+		return Math.abs(roundingDifference) < 0.000_001;
+	}
+
 	@ApiMethod
 	public static boolean checkInRange(
 			final int value,

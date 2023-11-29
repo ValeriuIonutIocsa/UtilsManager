@@ -152,4 +152,33 @@ class MathUtilsTest {
 		final int result = MathUtils.roundToNearestPowerOfTwo(n);
 		Assertions.assertEquals(expectedResult, result);
 	}
+
+	@TestFactory
+	List<DynamicTest> testCheckMultiple() {
+
+		final List<DynamicTest> dynamicTestList = new ArrayList<>();
+		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3);
+		if (testCaseList.contains(1)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("1",
+					() -> testCheckMultipleCommon(3.5, 0.5, true)));
+		}
+		if (testCaseList.contains(2)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("2",
+					() -> testCheckMultipleCommon(3.7, 0.4, false)));
+		}
+		if (testCaseList.contains(3)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("3",
+					() -> testCheckMultipleCommon(12, 4, true)));
+		}
+		return dynamicTestList;
+	}
+
+	private static void testCheckMultipleCommon(
+			final double n1,
+			final double n2,
+			final boolean expectedMultiple) {
+
+		final boolean multiple = MathUtils.checkMultiple(n1, n2);
+		Assertions.assertEquals(expectedMultiple, multiple);
+	}
 }

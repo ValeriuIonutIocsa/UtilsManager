@@ -1,7 +1,7 @@
 ext {
     subProjectNames = [':gui-utils']
     compileClassPaths = [
-            'org.controlsfx:controlsfx:11.1.2'
+            'org.controlsfx:controlsfx:11.2.0'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []

@@ -14,7 +14,7 @@ class XlsxWorkbookTest {
 		final String excelFilePathString;
 		final int input = Integer.parseInt("1");
 		if (input == 1) {
-			excelFilePathString = "D:\\docs\\ManifConnector\\ConnectionReport.xlsx";
+			excelFilePathString = "D:\\VT_IVI_MISC\\Tmp\\ADV\\ManifConnector\\ConnectionReport.xlsx";
 		} else {
 			throw new RuntimeException();
 		}
