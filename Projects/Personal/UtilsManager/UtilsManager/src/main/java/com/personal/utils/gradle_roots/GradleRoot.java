@@ -52,7 +52,7 @@ public class GradleRoot {
 			if (srcModuleFolderPathString != null) {
 
 				FactoryFolderCopier.getInstance().copyFolder(
-						srcModuleFolderPathString, moduleFolderPathString, true, true);
+						srcModuleFolderPathString, moduleFolderPathString, true, true, true);
 			}
 		}
 	}

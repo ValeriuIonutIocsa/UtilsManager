@@ -73,7 +73,7 @@ final class WorkerCreate {
 		final String projectRelativePath = "/Projects/Personal/" + projectName + "/" + projectName;
 		final String projectFolderPathString = PathUtils.computePath(pathString, projectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
-				templateProjectFolderPathString, projectFolderPathString, true, true);
+				templateProjectFolderPathString, projectFolderPathString, true, true, true);
 		final String appInfo = createAppInfo(packageName);
 		replaceDependencies(projectFolderPathString, appInfo, subProjectRelativePathStringList);
 		createMainClass(projectFolderPathString, projectName, packageName);
@@ -85,7 +85,7 @@ final class WorkerCreate {
 		final String allModulesProjectFolderPathString =
 				PathUtils.computePath(pathString, allModulesProjectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
-				templateProjectFolderPathString, allModulesProjectFolderPathString, true, true);
+				templateProjectFolderPathString, allModulesProjectFolderPathString, true, true, true);
 		replaceDependencies(allModulesProjectFolderPathString, "", Collections.singletonList(projectRelativePath));
 
 		final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(pathString,
