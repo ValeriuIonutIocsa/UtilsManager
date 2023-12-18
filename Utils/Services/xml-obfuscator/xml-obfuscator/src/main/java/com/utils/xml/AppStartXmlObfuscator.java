@@ -23,11 +23,11 @@ public final class AppStartXmlObfuscator {
 		if (cliArgsXmlObfuscator != null) {
 
 			final String cnfFilePathString = cliArgsXmlObfuscator.getConfigurationFilePathString();
-			main(cnfFilePathString);
+			mainL2(cnfFilePathString);
 		}
 	}
 
-	public static void main(
+	public static void mainL2(
 			final String cnfFilePathString) {
 
 		if (!IoUtils.fileExists(cnfFilePathString)) {

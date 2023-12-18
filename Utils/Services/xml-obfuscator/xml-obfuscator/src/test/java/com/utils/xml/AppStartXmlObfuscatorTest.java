@@ -8,6 +8,6 @@ class AppStartXmlObfuscatorTest {
 	void testWork() {
 
 		final String cnfFilePathString = "cfg\\XmlObfuscatorCfg.xml";
-		AppStartXmlObfuscator.main(cnfFilePathString);
+		AppStartXmlObfuscator.mainL2(cnfFilePathString);
 	}
 }

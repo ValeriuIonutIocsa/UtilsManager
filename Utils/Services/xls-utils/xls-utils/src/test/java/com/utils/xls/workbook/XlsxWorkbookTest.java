@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.utils.log.Logger;
+import com.utils.string.StrUtils;
 
 class XlsxWorkbookTest {
 
@@ -12,7 +13,7 @@ class XlsxWorkbookTest {
 	void testParse() {
 
 		final String excelFilePathString;
-		final int input = Integer.parseInt("1");
+		final int input = StrUtils.tryParsePositiveInt("1");
 		if (input == 1) {
 			excelFilePathString = "D:\\VT_IVI_MISC\\Tmp\\ADV\\ManifConnector\\ConnectionReport.xlsx";
 		} else {

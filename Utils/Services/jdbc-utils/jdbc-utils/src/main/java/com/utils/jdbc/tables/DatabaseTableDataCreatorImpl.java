@@ -113,10 +113,15 @@ public class DatabaseTableDataCreatorImpl<
 
 	/**
 	 * @param preparedStatement
+	 *            preparedStatement
 	 * @param tableRowDataList
+	 *            tableRowDataList
 	 * @param startIndex
+	 *            startIndex
 	 * @param batchRowCount
+	 *            batchRowCount
 	 * @throws SQLException
+	 *             SQLException
 	 */
 	protected void executeBatch(
 			final PreparedStatement preparedStatement,

@@ -59,6 +59,7 @@ public class CustomTableView<
 	private final List<ColumnHeader> columnHeaderList;
 	private final Map<String, TableColumn<TableRowDataT, Object>> columnsByNameMap;
 	private final ObservableList<TableRowDataT> unfilteredItemList;
+	private final FilteredList<TableRowDataT> filteredItemList;
 
 	private ScrollBar verticalScrollBar;
 	private boolean hideVerticalScrollBar;
@@ -96,6 +97,14 @@ public class CustomTableView<
 		getSelectionModel().setCellSelectionEnabled(cellSelection);
 
 		createTableColumns(tableColumnDataArray, sort, filter);
+
+		filteredItemList = new FilteredList<>(unfilteredItemList);
+		filteredItemList.setPredicate(filterPredicate);
+
+		final SortedList<TableRowDataT> sortedItemList = new SortedList<>(filteredItemList);
+		sortedItemList.comparatorProperty().bind(comparatorProperty());
+
+		setItems(sortedItemList);
 
 		setOnKeyPressed(event -> keyPressed(event, defaultSearchAndFilterColumnIndex));
 	}
@@ -853,13 +862,7 @@ public class CustomTableView<
 
 	private void setSortedAndFilteredItems() {
 
-		final FilteredList<TableRowDataT> filteredData = new FilteredList<>(unfilteredItemList);
-		filteredData.setPredicate(filterPredicate);
-
-		final SortedList<TableRowDataT> sortedData = new SortedList<>(filteredData);
-		sortedData.comparatorProperty().bind(comparatorProperty());
-
-		setItems(sortedData);
+		filteredItemList.setPredicate(filterPredicate);
 		refresh();
 	}
 
@@ -879,6 +882,12 @@ public class CustomTableView<
 			final String columnName) {
 
 		return columnsByNameMap.get(columnName);
+	}
+
+	@Override
+	public int computeTotalItemCount() {
+
+		return unfilteredItemList.size();
 	}
 
 	@ApiMethod

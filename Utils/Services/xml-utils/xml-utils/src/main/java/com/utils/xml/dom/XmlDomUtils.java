@@ -57,13 +57,44 @@ public final class XmlDomUtils {
 	}
 
 	@ApiMethod
-	public static ValidatedDocument openAndValidateDocument(
+	public static ValidatedDocument openAndValidateDocumentResourceSchema(
+			final InputStream inputStream,
+			final String schemaResourceFilePathString) throws Exception {
+
+		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
+		return new DocumentOpenerInputStream(inputStream, null)
+				.openAndValidateDocumentResourceSchema(documentBuilderFactory, schemaResourceFilePathString);
+	}
+
+	@ApiMethod
+	public static ValidatedDocument openAndValidateDocumentLocalSchema(
 			final InputStream inputStream,
 			final String schemaFolderPathString) throws Exception {
 
 		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
 		return new DocumentOpenerInputStream(inputStream, schemaFolderPathString)
-				.openAndValidateDocument(documentBuilderFactory);
+				.openAndValidateDocumentLocalSchema(documentBuilderFactory);
+	}
+
+	@ApiMethod
+	public static ValidatedDocument openAndValidateDocumentResourceSchema(
+			final String filePathString,
+			final String schemaResourceFilePathString) throws Exception {
+
+		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
+		final File file = new File(filePathString);
+		return new DocumentOpenerFile(file)
+				.openAndValidateDocumentResourceSchema(documentBuilderFactory, schemaResourceFilePathString);
+	}
+
+	@ApiMethod
+	public static ValidatedDocument openAndValidateDocumentLocalSchema(
+			final String filePathString) throws Exception {
+
+		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
+		final File file = new File(filePathString);
+		return new DocumentOpenerFile(file)
+				.openAndValidateDocumentLocalSchema(documentBuilderFactory);
 	}
 
 	@ApiMethod
@@ -73,15 +104,6 @@ public final class XmlDomUtils {
 		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
 		final File file = new File(filePathString);
 		return new DocumentOpenerFile(file).openDocument(documentBuilderFactory);
-	}
-
-	@ApiMethod
-	public static ValidatedDocument openAndValidateDocument(
-			final String filePathString) throws Exception {
-
-		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
-		final File file = new File(filePathString);
-		return new DocumentOpenerFile(file).openAndValidateDocument(documentBuilderFactory);
 	}
 
 	private static DocumentBuilderFactory createDocumentBuilderFactory() {
@@ -285,6 +307,20 @@ public final class XmlDomUtils {
 			}
 		}
 		return elementList;
+	}
+
+	@ApiMethod
+	public static String computeAttributeValue(
+			final Element parentElement,
+			final String tagName,
+			final String attributeName) {
+
+		String attributeValue = "";
+		final Element element = XmlDomUtils.getFirstElementByTagName(parentElement, tagName);
+		if (element != null) {
+			attributeValue = element.getAttribute(attributeName);
+		}
+		return attributeValue;
 	}
 
 	@ApiMethod

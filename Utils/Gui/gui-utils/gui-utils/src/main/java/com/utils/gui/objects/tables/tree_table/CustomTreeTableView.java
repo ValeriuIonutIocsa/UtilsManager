@@ -776,6 +776,24 @@ public class CustomTreeTableView<
 		return columnsByNameMap.get(columnName);
 	}
 
+	@Override
+	public int computeTotalItemCount() {
+
+		return computeTotalItemCountRec(unfilteredTreeItemRoot);
+	}
+
+	private int computeTotalItemCountRec(
+			final UnfilteredTreeItem<TableRowDataT> unfilteredTreeItem) {
+
+		final List<UnfilteredTreeItem<TableRowDataT>> childrenList =
+				unfilteredTreeItem.getChildrenList();
+		int itemCount = childrenList.size();
+		for (final UnfilteredTreeItem<TableRowDataT> childUnfilteredTreeItem : childrenList) {
+			itemCount += computeTotalItemCountRec(childUnfilteredTreeItem);
+		}
+		return itemCount;
+	}
+
 	@ApiMethod
 	public UnfilteredTreeItem<TableRowDataT> getUnfilteredTreeItemRoot() {
 		return unfilteredTreeItemRoot;

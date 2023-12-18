@@ -45,7 +45,9 @@ public class DatabaseTableDeleterImpl implements DatabaseTableDeleter {
 
 	/**
 	 * @param preparedStatement
+	 *            preparedStatement
 	 * @throws Exception
+	 *             Exception
 	 */
 	protected void setParameters(
 			final PreparedStatement preparedStatement) throws Exception {

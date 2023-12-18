@@ -131,6 +131,7 @@ abstract class AbstractCustomListSelectionView<
 
 	/**
 	 * @param vBoxLeft
+	 *            vBoxLeft
 	 */
 	@ApiMethod
 	protected void addLeftHeader(
@@ -165,6 +166,7 @@ abstract class AbstractCustomListSelectionView<
 
 	/**
 	 * @param vBoxRight
+	 *            vBoxRight
 	 */
 	@ApiMethod
 	protected void addRightHeader(

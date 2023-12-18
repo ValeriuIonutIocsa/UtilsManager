@@ -61,6 +61,7 @@ public abstract class AbstractCustomDialog<
 
 	/**
 	 * @param dialog
+	 *            dialog
 	 */
 	protected void configureDialog(
 			final DialogT dialog) {

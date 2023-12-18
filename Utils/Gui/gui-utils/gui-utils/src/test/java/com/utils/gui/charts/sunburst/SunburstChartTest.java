@@ -7,6 +7,7 @@ import com.utils.gui.AbstractCustomApplicationTest;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.charts.sunburst.tree.TreeNode;
 import com.utils.gui.factories.BasicControlsFactories;
+import com.utils.string.StrUtils;
 
 import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
@@ -39,7 +40,7 @@ class SunburstChartTest extends AbstractCustomApplicationTest {
 	void testLayout() {
 
 		final TreeNode treeNodeRoot;
-		final int input = Integer.parseInt("0");
+		final int input = StrUtils.tryParsePositiveInt("0");
 		if (input == 1) {
 			treeNodeRoot = createTreeNode1();
 		} else {
