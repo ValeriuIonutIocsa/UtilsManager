@@ -34,7 +34,7 @@ class DataTypesTest {
 
 		final byte[] byteArray;
 		final long expectedResult;
-		final int input = Integer.parseInt("1");
+		final int input = StrUtils.tryParsePositiveInt("1");
 		if (input == 1) {
 			byteArray = StrUtils.tryParseByteArrayFromHexString("b0 20");
 			expectedResult = 4_144;

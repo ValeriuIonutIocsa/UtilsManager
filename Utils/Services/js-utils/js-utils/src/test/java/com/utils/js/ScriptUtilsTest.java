@@ -28,7 +28,7 @@ class ScriptUtilsTest {
 
 		final int value;
 		final long expectedResult;
-		final int input = Integer.parseInt("2");
+		final int input = StrUtils.tryParsePositiveInt("2");
 		if (input == 1) {
 
 			value = 10;

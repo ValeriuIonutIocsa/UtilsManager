@@ -5,6 +5,7 @@ import java.time.Instant;
 import org.junit.jupiter.api.Test;
 
 import com.personal.utils.mode.Mode;
+import com.utils.string.StrUtils;
 
 class WorkerDownloadUploadTest {
 
@@ -12,7 +13,7 @@ class WorkerDownloadUploadTest {
 	void testWork() {
 
 		final Mode mode;
-		final int inputMode = Integer.parseInt("1");
+		final int inputMode = StrUtils.tryParsePositiveInt("1");
 		if (inputMode == 1) {
 			mode = Mode.DOWNLOAD;
 		} else if (inputMode == 2) {
@@ -22,7 +23,7 @@ class WorkerDownloadUploadTest {
 		}
 
 		final String pathString;
-		final int inputPathString = Integer.parseInt("1");
+		final int inputPathString = StrUtils.tryParsePositiveInt("1");
 		if (inputPathString == 1) {
 			pathString = "C:\\IVI\\Vitesco\\Main";
 

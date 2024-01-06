@@ -2,6 +2,8 @@ package com.personal.utils;
 
 import org.junit.jupiter.api.Test;
 
+import com.utils.string.StrUtils;
+
 class WorkerCreateTest {
 
 	@Test
@@ -9,7 +11,7 @@ class WorkerCreateTest {
 
 		final String pathString;
 		final String packageName;
-		final int inputPathString = Integer.parseInt("1");
+		final int inputPathString = StrUtils.tryParsePositiveInt("1");
 		if (inputPathString == 1) {
 			pathString = "C:\\IVI\\Prog\\JavaGradle\\WeatherAnalyzer";
 			packageName = "com.personal.wa";
