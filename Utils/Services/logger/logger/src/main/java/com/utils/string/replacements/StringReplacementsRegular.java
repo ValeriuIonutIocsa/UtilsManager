@@ -9,11 +9,11 @@ import com.utils.string.StrUtils;
 
 public class StringReplacementsRegular implements StringReplacements {
 
-	private final List<ReplacementData> replacementDataList;
+	private final List<StringReplacementsRegularData> stringReplacementsRegularDataList;
 
 	public StringReplacementsRegular() {
 
-		replacementDataList = new ArrayList<>();
+		stringReplacementsRegularDataList = new ArrayList<>();
 	}
 
 	@Override
@@ -21,9 +21,9 @@ public class StringReplacementsRegular implements StringReplacements {
 			final String searchString,
 			final String replacementString) {
 
-		final ReplacementData replacementData =
-				new ReplacementData(searchString, replacementString);
-		replacementDataList.add(replacementData);
+		final StringReplacementsRegularData stringReplacementsRegularData =
+				new StringReplacementsRegularData(searchString, replacementString);
+		stringReplacementsRegularDataList.add(stringReplacementsRegularData);
 	}
 
 	@Override
@@ -31,10 +31,10 @@ public class StringReplacementsRegular implements StringReplacements {
 			final String str) {
 
 		String resultStr = str;
-		for (final ReplacementData replacementData : replacementDataList) {
+		for (final StringReplacementsRegularData stringReplacementsRegularData : stringReplacementsRegularDataList) {
 
-			final String searchString = replacementData.searchString;
-			final String replacementString = replacementData.replacementString;
+			final String searchString = stringReplacementsRegularData.getSearchString();
+			final String replacementString = stringReplacementsRegularData.getReplacementString();
 			resultStr = StringUtils.replace(resultStr, searchString, replacementString);
 		}
 		return resultStr;
@@ -43,24 +43,5 @@ public class StringReplacementsRegular implements StringReplacements {
 	@Override
 	public String toString() {
 		return StrUtils.reflectionToString(this);
-	}
-
-	private static class ReplacementData {
-
-		final String searchString;
-		final String replacementString;
-
-		ReplacementData(
-				final String searchString,
-				final String replacementString) {
-
-			this.searchString = searchString;
-			this.replacementString = replacementString;
-		}
-
-		@Override
-		public String toString() {
-			return StrUtils.reflectionToString(this);
-		}
 	}
 }

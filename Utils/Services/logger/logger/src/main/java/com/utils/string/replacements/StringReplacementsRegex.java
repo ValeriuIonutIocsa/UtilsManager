@@ -8,13 +8,11 @@ import com.utils.string.StrUtils;
 
 public class StringReplacementsRegex implements StringReplacements {
 
-	private final List<Pattern> searchList;
-	private final List<String> replacementList;
+	private final List<StringReplacementsRegexData> stringReplacementsRegexDataList;
 
 	public StringReplacementsRegex() {
 
-		searchList = new ArrayList<>();
-		replacementList = new ArrayList<>();
+		stringReplacementsRegexDataList = new ArrayList<>();
 	}
 
 	@Override
@@ -23,9 +21,10 @@ public class StringReplacementsRegex implements StringReplacements {
 			final String replacementString) {
 
 		try {
-			final Pattern compile = Pattern.compile(searchString);
-			searchList.add(compile);
-			replacementList.add(replacementString);
+			final Pattern searchPattern = Pattern.compile(searchString);
+			final StringReplacementsRegexData stringReplacementsRegexData =
+					new StringReplacementsRegexData(searchPattern, replacementString);
+			stringReplacementsRegexDataList.add(stringReplacementsRegexData);
 
 		} catch (final Exception ignored) {
 		}
@@ -36,11 +35,10 @@ public class StringReplacementsRegex implements StringReplacements {
 			final String str) {
 
 		String resultStr = str;
-		final int replacementCount = Math.min(searchList.size(), replacementList.size());
-		for (int i = 0; i < replacementCount; i++) {
+		for (final StringReplacementsRegexData stringReplacementsRegexData : stringReplacementsRegexDataList) {
 
-			final Pattern searchPattern = searchList.get(i);
-			final String replacementString = replacementList.get(i);
+			final Pattern searchPattern = stringReplacementsRegexData.getSearchPattern();
+			final String replacementString = stringReplacementsRegexData.getReplacementString();
 			resultStr = searchPattern.matcher(resultStr).replaceAll(replacementString);
 		}
 		return resultStr;
