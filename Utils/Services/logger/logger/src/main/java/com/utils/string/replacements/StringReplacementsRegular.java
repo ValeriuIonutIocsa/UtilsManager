@@ -9,13 +9,11 @@ import com.utils.string.StrUtils;
 
 public class StringReplacementsRegular implements StringReplacements {
 
-	private final List<String> searchList;
-	private final List<String> replacementList;
+	private final List<ReplacementData> replacementDataList;
 
 	public StringReplacementsRegular() {
 
-		searchList = new ArrayList<>();
-		replacementList = new ArrayList<>();
+		replacementDataList = new ArrayList<>();
 	}
 
 	@Override
@@ -23,27 +21,46 @@ public class StringReplacementsRegular implements StringReplacements {
 			final String searchString,
 			final String replacementString) {
 
-		searchList.add(searchString);
-		replacementList.add(replacementString);
+		final ReplacementData replacementData =
+				new ReplacementData(searchString, replacementString);
+		replacementDataList.add(replacementData);
 	}
 
 	@Override
 	public String performReplacements(
-			final String strParam) {
+			final String str) {
 
-		String str = strParam;
-		final int replacementCount = Math.min(searchList.size(), replacementList.size());
-		for (int i = 0; i < replacementCount; i++) {
+		String resultStr = str;
+		for (final ReplacementData replacementData : replacementDataList) {
 
-			final String searchString = searchList.get(i);
-			final String replacementString = replacementList.get(i);
-			str = StringUtils.replace(str, searchString, replacementString);
+			final String searchString = replacementData.searchString;
+			final String replacementString = replacementData.replacementString;
+			resultStr = StringUtils.replace(resultStr, searchString, replacementString);
 		}
-		return str;
+		return resultStr;
 	}
 
 	@Override
 	public String toString() {
 		return StrUtils.reflectionToString(this);
+	}
+
+	private static class ReplacementData {
+
+		final String searchString;
+		final String replacementString;
+
+		ReplacementData(
+				final String searchString,
+				final String replacementString) {
+
+			this.searchString = searchString;
+			this.replacementString = replacementString;
+		}
+
+		@Override
+		public String toString() {
+			return StrUtils.reflectionToString(this);
+		}
 	}
 }

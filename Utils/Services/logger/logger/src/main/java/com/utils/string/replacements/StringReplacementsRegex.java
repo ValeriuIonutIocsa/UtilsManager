@@ -26,23 +26,24 @@ public class StringReplacementsRegex implements StringReplacements {
 			final Pattern compile = Pattern.compile(searchString);
 			searchList.add(compile);
 			replacementList.add(replacementString);
+
 		} catch (final Exception ignored) {
 		}
 	}
 
 	@Override
 	public String performReplacements(
-			final String strParam) {
+			final String str) {
 
-		String str = strParam;
+		String resultStr = str;
 		final int replacementCount = Math.min(searchList.size(), replacementList.size());
 		for (int i = 0; i < replacementCount; i++) {
 
 			final Pattern searchPattern = searchList.get(i);
 			final String replacementString = replacementList.get(i);
-			str = searchPattern.matcher(str).replaceAll(replacementString);
+			resultStr = searchPattern.matcher(resultStr).replaceAll(replacementString);
 		}
-		return str;
+		return resultStr;
 	}
 
 	@Override
