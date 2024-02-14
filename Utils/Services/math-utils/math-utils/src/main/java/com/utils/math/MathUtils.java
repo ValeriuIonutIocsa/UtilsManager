@@ -161,6 +161,24 @@ public final class MathUtils {
 	}
 
 	@ApiMethod
+	public static boolean checkIntervalInsideAnother(
+			final int start1,
+			final int end1,
+			final int start2,
+			final int end2) {
+		return start2 <= start1 && end1 <= end2;
+	}
+
+	@ApiMethod
+	public static boolean checkIntervalInsideAnother(
+			final long start1,
+			final long end1,
+			final long start2,
+			final long end2) {
+		return start2 <= start1 && end1 <= end2;
+	}
+
+	@ApiMethod
 	public static boolean checkIntervalNotInsideAnother(
 			final int start1,
 			final int end1,

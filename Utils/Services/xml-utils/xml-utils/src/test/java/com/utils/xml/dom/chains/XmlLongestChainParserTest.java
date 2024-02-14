@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,8 +18,15 @@ import com.utils.xml.dom.XmlDomUtils;
 
 class XmlLongestChainParserTest {
 
-	@Test
-	void testWork() throws Exception {
+	private static String xmlFilePathString;
+
+	@BeforeAll
+	static void beforeAll() {
+
+		xmlFilePathString = configureXmlFilePathString();
+	}
+
+	private static String configureXmlFilePathString() {
 
 		final String xmlFilePathString;
 		final int input = StrUtils.tryParsePositiveInt("12");
@@ -35,6 +43,11 @@ class XmlLongestChainParserTest {
 		} else {
 			throw new RuntimeException();
 		}
+		return xmlFilePathString;
+	}
+
+	@Test
+	void testWork() throws Exception {
 
 		final Document document = XmlDomUtils.openDocument(xmlFilePathString);
 		final Element documentElement = document.getDocumentElement();

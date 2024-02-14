@@ -101,11 +101,21 @@ public final class VersionDependentMethods {
 
 			final TreeItem<?> treeItem = treeTableCell.getTreeTableRow().getTreeItem();
 			final int depthInTreeView = treeTableCell.getTreeTableView().getTreeItemLevel(treeItem);
-			leftPadding = 8 + 10 * depthInTreeView;
+			final int leftPaddingLevel = Math.max(0, depthInTreeView);
+			leftPadding = 8 + 10 * leftPaddingLevel;
 
 		} else {
 			leftPadding = 0;
 		}
 		return leftPadding;
+	}
+
+	public static int computeOtherTreeTableCellLeftPadding(
+			final TreeTableCell<?, ?> treeTableCell) {
+
+		final TreeItem<?> treeItem = treeTableCell.getTreeTableRow().getTreeItem();
+		final int depthInTreeView = treeTableCell.getTreeTableView().getTreeItemLevel(treeItem);
+		final int leftPaddingLevel = Math.max(0, depthInTreeView - 1);
+		return 10 * leftPaddingLevel;
 	}
 }

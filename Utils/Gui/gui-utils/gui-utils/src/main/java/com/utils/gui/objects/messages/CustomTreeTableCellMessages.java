@@ -1,11 +1,11 @@
 package com.utils.gui.objects.messages;
 
+import com.utils.data_types.table.messages.TableRowDataMessage;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.help.StackPaneHelp;
 import com.utils.gui.icons.ImagesGuiUtils;
-import com.utils.gui.objects.messages.data.TableRowDataMessage;
 import com.utils.gui.objects.tables.tree_table.AbstractCustomTreeTableCell;
 import com.utils.log.messages.MessageType;
 

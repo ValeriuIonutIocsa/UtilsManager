@@ -178,4 +178,24 @@ public abstract class AbstractCustomTreeTableCell<
 			collapseTreeViewToLevelRec(collapseDepth, treeItemChild, childDepth);
 		}
 	}
+
+	@ApiMethod
+	protected int computeDepthInTreeTable() {
+
+		final TreeItem<RowDataT> treeItem = getTreeTableRow().getTreeItem();
+		return computeDepthInTreeTableRec(treeItem);
+	}
+
+	private int computeDepthInTreeTableRec(
+			final TreeItem<RowDataT> treeItem) {
+
+		final int depth;
+		final TreeItem<RowDataT> parentTreeItem = treeItem.getParent();
+		if (parentTreeItem == null) {
+			depth = 0;
+		} else {
+			depth = computeDepthInTreeTableRec(parentTreeItem) + 1;
+		}
+		return depth;
+	}
 }
