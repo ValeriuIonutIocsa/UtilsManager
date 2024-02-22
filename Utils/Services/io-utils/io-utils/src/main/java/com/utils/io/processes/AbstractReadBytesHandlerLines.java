@@ -16,12 +16,12 @@ public abstract class AbstractReadBytesHandlerLines implements ReadBytesHandler 
 			final int intByte) {
 
 		final char ch = (char) intByte;
-		if (ch == '\n') {
+		if (ch == '\r') {
 			final String line = stringBuilder.toString();
 			handleLine(line);
 			stringBuilder.setLength(0);
 
-		} else if (ch != '\r') {
+		} else if (ch != '\n') {
 			stringBuilder.append(ch);
 		}
 	}
