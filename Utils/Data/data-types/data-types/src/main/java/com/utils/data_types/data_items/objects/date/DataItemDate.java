@@ -32,6 +32,7 @@ public class DataItemDate extends AbstractDataItem<Date> implements Comparable<D
 	@Override
 	public int compareTo(
 			final DataItemDate other) {
+
 		return value.compareTo(other.value);
 	}
 
@@ -55,6 +56,7 @@ public class DataItemDate extends AbstractDataItem<Date> implements Comparable<D
 
 	@Override
 	public String toString() {
+
 		return ConverterDate.dateToString(value);
 	}
 
