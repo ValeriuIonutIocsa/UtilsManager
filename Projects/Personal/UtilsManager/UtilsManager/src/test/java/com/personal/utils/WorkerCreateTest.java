@@ -13,8 +13,8 @@ class WorkerCreateTest {
 		final String packageName;
 		final int inputPathString = StrUtils.tryParsePositiveInt("1");
 		if (inputPathString == 1) {
-			pathString = "C:\\IVI\\Prog\\JavaGradle\\WeatherAnalyzer";
-			packageName = "com.personal.wa";
+			pathString = "C:\\IVI\\Prog\\JavaGradle\\GeneratedTestProject";
+			packageName = "com.personal.test_prj";
 
 		} else {
 			throw new RuntimeException();

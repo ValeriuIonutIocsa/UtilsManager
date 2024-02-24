@@ -286,6 +286,11 @@ final class WorkerCreate {
 
 				printStream.println();
 
+				printStream.print("import com.utils.test.TestInputUtils;");
+				printStream.println();
+
+				printStream.println();
+
 				printStream.print("class AppStart");
 				printStream.print(projectName);
 				printStream.print("Test {");
@@ -304,7 +309,7 @@ final class WorkerCreate {
 				printStream.print("\t\tfinal String[] args;");
 				printStream.println();
 
-				printStream.print("\t\tfinal int input = Integer.parseInt(\"1\");");
+				printStream.print("\t\tfinal int input = TestInputUtils.parseTestInputNumber(\"1\");");
 				printStream.println();
 
 				printStream.print("\t\tif (input == 1) {");
