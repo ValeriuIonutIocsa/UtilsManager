@@ -250,7 +250,7 @@ public class CustomTreeTableView<
 	public void pasteKeyCombinationPressed() {
 	}
 
-	private void createTreeTableColumns(
+	public void createTreeTableColumns(
 			final TableColumnData[] tableColumnDataArray,
 			final boolean filter) {
 

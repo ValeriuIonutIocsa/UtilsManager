@@ -15,7 +15,6 @@ public final class MathUtils {
 
 		int sum = 0;
 		for (final int value : values) {
-
 			sum += value;
 		}
 		return sum;
@@ -27,7 +26,17 @@ public final class MathUtils {
 
 		long sum = 0;
 		for (final long value : values) {
+			sum += value;
+		}
+		return sum;
+	}
 
+	@ApiMethod
+	public static double sum(
+			final double... values) {
+
+		double sum = 0.0;
+		for (final double value : values) {
 			sum += value;
 		}
 		return sum;

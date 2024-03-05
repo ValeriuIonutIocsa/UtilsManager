@@ -16,8 +16,11 @@ if (project.hasProperty('projectVersion')) {
 
 apply plugin: 'java-library'
 apply plugin: 'java-test-fixtures'
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 compileJava.options.encoding = 'UTF-8'
 
 repositories {
@@ -336,8 +339,6 @@ def subProjectRunConfigurationsRec(
 apply plugin: 'idea'
 idea {
     module {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
         downloadJavadoc = true
         downloadSources = true
     }
@@ -345,8 +346,6 @@ idea {
 
 apply plugin: 'eclipse'
 eclipse {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
     classpath {
         downloadJavadoc = true
         downloadSources = true
