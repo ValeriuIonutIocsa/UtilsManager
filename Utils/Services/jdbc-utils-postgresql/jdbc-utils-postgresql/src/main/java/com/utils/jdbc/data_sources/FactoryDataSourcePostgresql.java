@@ -25,7 +25,7 @@ public final class FactoryDataSourcePostgresql {
 
 		final Properties properties = new Properties();
 		final String propertiesFilePathString = PathUtils.computePath(
-				PathUtils.createRootPath(), "tmp", "_cnf", "postgresql_db.properties");
+				PathUtils.createRootPath(), "IVI_MISC", "Tmp", "_cnf", "postgresql_db.properties");
 		Logger.printProgress("loading postgresql DB properties from:");
 		Logger.printLine(propertiesFilePathString);
 		try (InputStream inputStream = StreamUtils.openBufferedInputStream(propertiesFilePathString)) {
