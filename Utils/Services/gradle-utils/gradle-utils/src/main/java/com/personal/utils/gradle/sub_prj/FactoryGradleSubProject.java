@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
+import com.utils.io.PathUtils;
 import com.utils.log.Logger;
 
 public final class FactoryGradleSubProject {
@@ -28,39 +27,28 @@ public final class FactoryGradleSubProject {
 				final Map<Integer, String> levelsInTreeMap = new HashMap<>();
 				levelsInTreeMap.put(-1, projectPathString);
 
-				boolean insideSubProjectsSection = false;
+				final String projectRootFolderPathString = PathUtils.computeParentPath(projectPathString, 4);
 				for (final String line : lineList) {
 
-					if (!StringUtils.endsWith(line, " SKIPPED") &&
-							StringUtils.contains(line, ":subProjectDependencyTree")) {
-						insideSubProjectsSection = true;
+					final String subProjectPathString = line.trim();
+					if (subProjectPathString.startsWith(projectRootFolderPathString)) {
 
-					} else {
-						if (StringUtils.isBlank(line)) {
-							insideSubProjectsSection = false;
+						final GradleSubProject gradleSubProject =
+								new GradleSubProject(subProjectPathString);
+						gradleSubProjectsByPathMap.put(subProjectPathString, gradleSubProject);
+
+						final int levelInTree = line.length() - subProjectPathString.length();
+						levelsInTreeMap.put(levelInTree, subProjectPathString);
+
+						final int parentLevel = levelInTree - 1;
+						final String parentSubProjectPathString = levelsInTreeMap.get(parentLevel);
+
+						GradleSubProject parentGradleSubProject =
+								gradleSubProjectsByPathMap.get(parentSubProjectPathString);
+						if (parentGradleSubProject == null) {
+							parentGradleSubProject = rootGradleSubProject;
 						}
-
-						if (insideSubProjectsSection) {
-
-							final String subProjectPathString = line.trim();
-
-							final GradleSubProject gradleSubProject =
-									new GradleSubProject(subProjectPathString);
-							gradleSubProjectsByPathMap.put(subProjectPathString, gradleSubProject);
-
-							final int levelInTree = line.length() - subProjectPathString.length();
-							levelsInTreeMap.put(levelInTree, subProjectPathString);
-
-							final int parentLevel = levelInTree - 1;
-							final String parentSubProjectPathString = levelsInTreeMap.get(parentLevel);
-
-							GradleSubProject parentGradleSubProject =
-									gradleSubProjectsByPathMap.get(parentSubProjectPathString);
-							if (parentGradleSubProject == null) {
-								parentGradleSubProject = rootGradleSubProject;
-							}
-							parentGradleSubProject.getDependencyPathSet().add(subProjectPathString);
-						}
+						parentGradleSubProject.getDependencyPathSet().add(subProjectPathString);
 					}
 				}
 			}
