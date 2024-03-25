@@ -26,7 +26,7 @@ public final class FactorySRecFile {
 			Logger.printLine(sRecFilePathString);
 
 			if (!IoUtils.fileExists(sRecFilePathString)) {
-				Logger.printWarning("the " + displayName + " file does not exist:" +
+				Logger.printError("the " + displayName + " file does not exist:" +
 						System.lineSeparator() + sRecFilePathString);
 
 			} else {
