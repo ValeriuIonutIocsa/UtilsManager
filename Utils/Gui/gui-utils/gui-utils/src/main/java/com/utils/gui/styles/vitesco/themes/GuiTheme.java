@@ -5,6 +5,10 @@ public enum GuiTheme {
 	VITESCO("Vitesco Technologies",
 			"com/utils/gui/styles/vitesco/style_theme_vitesco.css",
 			"Vitesco Technologies Theme: a theme in tone with the \"Vitesco Technologies\" theme"),
+	VITESCO_WHITE("Vitesco Technologies White",
+			"com/utils/gui/styles/vitesco/style_theme_vitesco_white.css",
+			"Vitesco Technologies White Theme: a theme in tone with the \"Vitesco Technologies\" theme, " +
+					"with a more white background"),
 	STANDARD("Standard",
 			"com/utils/gui/styles/vitesco/style_theme_standard.css",
 			"Standard Theme: the standard theme of the application"),

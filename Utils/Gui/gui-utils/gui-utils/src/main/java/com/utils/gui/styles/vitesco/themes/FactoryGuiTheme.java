@@ -15,6 +15,7 @@ public final class FactoryGuiTheme {
 
 			final String name = value.name();
 			if (name.equals(nameParam)) {
+
 				guiTheme = value;
 				break;
 			}

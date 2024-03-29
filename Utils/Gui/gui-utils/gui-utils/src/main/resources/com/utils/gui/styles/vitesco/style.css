@@ -2,10 +2,6 @@
     -fx-opacity: 1;
 }
 
-.root {
-    -fx-control-inner-background-alt: -fx-control-inner-background;
-}
-
 .tab-pane > .tab-header-area > .headers-region > .tab {
     -fx-padding: 3px;
 }
@@ -54,6 +50,10 @@
     -fx-text-fill: -fx-text-inner-color;
 }
 
+.tree-table-row-cell:odd {
+    -fx-background-color: -fx-control-inner-background-alt;
+}
+
 .tree-table-row-cell:selected {
     -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-focus-color;
     -fx-background-insets: 0, 1, 2;
@@ -75,6 +75,15 @@
 	-fx-font-size: 8pt;    
 }
 
+.tree-cell:odd {
+    -fx-background-color: -fx-control-inner-background-alt;
+}
+
+.tree-cell:selected {
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-focus-color;
+    -fx-background-insets: 0, 1, 2;
+}
+
 .list-view {
     -fx-font-size: 8pt;
 }
@@ -84,16 +93,9 @@
     -fx-pref-width: 100px;
 }
 
-.limas_combo_box {
-    -fx-min-width: 200px;
-    -fx-pref-width: 200px;
-}
-
 .text-area > .scroll-pane {
     -fx-vbar-policy: always;
 }
-
-
 
 .boldFontSize18 {
     -fx-font-size: 18pt;
