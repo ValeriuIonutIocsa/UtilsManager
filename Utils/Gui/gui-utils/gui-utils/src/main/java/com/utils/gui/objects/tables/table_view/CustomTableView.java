@@ -170,13 +170,25 @@ public class CustomTableView<
 			final KeyEvent keyEvent,
 			final int defaultSearchAndFilterColumnIndex) {
 
-		if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.F) {
+		if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.MINUS ||
+				keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.SUBTRACT) {
+			deselectAllKeyCombinationPressed();
+
+		} else if (keyEvent.isControlDown() && !keyEvent.isShiftDown() && keyEvent.getCode() == KeyCode.F) {
 			searchKeyCombinationPressed(defaultSearchAndFilterColumnIndex);
+		} else if (keyEvent.isControlDown() && keyEvent.isShiftDown() && keyEvent.getCode() == KeyCode.F) {
+			filterKeyCombinationPressed(defaultSearchAndFilterColumnIndex);
+
 		} else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 			copyKeyCombinationPressed();
 		} else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.V) {
 			pasteKeyCombinationPressed();
 		}
+	}
+
+	private void deselectAllKeyCombinationPressed() {
+
+		getSelectionModel().clearSelection();
 	}
 
 	private void searchKeyCombinationPressed(
@@ -188,6 +200,17 @@ public class CustomTableView<
 			columnIndex = focusedCell.getColumn();
 		}
 		search(columnIndex);
+	}
+
+	private void filterKeyCombinationPressed(
+			final int defaultSearchAndFilterColumnIndex) {
+
+		int columnIndex = defaultSearchAndFilterColumnIndex;
+		final TablePosition<?, ?> focusedCell = getFocusModel().getFocusedCell();
+		if (focusedCell != null) {
+			columnIndex = focusedCell.getColumn();
+		}
+		filter(columnIndex);
 	}
 
 	protected void copyKeyCombinationPressed() {
