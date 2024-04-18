@@ -1,4 +1,4 @@
-package com.utils.io.zip;
+package com.utils.io.seven_zip;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -12,12 +12,11 @@ import com.utils.io.PathUtils;
 import com.utils.io.file_deleters.FactoryFileDeleter;
 import com.utils.io.folder_deleters.FactoryFolderDeleter;
 import com.utils.io.processes.InputStreamReaderThread;
-import com.utils.io.seven_zip.ReadBytesHandler7z;
 import com.utils.log.Logger;
 import com.utils.log.progress.ProgressIndicators;
 import com.utils.string.StrUtils;
 
-public class ZipFileExtractor7z {
+public final class SevenZipFileExtractor7z {
 
 	private final String sevenZipExecutablePathString;
 	private final String archiveFilePathString;
@@ -26,7 +25,7 @@ public class ZipFileExtractor7z {
 
 	private boolean success;
 
-	public ZipFileExtractor7z(
+	public SevenZipFileExtractor7z(
 			final String sevenZipExecutablePathString,
 			final String archiveFilePathString,
 			final String outputParentFolderPathString,
@@ -43,7 +42,7 @@ public class ZipFileExtractor7z {
 		success = false;
 		try {
 			if (!IoUtils.fileExists(archiveFilePathString)) {
-				Logger.printError("ZIP archive does not exist:" +
+				Logger.printError("7Z archive does not exist:" +
 						System.lineSeparator() + archiveFilePathString);
 
 			} else {
@@ -51,7 +50,7 @@ public class ZipFileExtractor7z {
 				if (deleteExisting) {
 
 					String zipArchiveNameWoExt = null;
-					final String suffix = ".zip";
+					final String suffix = ".7z";
 					final String zipArchiveName = PathUtils.computeFileName(archiveFilePathString);
 					if (zipArchiveName.endsWith(suffix)) {
 						zipArchiveNameWoExt =
@@ -83,7 +82,7 @@ public class ZipFileExtractor7z {
 				if (keepGoing) {
 
 					ProgressIndicators.getInstance().update(0.0);
-					Logger.printProgress("extracting ZIP archive");
+					Logger.printProgress("extracting 7Z archive");
 
 					final List<String> commandPartList = new ArrayList<>();
 					commandPartList.add(sevenZipExecutablePathString);
@@ -107,7 +106,7 @@ public class ZipFileExtractor7z {
 							.start();
 
 					final InputStreamReaderThread inputStreamReaderThread = new InputStreamReaderThread(
-							"extract zip archive input stream reader", process.getInputStream(),
+							"extract 7z archive input stream reader", process.getInputStream(),
 							StandardCharsets.UTF_8, new ReadBytesHandler7z());
 					inputStreamReaderThread.start();
 
@@ -120,10 +119,13 @@ public class ZipFileExtractor7z {
 
 		} catch (final Exception exc) {
 			Logger.printException(exc);
+
+		} finally {
+			ProgressIndicators.getInstance().update(0.0);
 		}
 
 		if (!success) {
-			Logger.printError("failed to extract ZIP archive:" +
+			Logger.printError("failed to extract 7Z archive:" +
 					System.lineSeparator() + archiveFilePathString);
 		}
 	}

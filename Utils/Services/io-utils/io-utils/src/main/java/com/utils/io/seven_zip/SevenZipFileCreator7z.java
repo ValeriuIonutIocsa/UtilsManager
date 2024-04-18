@@ -1,4 +1,4 @@
-package com.utils.io.zip;
+package com.utils.io.seven_zip;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -12,27 +12,29 @@ import com.utils.io.PathUtils;
 import com.utils.io.file_deleters.FactoryFileDeleter;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.processes.InputStreamReaderThread;
-import com.utils.io.seven_zip.ReadBytesHandler7z;
 import com.utils.log.Logger;
 import com.utils.log.progress.ProgressIndicators;
 import com.utils.string.StrUtils;
 
-public class ZipFileCreator7z {
+public final class SevenZipFileCreator7z {
 
 	private final String sevenZipExecutablePathString;
+	private final int compressionLevel;
 	private final String inputFilePathString;
 	private final String archiveFilePathString;
 	private final boolean deleteExisting;
 
 	private boolean success;
 
-	public ZipFileCreator7z(
+	public SevenZipFileCreator7z(
 			final String sevenZipExecutablePathString,
+			final int compressionLevel,
 			final String inputFilePathString,
 			final String archiveFilePathString,
 			final boolean deleteExisting) {
 
 		this.sevenZipExecutablePathString = sevenZipExecutablePathString;
+		this.compressionLevel = compressionLevel;
 		this.inputFilePathString = inputFilePathString;
 		this.archiveFilePathString = archiveFilePathString;
 		this.deleteExisting = deleteExisting;
@@ -62,13 +64,14 @@ public class ZipFileCreator7z {
 					if (keepGoing) {
 
 						ProgressIndicators.getInstance().update(0.0);
-						Logger.printProgress("creating ZIP archive:");
+						Logger.printProgress("creating 7Z archive:");
 						Logger.printLine(archiveFilePathString);
 
 						final List<String> commandPartList = new ArrayList<>();
 						commandPartList.add(sevenZipExecutablePathString);
 						commandPartList.add("a");
 						commandPartList.add("-bsp1");
+						commandPartList.add("-mx=" + compressionLevel);
 						commandPartList.add(archiveFilePathString);
 						commandPartList.add(inputFilePathString);
 
@@ -86,7 +89,7 @@ public class ZipFileCreator7z {
 								.start();
 
 						final InputStreamReaderThread inputStreamReaderThread = new InputStreamReaderThread(
-								"create zip archive input stream reader", process.getInputStream(),
+								"create 7z archive input stream reader", process.getInputStream(),
 								StandardCharsets.UTF_8, new ReadBytesHandler7z());
 						inputStreamReaderThread.start();
 
@@ -108,7 +111,7 @@ public class ZipFileCreator7z {
 		}
 
 		if (!success) {
-			Logger.printError("failed to create ZIP archive:" +
+			Logger.printError("failed to create 7Z archive:" +
 					System.lineSeparator() + archiveFilePathString);
 		}
 	}
