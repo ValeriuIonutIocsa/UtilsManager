@@ -24,14 +24,6 @@ class FolderCopierImpl implements FolderCopier {
 
 		boolean success = false;
 		try {
-			if (verboseProgress) {
-
-				Logger.printProgress("copying folder:");
-				Logger.printLine(srcFolderPathString);
-				Logger.printLine("to:");
-				Logger.printLine(dstFolderPathString);
-			}
-
 			final boolean keepGoing;
 			if (deleteDirectoryBeforeCopying) {
 				keepGoing = FactoryFolderDeleter.getInstance()
@@ -40,6 +32,14 @@ class FolderCopierImpl implements FolderCopier {
 				keepGoing = true;
 			}
 			if (keepGoing) {
+
+				if (verboseProgress) {
+
+					Logger.printProgress("copying folder:");
+					Logger.printLine(srcFolderPathString);
+					Logger.printLine("to:");
+					Logger.printLine(dstFolderPathString);
+				}
 
 				final File srcFolder = new File(srcFolderPathString);
 				final File dstFolder = new File(dstFolderPathString);

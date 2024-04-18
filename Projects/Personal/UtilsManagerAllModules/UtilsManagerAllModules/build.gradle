@@ -9,6 +9,20 @@ buildscript {
 
 apply plugin: 'com.github.ben-manes.versions'
 
+final def isNonStable = { final String version ->
+    final def lowerCaseVersion = version.toLowerCase(Locale.US)
+    final def containsStableKeyword =
+            ['release', 'final', 'ga'].any { final it -> lowerCaseVersion.contains(it) }
+    final def regex = /^[0-9,.v-]+(-r)?$/
+    return !containsStableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+    rejectVersionIf {
+        isNonStable(it.candidate.version)
+    }
+}
+
 ext {
     subProjectNames = [
             ':UtilsManager',
