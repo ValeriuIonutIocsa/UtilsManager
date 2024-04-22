@@ -4,10 +4,11 @@ import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
@@ -861,19 +862,31 @@ public final class StrUtils {
 	@ApiMethod
 	public static String createDateTimeString() {
 
-		return new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+		final DateTimeFormatter dateTimeFormatter =
+				DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")
+						.withLocale(Locale.US).withZone(ZoneId.systemDefault());
+		return dateTimeFormatter.format(Instant.now());
 	}
 
 	@ApiMethod
 	public static String createPathDateTimeString() {
 
-		return new SimpleDateFormat("dd_MMM_yyyy__hh_mm_ss_SSS__zzz", Locale.US).format(new Date());
+		final DateTimeFormatter dateTimeFormatter =
+				DateTimeFormatter.ofPattern("dd_MMM_yyyy__HH_mm_ss_SSS__z")
+						.withLocale(Locale.US).withZone(ZoneId.systemDefault());
+		String pathDateTimeString = dateTimeFormatter.format(Instant.now());
+		pathDateTimeString = StringUtils.replaceChars(pathDateTimeString, '/', '_');
+		pathDateTimeString = StringUtils.replaceChars(pathDateTimeString, ';', '_');
+		return pathDateTimeString;
 	}
 
 	@ApiMethod
 	public static String createDisplayDateTimeString() {
 
-		return new SimpleDateFormat("dd MMM yyyy, hh:mm:ss zzz", Locale.US).format(new Date());
+		final DateTimeFormatter dateTimeFormatter =
+				DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss.SSS z")
+						.withLocale(Locale.US).withZone(ZoneId.systemDefault());
+		return dateTimeFormatter.format(Instant.now());
 	}
 
 	@ApiMethod
