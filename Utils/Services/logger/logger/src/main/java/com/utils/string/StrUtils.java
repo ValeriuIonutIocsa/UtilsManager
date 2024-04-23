@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.utils.annotations.ApiMethod;
 import com.utils.string.characters.SpecialCharacterUtils;
+import com.utils.string.converters.ConverterInstant;
 
 public final class StrUtils {
 
@@ -883,10 +884,18 @@ public final class StrUtils {
 	@ApiMethod
 	public static String createDisplayDateTimeString() {
 
+		final Instant instant = Instant.now();
+		return createDisplayDateTimeString(instant);
+	}
+
+	@ApiMethod
+	public static String createDisplayDateTimeString(
+			final Instant instant) {
+
 		final DateTimeFormatter dateTimeFormatter =
-				DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss.SSS z")
+				DateTimeFormatter.ofPattern(ConverterInstant.FULL_DATE_FORMAT)
 						.withLocale(Locale.US).withZone(ZoneId.systemDefault());
-		return dateTimeFormatter.format(Instant.now());
+		return dateTimeFormatter.format(instant);
 	}
 
 	@ApiMethod

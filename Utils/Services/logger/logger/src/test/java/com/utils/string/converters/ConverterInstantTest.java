@@ -2,8 +2,10 @@ package com.utils.string.converters;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
@@ -11,11 +13,38 @@ import com.utils.log.Logger;
 import com.utils.test.DynamicTestOption;
 import com.utils.test.DynamicTestOptions;
 import com.utils.test.DynamicTestSuite;
+import com.utils.test.TestInputUtils;
 
 class ConverterInstantTest {
 
+	private static String timeZoneId;
+
+	@BeforeAll
+	static void beforeAll() {
+
+		timeZoneId = configureTimeZoneId();
+	}
+
+	private static String configureTimeZoneId() {
+
+		final String timeZoneId;
+		final int input = TestInputUtils.parseTestInputNumber("0");
+		if (input == 1) {
+			timeZoneId = "UTC";
+		} else if (input == 2) {
+			timeZoneId = "IST";
+		} else {
+			timeZoneId = null;
+		}
+		return timeZoneId;
+	}
+
 	@TestFactory
 	List<DynamicTest> testStringToInstant() {
+
+		if (timeZoneId != null) {
+			TimeZone.setDefault(TimeZone.getTimeZone(timeZoneId));
+		}
 
 		final DynamicTestOptions<Instant> instantDynamicTestOptions =
 				new DynamicTestOptions<>("instant string", 1);

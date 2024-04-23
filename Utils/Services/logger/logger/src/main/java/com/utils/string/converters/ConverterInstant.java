@@ -5,10 +5,12 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import com.utils.string.StrUtils;
+
 public final class ConverterInstant {
 
 	private final static String SIMPLE_DATE_FORMAT = "yyyy-MMM-dd HH:mm:ss";
-	private final static String FULL_DATE_FORMAT = "yyyy-MMM-dd HH:mm:ss.SSS zzz";
+	public final static String FULL_DATE_FORMAT = "yyyy-MMM-dd HH:mm:ss.SSS z";
 
 	private ConverterInstant() {
 	}
@@ -16,17 +18,35 @@ public final class ConverterInstant {
 	public static String instantToString(
 			final Instant instant) {
 
-		final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FULL_DATE_FORMAT)
-				.withLocale(Locale.US).withZone(ZoneId.systemDefault());
-		return dateTimeFormatter.format(instant);
+		final long epochMilli = instant.toEpochMilli();
+		return String.valueOf(epochMilli);
 	}
 
 	public static Instant stringToInstant(
 			final String instantString) {
 
-		Instant instant = tryParseInstant(instantString, FULL_DATE_FORMAT);
-		if (instant == null) {
-			instant = tryParseInstant(instantString, SIMPLE_DATE_FORMAT);
+		Instant instant;
+		final long instantEpochMs = StrUtils.tryParsePositiveLong(instantString);
+		if (instantEpochMs >= 0) {
+			instant = tryParseInstantFromEpochMs(instantEpochMs);
+
+		} else {
+			instant = tryParseInstant(instantString, FULL_DATE_FORMAT);
+			if (instant == null) {
+				instant = tryParseInstant(instantString, SIMPLE_DATE_FORMAT);
+			}
+		}
+		return instant;
+	}
+
+	private static Instant tryParseInstantFromEpochMs(
+			final long instantEpochMs) {
+
+		Instant instant = null;
+		try {
+			instant = Instant.ofEpochMilli(instantEpochMs);
+
+		} catch (final Exception ignored) {
 		}
 		return instant;
 	}

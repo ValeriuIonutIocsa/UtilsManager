@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.Calendar;
 
 import com.utils.data_types.data_items.AbstractDataItem;
-import com.utils.string.converters.ConverterInstant;
+import com.utils.string.StrUtils;
 
 public class DataItemInstant extends AbstractDataItem<Instant> implements Comparable<DataItemInstant> {
 
@@ -57,7 +57,7 @@ public class DataItemInstant extends AbstractDataItem<Instant> implements Compar
 	@Override
 	public String toString() {
 
-		return ConverterInstant.instantToString(value);
+		return StrUtils.createDisplayDateTimeString(value);
 	}
 
 	@Override
