@@ -55,7 +55,7 @@ public final class AxisConstraintStrategies {
 		return new FixedAxisConstraintStrategy(constraint);
 	}
 
-	private static class DefaultAxisConstraintStrategy implements AxisConstraintStrategy {
+	private static final class DefaultAxisConstraintStrategy implements AxisConstraintStrategy {
 
 		@Override
 		public AxisConstraint getConstraint(
@@ -73,7 +73,7 @@ public final class AxisConstraintStrategies {
 		}
 	}
 
-	private static class IgnoreOutsideChartAxisConstraintStrategy implements AxisConstraintStrategy {
+	private static final class IgnoreOutsideChartAxisConstraintStrategy implements AxisConstraintStrategy {
 
 		@Override
 		public AxisConstraint getConstraint(
