@@ -5,7 +5,6 @@ import com.utils.data_types.data_items.DataItem;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.objects.tables.CustomCell;
-import com.utils.gui.version.VersionDependentMethods;
 import com.utils.log.Logger;
 
 import javafx.geometry.Insets;
@@ -31,8 +30,7 @@ public abstract class AbstractCustomTreeTableCell<
 
 		super.updateItem(item, empty);
 
-		final double leftPadding = VersionDependentMethods.computeTreeTableCellLeftPadding(this);
-		setPadding(new Insets(0, 0, 0, leftPadding));
+		setPadding(new Insets(0, 0, 0, 0));
 		setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
 		final StackPane stackPane = LayoutControlsFactories.getInstance().createStackPane(Pos.CENTER_LEFT);
@@ -123,7 +121,7 @@ public abstract class AbstractCustomTreeTableCell<
 	protected RowDataT getRowData() {
 
 		RowDataT rowData = null;
-		final TreeTableRow<RowDataT> treeTableRow = getTreeTableRow();
+		final TreeTableRow<RowDataT> treeTableRow = getTableRow();
 		if (treeTableRow != null) {
 			rowData = treeTableRow.getItem();
 		}
@@ -137,9 +135,8 @@ public abstract class AbstractCustomTreeTableCell<
 
 		CellValue cellData = null;
 		final CellDataT item = getItem();
-		if (item instanceof DataItem<?>) {
+		if (item instanceof final DataItem<?> dataItem) {
 
-			final DataItem<?> dataItem = (DataItem<?>) item;
 			final Object value = dataItem.getValue();
 			if (cellValueClass.isInstance(value)) {
 				cellData = cellValueClass.cast(value);
@@ -151,7 +148,7 @@ public abstract class AbstractCustomTreeTableCell<
 	@ApiMethod
 	protected void collapseTreeViewToLevel() {
 
-		final TreeItem<RowDataT> treeItem = getTreeTableRow().getTreeItem();
+		final TreeItem<RowDataT> treeItem = getTableRow().getTreeItem();
 		final int depthInTreeView = getTreeTableView().getTreeItemLevel(treeItem);
 		collapseTreeViewToLevel(depthInTreeView);
 	}
@@ -182,7 +179,7 @@ public abstract class AbstractCustomTreeTableCell<
 	@ApiMethod
 	protected int computeDepthInTreeTable() {
 
-		final TreeItem<RowDataT> treeItem = getTreeTableRow().getTreeItem();
+		final TreeItem<RowDataT> treeItem = getTableRow().getTreeItem();
 		return computeDepthInTreeTableRec(treeItem);
 	}
 

@@ -1,5 +1,7 @@
 ext {
-    subProjectNames = [':gui-utils']
+    subProjectNames = [
+            ':gui-utils'
+    ]
     compileClassPaths = [
             'com.jfoenix:jfoenix:9.0.10'
     ]

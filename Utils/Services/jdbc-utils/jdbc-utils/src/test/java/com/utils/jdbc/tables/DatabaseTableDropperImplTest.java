@@ -35,7 +35,7 @@ class DatabaseTableDropperImplTest {
 		};
 
 		final String[] constraints = {
-				"CONSTRAINT \"PK_AGGREGATE_NAME\" PRIMARY KEY (\"" + columns[0].getName() + "\")"
+				"CONSTRAINT \"PK_AGGREGATE_NAME\" PRIMARY KEY (\"" + columns[0].name() + "\")"
 		};
 
 		return new DatabaseTableInfo("DomainUsers", columns, constraints);

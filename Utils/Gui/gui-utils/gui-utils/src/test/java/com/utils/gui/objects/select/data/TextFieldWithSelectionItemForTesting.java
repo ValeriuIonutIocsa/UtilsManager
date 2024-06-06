@@ -4,9 +4,12 @@ import com.utils.data_types.data_items.DataItem;
 import com.utils.data_types.data_items.objects.FactoryDataItemObjectComparable;
 import com.utils.data_types.table.TableColumnData;
 
+import java.io.Serial;
+
 public class TextFieldWithSelectionItemForTesting implements TextFieldWithSelectionItem {
 
-	private static final long serialVersionUID = 7706800536600688010L;
+	@Serial
+    private static final long serialVersionUID = 7706800536600688010L;
 
 	public static final TableColumnData[] COLUMNS = {
 			new TableColumnData("Name", "Name", 0.1),

@@ -20,7 +20,7 @@ public class DatabaseTableCreatorImpl implements DatabaseTableCreator {
 
 		boolean success = false;
 		try {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			Logger.printProgress("creating table \"" + tableName + "\"");
 
 			final String sql = createSql(databaseTableInfo);
@@ -37,7 +37,7 @@ public class DatabaseTableCreatorImpl implements DatabaseTableCreator {
 			success = true;
 
 		} catch (final Exception exc) {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			Logger.printError("failed to create table \"" + tableName + "\"");
 			Logger.printException(exc);
 		}
@@ -47,21 +47,21 @@ public class DatabaseTableCreatorImpl implements DatabaseTableCreator {
 	static String createSql(
 			final DatabaseTableInfo databaseTableInfo) {
 
-		final String tableName = databaseTableInfo.getName();
+		final String tableName = databaseTableInfo.name();
 		final StringBuilder sbSql = new StringBuilder("CREATE TABLE \"" + tableName + "\" (");
 
 		final List<String> argumentList = new ArrayList<>();
 
-		final DatabaseTableColumn[] columns = databaseTableInfo.getDatabaseTableColumnArray();
+		final DatabaseTableColumn[] columns = databaseTableInfo.databaseTableColumnArray();
 		for (final DatabaseTableColumn column : columns) {
 
-			final String name = column.getName();
-			final String type = column.getType();
+			final String name = column.name();
+			final String type = column.type();
 			final String argument = "\"" + name + "\" " + type;
 			argumentList.add(argument);
 		}
 
-		final String[] constraints = databaseTableInfo.getConstraintArray();
+		final String[] constraints = databaseTableInfo.constraintArray();
 		if (constraints != null) {
 			Collections.addAll(argumentList, constraints);
 		}

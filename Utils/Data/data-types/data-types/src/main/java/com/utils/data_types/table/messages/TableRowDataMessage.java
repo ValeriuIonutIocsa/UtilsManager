@@ -1,5 +1,6 @@
 package com.utils.data_types.table.messages;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,8 @@ import com.utils.string.StrUtils;
 
 public class TableRowDataMessage implements TableRowData {
 
-	private static final long serialVersionUID = -4482668257460205647L;
+	@Serial
+    private static final long serialVersionUID = -4482668257460205647L;
 
 	public static final String MESSAGES_COLUMN_NAME = "Messages";
 

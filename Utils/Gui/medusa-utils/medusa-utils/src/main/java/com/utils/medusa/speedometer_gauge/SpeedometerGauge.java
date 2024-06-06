@@ -22,15 +22,15 @@ public final class SpeedometerGauge {
 		gaugeBuilder.animated(false).interactive(false);
 
 		if (sizes != null) {
-			final double width = sizes.getWidth();
-			final double height = sizes.getHeight();
+			final double width = sizes.width();
+			final double height = sizes.height();
 			gaugeBuilder.maxSize(width, height).minSize(width, height);
 		}
 
 		if (values != null) {
-			final double minValue = values.getMinValue();
-			final double maxValue = values.getMaxValue();
-			final double value = values.getValue();
+			final double minValue = values.minValue();
+			final double maxValue = values.maxValue();
+			final double value = values.value();
 			gaugeBuilder.minValue(minValue).maxValue(maxValue);
 			gaugeBuilder.value(value);
 		}

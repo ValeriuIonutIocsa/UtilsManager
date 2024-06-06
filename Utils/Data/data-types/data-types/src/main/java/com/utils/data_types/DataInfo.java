@@ -1,5 +1,6 @@
 package com.utils.data_types;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ import com.utils.string.StrUtils;
 
 public class DataInfo implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 3078827620097666118L;
 
 	private final String option;
@@ -58,9 +60,7 @@ public class DataInfo implements Serializable {
 			final Object o) {
 
 		boolean result = false;
-		if (o instanceof DataInfo) {
-
-			final DataInfo other = (DataInfo) o;
+		if (o instanceof final DataInfo other) {
 			result = Objects.equals(option, other.option);
 		}
 		return result;

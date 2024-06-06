@@ -34,8 +34,8 @@ public final class SRecUtils {
 
 				for (final SRecPatcherSymbol sRecPatcherSymbol : sRecPatcherSymbolList) {
 
-					final long startAddress = sRecPatcherSymbol.getStartAddress();
-					final byte[] symbolContent = sRecPatcherSymbol.getSymbolContent();
+					final long startAddress = sRecPatcherSymbol.startAddress();
+					final byte[] symbolContent = sRecPatcherSymbol.symbolContent();
 					printStream.print(StrUtils.createHexString(startAddress));
 					printStream.print(',');
 					printStream.print(StrUtils.byteArrayToHexString(symbolContent));

@@ -142,9 +142,8 @@ public abstract class AbstractCustomTableCell<
 
 		CellValue cellData = null;
 		final CellDataT item = getItem();
-		if (item instanceof DataItem<?>) {
+		if (item instanceof final DataItem<?> dataItem) {
 
-			final DataItem<?> dataItem = (DataItem<?>) item;
 			final Object value = dataItem.getValue();
 			if (cellValueClass.isInstance(value)) {
 				cellData = cellValueClass.cast(value);

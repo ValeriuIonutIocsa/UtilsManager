@@ -93,14 +93,8 @@ public final class AxisConstraintStrategies {
 		}
 	}
 
-	private static class FixedAxisConstraintStrategy implements AxisConstraintStrategy {
-
-		final AxisConstraint constraint;
-
-		FixedAxisConstraintStrategy(
-				final AxisConstraint constraint) {
-			this.constraint = constraint;
-		}
+	private record FixedAxisConstraintStrategy(
+			AxisConstraint constraint) implements AxisConstraintStrategy {
 
 		@Override
 		public String toString() {

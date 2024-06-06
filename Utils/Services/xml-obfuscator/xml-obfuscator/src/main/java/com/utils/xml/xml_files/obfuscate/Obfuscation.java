@@ -58,9 +58,7 @@ public class Obfuscation {
 			while (iteratorAttributes.hasNext()) {
 
 				final Object nextObject = iteratorAttributes.next();
-				if (nextObject instanceof Attribute) {
-
-					final Attribute attribute = (Attribute) nextObject;
+				if (nextObject instanceof final Attribute attribute) {
 					processAttribute(attribute, obfuscatedToOriginalValuesMap, xmlStAXWriter);
 				}
 			}

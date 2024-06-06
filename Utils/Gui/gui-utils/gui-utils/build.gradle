@@ -1,9 +1,11 @@
 ext {
-    subProjectNames = [':data-types']
+    subProjectNames = [
+            ':data-types'
+    ]
     compileClassPaths = [
-            'org.openjfx:javafx-base:11.0.2:win',
-            'org.openjfx:javafx-graphics:11.0.2:win',
-            'org.openjfx:javafx-controls:11.0.2:win'
+            'org.openjfx:javafx-base:21.0.3:win',
+            'org.openjfx:javafx-graphics:21.0.3:win',
+            'org.openjfx:javafx-controls:21.0.3:win'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = [

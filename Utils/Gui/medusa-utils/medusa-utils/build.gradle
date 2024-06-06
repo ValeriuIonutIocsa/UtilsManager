@@ -1,5 +1,7 @@
 ext {
-    subProjectNames = [':gui-utils']
+    subProjectNames = [
+            ':gui-utils'
+    ]
     compileClassPaths = [
             'eu.hansolo:Medusa:11.7'
     ]

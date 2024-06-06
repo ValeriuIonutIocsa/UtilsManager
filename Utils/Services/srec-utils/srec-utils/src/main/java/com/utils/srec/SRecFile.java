@@ -144,12 +144,12 @@ public class SRecFile {
 		sortedSRecRecordList.sort(Comparator.comparing(SRecRecord::getStartAddress));
 
 		final List<SRecPatcherSymbol> sortedSRecPatcherSymbolList = new ArrayList<>(sRecPatcherSymbolList);
-		sortedSRecPatcherSymbolList.sort(Comparator.comparing(SRecPatcherSymbol::getStartAddress));
+		sortedSRecPatcherSymbolList.sort(Comparator.comparing(SRecPatcherSymbol::startAddress));
 
 		int recordIndex = 0;
 		for (final SRecPatcherSymbol sRecPatcherSymbol : sortedSRecPatcherSymbolList) {
 
-			final long startAddress = sRecPatcherSymbol.getStartAddress();
+			final long startAddress = sRecPatcherSymbol.startAddress();
 			while (true) {
 
 				if (recordIndex < sortedSRecRecordList.size()) {
@@ -182,7 +182,7 @@ public class SRecFile {
 			final int recordIndex) {
 
 		int readingRecordIndex = recordIndex;
-		long readingStartAddress = sRecPatcherSymbol.getStartAddress();
+		long readingStartAddress = sRecPatcherSymbol.startAddress();
 		int readByteCount = 0;
 		while (true) {
 
@@ -203,7 +203,7 @@ public class SRecFile {
 				continue;
 			}
 
-			final byte[] symbolContent = sRecPatcherSymbol.getSymbolContent();
+			final byte[] symbolContent = sRecPatcherSymbol.symbolContent();
 			if (readByteCount == symbolContent.length) {
 				break;
 			}

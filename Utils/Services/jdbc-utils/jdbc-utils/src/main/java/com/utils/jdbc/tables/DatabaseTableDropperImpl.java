@@ -16,7 +16,7 @@ public class DatabaseTableDropperImpl implements DatabaseTableDropper {
 
 		boolean success = false;
 		try {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			Logger.printProgress("dropping table \"" + tableName + "\"");
 
 			final String sql = createSql(databaseTableInfo);
@@ -33,7 +33,7 @@ public class DatabaseTableDropperImpl implements DatabaseTableDropper {
 			success = true;
 
 		} catch (final Exception exc) {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			Logger.printError("failed to drop table \"" + tableName + "\"");
 			Logger.printException(exc);
 		}
@@ -43,7 +43,7 @@ public class DatabaseTableDropperImpl implements DatabaseTableDropper {
 	static String createSql(
 			final DatabaseTableInfo databaseTableInfo) {
 
-		final String tableName = databaseTableInfo.getName();
+		final String tableName = databaseTableInfo.name();
 		return "DROP TABLE IF EXISTS \"" + tableName + "\"";
 	}
 }

@@ -1,30 +1,14 @@
 package com.utils.medusa.speedometer_gauge.data;
 
-public class Values {
+import com.utils.string.StrUtils;
 
-	private final double maxValue;
-	private final double minValue;
-	private final double value;
+public record Values(
+		double minValue,
+		double maxValue,
+		double value) {
 
-	public Values(
-			final double minValue,
-			final double maxValue,
-			final double value) {
-
-		this.minValue = minValue;
-		this.maxValue = maxValue;
-		this.value = value;
-	}
-
-	public double getMaxValue() {
-		return maxValue;
-	}
-
-	public double getMinValue() {
-		return minValue;
-	}
-
-	public double getValue() {
-		return value;
+	@Override
+	public String toString() {
+		return StrUtils.reflectionToString(this);
 	}
 }

@@ -11,8 +11,8 @@ class CustomListSelectionViewTestImpl extends AbstractCustomListSelectionViewOne
 			final List<Text> leftTableRowDataList,
 			final List<TextWithLength> rightTableRowDataList) {
 		super(0.45, leftTableRowDataList, rightTableRowDataList,
-				Comparator.comparing(Text::getText),
-				Comparator.comparing(textWithLength -> textWithLength.getText().length()));
+				Comparator.comparing(Text::text),
+				Comparator.comparing(textWithLength -> textWithLength.text().length()));
 	}
 
 	@Override
@@ -28,12 +28,12 @@ class CustomListSelectionViewTestImpl extends AbstractCustomListSelectionViewOne
 	@Override
 	protected TextWithLength convertLeftToRight(
 			final Text leftItem) {
-		return new TextWithLength(leftItem.getText());
+		return new TextWithLength(leftItem.text());
 	}
 
 	@Override
 	protected Text convertRightToLeft(
 			final TextWithLength rightItem) {
-		return new Text(rightItem.getText());
+		return new Text(rightItem.text());
 	}
 }

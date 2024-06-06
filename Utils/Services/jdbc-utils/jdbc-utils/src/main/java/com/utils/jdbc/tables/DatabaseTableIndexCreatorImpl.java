@@ -23,7 +23,7 @@ public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator 
 
 		boolean success = false;
 		try {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			Logger.printProgress("creating table \"" + tableName + "\"");
 
 			final String sql = createSql(databaseTableInfo, indexName, columnIndices);
@@ -40,7 +40,7 @@ public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator 
 			success = true;
 
 		} catch (final Exception exc) {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			Logger.printError("failed to create table \"" + tableName + "\"");
 			Logger.printException(exc);
 		}
@@ -52,7 +52,7 @@ public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator 
 			final String indexName,
 			final int[] columnIndices) {
 
-		final String tableName = databaseTableInfo.getName();
+		final String tableName = databaseTableInfo.name();
 
 		final List<Integer> columnIndexList = new ArrayList<>();
 		for (final int columnIndex : columnIndices) {
@@ -71,13 +71,13 @@ public class DatabaseTableIndexCreatorImpl implements DatabaseTableIndexCreator 
 			final List<Integer> columnIndexList,
 			final List<String> columnList) {
 
-		final DatabaseTableColumn[] databaseTableColumns = databaseTableInfo.getDatabaseTableColumnArray();
+		final DatabaseTableColumn[] databaseTableColumns = databaseTableInfo.databaseTableColumnArray();
 		for (int columnIndex = 0; columnIndex < databaseTableColumns.length; columnIndex++) {
 
 			if (columnIndexList.contains(columnIndex)) {
 
 				final DatabaseTableColumn databaseTableColumn = databaseTableColumns[columnIndex];
-				final String columnName = databaseTableColumn.getName();
+				final String columnName = databaseTableColumn.name();
 				final String columnString = "\"" + columnName + "\"";
 				columnList.add(columnString);
 			}

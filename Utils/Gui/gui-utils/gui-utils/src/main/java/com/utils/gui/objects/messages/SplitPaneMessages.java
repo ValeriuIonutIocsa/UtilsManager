@@ -53,8 +53,8 @@ public class SplitPaneMessages extends AbstractCustomControl<SplitPane> {
 			final Parent topControl) {
 
 		final SplitPane splitPaneRoot = getRoot();
-		splitPaneRoot.getItems().remove(0);
-		splitPaneRoot.getItems().add(0, topControl);
+		splitPaneRoot.getItems().removeFirst();
+		splitPaneRoot.getItems().addFirst(topControl);
 		splitPaneRoot.setDividerPositions(0.7);
 	}
 

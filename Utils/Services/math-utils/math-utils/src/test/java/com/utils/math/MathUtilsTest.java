@@ -52,21 +52,10 @@ class MathUtilsTest {
 		Assertions.assertEquals(testRoundToNextMultipleData.expectedResult, result);
 	}
 
-	private static class TestRoundToNextMultipleData {
-
-		private final int n;
-		private final int d;
-		private final int expectedResult;
-
-		TestRoundToNextMultipleData(
-				final int n,
-				final int d,
-				final int expectedResult) {
-
-			this.n = n;
-			this.d = d;
-			this.expectedResult = expectedResult;
-		}
+	private record TestRoundToNextMultipleData(
+			int n,
+			int d,
+			int expectedResult) {
 	}
 
 	@TestFactory

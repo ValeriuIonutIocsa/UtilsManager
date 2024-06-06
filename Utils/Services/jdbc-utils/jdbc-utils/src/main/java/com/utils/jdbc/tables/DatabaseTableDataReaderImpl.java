@@ -34,7 +34,7 @@ public class DatabaseTableDataReaderImpl<
 		boolean success = false;
 		try {
 			if (verbose) {
-				final String tableName = databaseTableInfo.getName();
+				final String tableName = databaseTableInfo.name();
 				Logger.printProgress("retrieving data from table \"" + tableName + "\"");
 			}
 
@@ -78,14 +78,14 @@ public class DatabaseTableDataReaderImpl<
 			}
 
 			if (verbose) {
-				final String tableName = databaseTableInfo.getName();
+				final String tableName = databaseTableInfo.name();
 				Logger.printStatus("Successfully retrieved data from table \"" + tableName + "\".");
 			}
 			success = true;
 
 		} catch (final Exception exc) {
 			if (verbose) {
-				final String tableName = databaseTableInfo.getName();
+				final String tableName = databaseTableInfo.name();
 				Logger.printError("failed to retrieve the data from table \"" + tableName + "\"");
 			}
 			Logger.printException(exc);
@@ -111,7 +111,7 @@ public class DatabaseTableDataReaderImpl<
 			final int[] columnIndices,
 			final String whereClause) {
 
-		final String tableName = databaseTableInfo.getName();
+		final String tableName = databaseTableInfo.name();
 
 		final String columnsString;
 		if (ArrayUtils.getLength(columnIndices) > 0) {
@@ -143,13 +143,13 @@ public class DatabaseTableDataReaderImpl<
 			columnIndexList.add(columnIndex);
 		}
 
-		final DatabaseTableColumn[] databaseTableColumns = databaseTableInfo.getDatabaseTableColumnArray();
+		final DatabaseTableColumn[] databaseTableColumns = databaseTableInfo.databaseTableColumnArray();
 		for (int columnIndex = 0; columnIndex < databaseTableColumns.length; columnIndex++) {
 
 			if (columnIndexList.contains(columnIndex)) {
 
 				final DatabaseTableColumn databaseTableColumn = databaseTableColumns[columnIndex];
-				final String columnName = databaseTableColumn.getName();
+				final String columnName = databaseTableColumn.name();
 				columnList.add("\"" + columnName + "\"");
 			}
 		}

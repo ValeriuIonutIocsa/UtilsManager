@@ -1,7 +1,10 @@
 package com.utils.js;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
+
+import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
+
+import com.utils.log.Logger;
 
 public final class ScriptUtils {
 
@@ -10,8 +13,11 @@ public final class ScriptUtils {
 
 	public static ScriptEngine createScriptEngine() {
 
-		System.setProperty("nashorn.args", "--no-deprecation-warning");
-		final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-		return scriptEngineManager.getEngineByName("JavaScript");
+		final NashornScriptEngineFactory nashornScriptEngineFactory = new NashornScriptEngineFactory();
+		final ScriptEngine scriptEngine = nashornScriptEngineFactory.getScriptEngine("-scripting");
+		if (scriptEngine == null) {
+			Logger.printError("script engine is unavailable");
+		}
+		return scriptEngine;
 	}
 }

@@ -135,7 +135,7 @@ class SunburstChartTest extends AbstractCustomApplicationTest {
 
 		final TreeNode treeNodeRoot = sunburstChart.getRoot();
 
-		final TreeNode treeNodeFirstChild = treeNodeRoot.getChildren().get(0);
+		final TreeNode treeNodeFirstChild = treeNodeRoot.getChildren().getFirst();
 		final Path path = treeNodeFirstChild.getPath();
 		final FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.25), path);
 		fadeTransition.setFromValue(1.0);

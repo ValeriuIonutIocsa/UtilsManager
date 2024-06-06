@@ -4,8 +4,8 @@ ext {
             ':swing-utils'
     ]
     compileClassPaths = [
-            'org.openjfx:javafx-web:11.0.2:win',
-            'org.openjfx:javafx-media:11.0.2:win'
+            'org.openjfx:javafx-web:21.0.3:win',
+            'org.openjfx:javafx-media:21.0.3:win'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = [

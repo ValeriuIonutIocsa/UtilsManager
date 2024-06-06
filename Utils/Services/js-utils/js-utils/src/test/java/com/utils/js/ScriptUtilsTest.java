@@ -18,9 +18,18 @@ class ScriptUtilsTest {
 	@Test
 	void testCreateScriptEngine() throws Exception {
 
-		final ScriptEngine engine = ScriptUtils.createScriptEngine();
-		final Object result = engine.eval("2 + 3");
-		Logger.printLine(result);
+		int result = -1;
+		final ScriptEngine scriptEngine = ScriptUtils.createScriptEngine();
+		if (scriptEngine != null) {
+
+			final Object resultObject = scriptEngine.eval("2 + 3");
+			final double resultDouble =
+					StrUtils.tryParseDouble(resultObject.toString(), Double.NaN);
+			if (!Double.isNaN(resultDouble)) {
+				result = (int) resultDouble;
+			}
+		}
+		Assertions.assertEquals(5, result);
 	}
 
 	@Test
@@ -28,7 +37,7 @@ class ScriptUtilsTest {
 
 		final int value;
 		final long expectedResult;
-		final int input = StrUtils.tryParsePositiveInt("2");
+		final int input = StrUtils.tryParsePositiveInt("1");
 		if (input == 1) {
 
 			value = 10;
@@ -57,14 +66,21 @@ class ScriptUtilsTest {
 							.getResourceAsStream("com/utils/js/fibonacci.js"))))) {
 
 				final ScriptEngine scriptEngine = ScriptUtils.createScriptEngine();
-				scriptEngine.eval(reader);
+				if (scriptEngine != null) {
 
-				final Invocable invocable = (Invocable) scriptEngine;
-				final Object resultObj = invocable.invokeFunction("fibonacci", value);
-				if (resultObj != null) {
+					scriptEngine.eval(reader);
 
-					final String resultObjString = resultObj.toString();
-					result = StrUtils.tryParsePositiveLong(resultObjString);
+					final Invocable invocable = (Invocable) scriptEngine;
+					final Object resultObj = invocable.invokeFunction("fibonacci", value);
+					if (resultObj != null) {
+
+						final String resultObjString = resultObj.toString();
+						final double resultDouble = StrUtils.tryParseDouble(resultObjString, Double.NaN);
+						if (!Double.isNaN(resultDouble)) {
+
+							result = (int) resultDouble;
+						}
+					}
 				}
 			}
 

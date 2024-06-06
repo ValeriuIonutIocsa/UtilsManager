@@ -134,9 +134,8 @@ public class CustomTableView<
 			final Set<Node> scrollBars = lookupAll(".scroll-bar");
 			for (final Node node : scrollBars) {
 
-				if (node instanceof ScrollBar) {
+				if (node instanceof final ScrollBar scrollBar) {
 
-					final ScrollBar scrollBar = (ScrollBar) node;
 					final Orientation orientation = scrollBar.getOrientation();
 					if (orientation == Orientation.VERTICAL) {
 						verticalScrollBar = scrollBar;
@@ -573,7 +572,7 @@ public class CustomTableView<
 
 			sortColumn.setSortable(true);
 			sortColumn.setSortType(TableColumn.SortType.ASCENDING);
-			getSortOrder().add(0, sortColumn);
+			getSortOrder().addFirst(sortColumn);
 			refresh();
 			sortColumn.setSortable(false);
 		}
@@ -587,7 +586,7 @@ public class CustomTableView<
 
 			sortColumn.setSortable(true);
 			sortColumn.setSortType(TableColumn.SortType.DESCENDING);
-			getSortOrder().add(0, sortColumn);
+			getSortOrder().addFirst(sortColumn);
 			refresh();
 			sortColumn.setSortable(false);
 		}
@@ -623,7 +622,7 @@ public class CustomTableView<
 							System.lineSeparator() + "there are multiple items selected");
 
 				} else {
-					final int selectedIndex = selectedIndices.get(0);
+					final int selectedIndex = selectedIndices.getFirst();
 					final int newIndex = selectedIndex + offset;
 					if (newIndex < 0) {
 						Logger.printNewLine();

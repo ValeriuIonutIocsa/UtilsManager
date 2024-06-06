@@ -26,7 +26,7 @@ public class DatabaseTableDataCreatorImpl<
 
 		boolean success = false;
 		try {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			if (verbose) {
 				Logger.printProgress("exporting data to table \"" + tableName + "\"");
 			}
@@ -69,7 +69,7 @@ public class DatabaseTableDataCreatorImpl<
 		}
 
 		if (!success) {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			if (verbose) {
 				Logger.printError("failed to export the data to table \"" + tableName + "\"");
 			}
@@ -138,10 +138,10 @@ public class DatabaseTableDataCreatorImpl<
 
 		final StringBuilder sbSql = new StringBuilder(200);
 
-		final String tableName = databaseTableInfo.getName();
+		final String tableName = databaseTableInfo.name();
 		sbSql.append("INSERT INTO \"").append(tableName).append("\" (");
 
-		final DatabaseTableColumn[] columns = databaseTableInfo.getDatabaseTableColumnArray();
+		final DatabaseTableColumn[] columns = databaseTableInfo.databaseTableColumnArray();
 		final int columnCount = columns.length;
 		for (int i = 0; i < columnCount; i++) {
 
@@ -149,7 +149,7 @@ public class DatabaseTableDataCreatorImpl<
 			if (!excludedColumnIndex) {
 
 				final DatabaseTableColumn column = columns[i];
-				final String columnName = column.getName();
+				final String columnName = column.name();
 				sbSql.append('"').append(columnName).append('"');
 				if (i < columnCount - 1) {
 					sbSql.append(", ");

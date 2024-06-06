@@ -124,9 +124,8 @@ public final class FactoryXlsCellStyles {
 		cellStyleColored.setWrapText(true);
 
 		try {
-			if (cellStyleColored instanceof XSSFCellStyle) {
+			if (cellStyleColored instanceof final XSSFCellStyle xssfCellStyle) {
 
-				final XSSFCellStyle xssfCellStyle = (XSSFCellStyle) cellStyleColored;
 				final XSSFColor xssfColor = new XSSFColor(Hex.decodeHex(colorRgb), null);
 				xssfCellStyle.setFillForegroundColor(xssfColor);
 			}

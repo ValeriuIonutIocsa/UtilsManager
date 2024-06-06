@@ -125,9 +125,8 @@ public class CustomTreeTableView<
 			final Set<Node> scrollBarSet = lookupAll(".scroll-bar");
 			for (final Node node : scrollBarSet) {
 
-				if (node instanceof ScrollBar) {
+				if (node instanceof final ScrollBar scrollBar) {
 
-					final ScrollBar scrollBar = (ScrollBar) node;
 					final Orientation orientation = scrollBar.getOrientation();
 					if (orientation == Orientation.VERTICAL) {
 						verticalScrollBar = scrollBar;

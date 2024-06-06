@@ -17,7 +17,7 @@ public class DatabaseTableDeleterImpl implements DatabaseTableDeleter {
 
 		boolean success = false;
 		try {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			Logger.printProgress("deleting data from table \"" + tableName + "\"");
 
 			final String sql = createSql(databaseTableInfo, whereClause);
@@ -36,7 +36,7 @@ public class DatabaseTableDeleterImpl implements DatabaseTableDeleter {
 			success = true;
 
 		} catch (final Exception exc) {
-			final String tableName = databaseTableInfo.getName();
+			final String tableName = databaseTableInfo.name();
 			Logger.printError("failed to delete data from table \"" + tableName + "\"");
 			Logger.printException(exc);
 		}
@@ -57,7 +57,7 @@ public class DatabaseTableDeleterImpl implements DatabaseTableDeleter {
 			final DatabaseTableInfo databaseTableInfo,
 			final String whereClause) {
 
-		final String tableName = databaseTableInfo.getName();
+		final String tableName = databaseTableInfo.name();
 		final StringBuilder sbSql = new StringBuilder("DELETE FROM \"" + tableName + "\"");
 		if (whereClause != null) {
 			sbSql.append(' ').append(whereClause);

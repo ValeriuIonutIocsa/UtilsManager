@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.io.File;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import com.utils.log.Logger;
 
 public class JDialogCreate extends JDialog {
 
+	@Serial
 	private static final long serialVersionUID = -4309781150215172007L;
 
 	private final JCheckBoxTree jCheckBoxTree;

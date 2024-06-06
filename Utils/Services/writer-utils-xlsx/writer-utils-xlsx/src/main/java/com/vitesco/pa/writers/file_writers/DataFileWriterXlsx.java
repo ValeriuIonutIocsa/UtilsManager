@@ -150,81 +150,83 @@ public class DataFileWriterXlsx extends AbstractDataFileWriter {
 			final DataItem<?> dataItem = dataItemArray[i];
 			final List<XlsCell> xlsCellList = xlsCellsByColumnList.get(i);
 
-			if (dataItem != null) {
+			switch (dataItem) {
 
-				if (dataItem instanceof DataItemBoolean) {
+				case final DataItemBoolean dataItemBoolean -> {
 
-					final boolean booleanValue = ((DataItemBoolean) dataItem).createXlsxValue();
+					final boolean booleanValue = dataItemBoolean.createXlsxValue();
 					final XlsCell xlsCell = new XlsCellBoolean(cellStyleRegular, booleanValue);
 					xlsCellList.add(xlsCell);
+				}
+				case final DataItemUByteHex dataItemUByteHex -> {
 
-				} else if (dataItem instanceof DataItemUByteHex) {
-
-					final byte byteValue = ((DataItemUByteHex) dataItem).createXlsxValue();
+					final byte byteValue = dataItemUByteHex.createXlsxValue();
 					if (byteValue >= 0) {
 
 						final String hexStringValue = StrUtils.createHexString(byteValue);
 						final XlsCell xlsCell = new XlsCellString(cellStyleRegular, hexStringValue);
 						xlsCellList.add(xlsCell);
 					}
+				}
+				case final DataItemUByte dataItemUByte -> {
 
-				} else if (dataItem instanceof DataItemUByte) {
-
-					final byte byteValue = ((DataItemUByte) dataItem).createXlsxValue();
+					final byte byteValue = dataItemUByte.createXlsxValue();
 					if (byteValue >= 0) {
 
 						final XlsCell xlsCell = new XlsCellNumber(cellStyleRegular, byteValue);
 						xlsCellList.add(xlsCell);
 					}
+				}
+				case final DataItemUIntHex dataItemUIntHex -> {
 
-				} else if (dataItem instanceof DataItemUIntHex) {
-
-					final int integerValue = ((DataItemUIntHex) dataItem).createXlsxValue();
+					final int integerValue = dataItemUIntHex.createXlsxValue();
 					if (integerValue >= 0) {
 
 						final String hexStringValue = StrUtils.createHexString(integerValue);
 						final XlsCell xlsCell = new XlsCellString(cellStyleRegular, hexStringValue);
 						xlsCellList.add(xlsCell);
 					}
+				}
+				case final DataItemUInt dataItemUInt -> {
 
-				} else if (dataItem instanceof DataItemUInt) {
-
-					final int integerValue = ((DataItemUInt) dataItem).createXlsxValue();
+					final int integerValue = dataItemUInt.createXlsxValue();
 					if (integerValue >= 0) {
 
 						final XlsCell xlsCell = new XlsCellNumber(cellStyleRegular, integerValue);
 						xlsCellList.add(xlsCell);
 					}
+				}
+				case final DataItemULongHex dataItemULongHex -> {
 
-				} else if (dataItem instanceof DataItemULongHex) {
-
-					final long longValue = ((DataItemULongHex) dataItem).createXlsxValue();
+					final long longValue = dataItemULongHex.createXlsxValue();
 					if (longValue >= 0) {
 
 						final String hexStringValue = StrUtils.createHexString(longValue);
 						final XlsCell xlsCell = new XlsCellString(cellStyleRegular, hexStringValue);
 						xlsCellList.add(xlsCell);
 					}
+				}
+				case final DataItemULong dataItemULong -> {
 
-				} else if (dataItem instanceof DataItemULong) {
-
-					final long longValue = ((DataItemULong) dataItem).createXlsxValue();
+					final long longValue = dataItemULong.createXlsxValue();
 					if (longValue >= 0) {
 
 						final XlsCell xlsCell = new XlsCellNumber(cellStyleRegular, longValue);
 						xlsCellList.add(xlsCell);
 					}
+				}
+				case final DataItemDouble dataItemDouble -> {
 
-				} else if (dataItem instanceof DataItemDouble) {
-
-					final double doubleValue = ((DataItemDouble) dataItem).createXlsxValue();
+					final double doubleValue = dataItemDouble.createXlsxValue();
 					if (!Double.isNaN(doubleValue)) {
 
 						final XlsCell xlsCell = new XlsCellNumber(cellStyleDecimalNumber, doubleValue);
 						xlsCellList.add(xlsCell);
 					}
-
-				} else {
+				}
+				case null -> {
+				}
+				default -> {
 					final Object value = dataItem.createXlsxValue();
 					if (value != null) {
 
