@@ -143,15 +143,15 @@ public class BasicControlsFactoryImpl implements BasicControlsFactory {
 		if (styleClassElements != null) {
 			textField.getStyleClass().addAll(styleClassElements);
 		}
-		textField.setOnKeyPressed(event -> {
+		textField.setOnKeyPressed(keyEvent -> {
 
-			if (event.isControlDown() && event.getCode() == KeyCode.C) {
+			if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 
 				final String selectedText = textField.getSelectedText();
 				if (StringUtils.isNotBlank(selectedText)) {
 					ClipboardUtils.putStringInClipBoard(selectedText);
 				}
-				event.consume();
+				keyEvent.consume();
 			}
 		});
 		return textField;
@@ -167,15 +167,15 @@ public class BasicControlsFactoryImpl implements BasicControlsFactory {
 		if (styleClassElements != null) {
 			textArea.getStyleClass().addAll(styleClassElements);
 		}
-		textArea.setOnKeyPressed(event -> {
+		textArea.setOnKeyPressed(keyEvent -> {
 
-			if (event.isControlDown() && event.getCode() == KeyCode.C) {
+			if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 
 				final String selectedText = textArea.getSelectedText();
 				if (StringUtils.isNotBlank(selectedText)) {
 					ClipboardUtils.putStringInClipBoard(selectedText);
 				}
-				event.consume();
+				keyEvent.consume();
 			}
 		});
 		return textArea;

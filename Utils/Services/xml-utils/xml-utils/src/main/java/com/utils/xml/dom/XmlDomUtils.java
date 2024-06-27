@@ -521,4 +521,37 @@ public final class XmlDomUtils {
 		final LSSerializer lsSerializer = domImplementationLS.createLSSerializer();
 		return lsSerializer.writeToString(node);
 	}
+
+	@ApiMethod
+	public static String computeNodeXmlPath(
+			final Node node) {
+
+		return computeNodeXmlPathRec(node, "");
+	}
+
+	private static String computeNodeXmlPathRec(
+			final Node node,
+			final String childNodeXmlPath) {
+
+		final String nodeXmlPath;
+		if (node == null) {
+			nodeXmlPath = "";
+
+		} else {
+			final Node parent = node.getParentNode();
+			if (parent == null) {
+				nodeXmlPath = childNodeXmlPath;
+
+			} else {
+				final String elementName;
+				if (node instanceof final Element element) {
+					elementName = element.getTagName();
+				} else {
+					elementName = "";
+				}
+				nodeXmlPath = computeNodeXmlPathRec(parent, "/" + elementName + childNodeXmlPath);
+			}
+		}
+		return nodeXmlPath;
+	}
 }

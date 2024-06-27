@@ -45,6 +45,7 @@ public class CustomWebViewGuiLogger extends CustomWebView {
 		contextMenu.getItems().add(menuItemClear);
 
 		webViewRoot.setOnMouseClicked(mouseEvent -> {
+
 			if (GuiUtils.isRightClick(mouseEvent)) {
 				contextMenu.show(webViewRoot, mouseEvent.getScreenX(), mouseEvent.getScreenY());
 			} else {

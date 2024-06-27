@@ -14,6 +14,7 @@ import com.utils.gui.objects.tables.table_view.CustomTableView;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -59,6 +60,13 @@ class VBoxSelectTextFieldValue<
 		GuiUtils.addToVBox(rootVBox, hBoxButtons.getRoot(),
 				Pos.CENTER, Priority.ALWAYS, 7, 7, 7, 7);
 
+		rootVBox.setOnKeyPressed(keyEvent -> {
+
+			if (keyEvent.getCode() == KeyCode.ENTER) {
+				okButtonClicked();
+			}
+		});
+
 		return rootVBox;
 	}
 
@@ -83,6 +91,13 @@ class VBoxSelectTextFieldValue<
 		if (selectedItem != null) {
 			customTableView.getSelectionModel().select(selectedItem);
 		}
+
+		customTableView.setOnMouseClicked(mouseEvent -> {
+
+			if (GuiUtils.isDoubleClick(mouseEvent)) {
+				okButtonClicked();
+			}
+		});
 
 		return customTableView;
 	}

@@ -55,8 +55,9 @@ public class HBoxWebViewSearch extends AbstractCustomControl<HBox> {
 		searchTextField.setTooltip(BasicControlsFactories.getInstance().createTooltip(SEARCH_TOOLTIP_TEXT));
 		searchTextField.setOnAction(event -> customWebView.search(
 				searchTextField.getText(), caseSensitiveToggleButton.isSelected()));
-		customWebView.getRoot().setOnKeyPressed(event -> {
-			if (event.isControlDown() && event.getCode() == KeyCode.F) {
+		customWebView.getRoot().setOnKeyPressed(keyEvent -> {
+
+			if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.F) {
 				searchTextField.requestFocus();
 			}
 		});
@@ -68,6 +69,7 @@ public class HBoxWebViewSearch extends AbstractCustomControl<HBox> {
 				Pos.CENTER_LEFT, Priority.NEVER, 0, 0, 0, 5);
 		stackPaneImageViewSearch.setPadding(new Insets(0, 2, 0, 2));
 		stackPaneImageViewSearch.setOnMouseClicked(mouseEvent -> {
+
 			if (GuiUtils.isLeftClick(mouseEvent)) {
 				customWebView.search(searchTextField.getText(), caseSensitiveToggleButton.isSelected());
 			}

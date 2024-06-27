@@ -31,6 +31,7 @@ public class HBoxTitleTableView<
 		imageViewUpArrow.setOnMouseClicked(mouseEvent -> {
 
 			if (GuiUtils.isLeftClick(mouseEvent)) {
+
 				customTableView.moveSelectedItem(-1, tableItemIndexUpdater);
 				if (saveData != null) {
 					saveData.apply();
@@ -42,7 +43,9 @@ public class HBoxTitleTableView<
 
 		final ImageView imageViewDownArrow = new ImageView(ImagesGuiUtils.IMAGE_DOWN_ARROW);
 		imageViewDownArrow.setOnMouseClicked(mouseEvent -> {
+
 			if (GuiUtils.isLeftClick(mouseEvent)) {
+
 				customTableView.moveSelectedItem(1, tableItemIndexUpdater);
 				if (saveData != null) {
 					saveData.apply();
