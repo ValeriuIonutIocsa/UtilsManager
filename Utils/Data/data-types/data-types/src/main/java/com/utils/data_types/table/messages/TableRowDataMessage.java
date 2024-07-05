@@ -48,7 +48,7 @@ public class TableRowDataMessage implements TableRowData {
 
 	public static final DataInfo DATA_INFO = new DataInfo(
 			"-messages", "Messages",
-			"Messages", "Message", COLUMNS_DATA, COLUMNS_TABLE);
+			"Messages", "Message", -1, COLUMNS_DATA, COLUMNS_TABLE);
 
 	private final boolean category;
 	private final MessageType type;

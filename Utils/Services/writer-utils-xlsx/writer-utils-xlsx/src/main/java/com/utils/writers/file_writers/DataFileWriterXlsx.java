@@ -1,4 +1,4 @@
-package com.vitesco.pa.writers.file_writers;
+package com.utils.writers.file_writers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import com.utils.data_types.DataInfo;
 import com.utils.data_types.data_items.DataItem;
 import com.utils.data_types.data_items.di_boolean.DataItemBoolean;
 import com.utils.data_types.data_items.di_byte.DataItemUByte;
@@ -19,6 +20,7 @@ import com.utils.data_types.table.TableColumnData;
 import com.utils.data_types.table.TableRowData;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
+import com.utils.writers.file_writers.data.DataTable;
 import com.utils.xls.XlsUtils;
 import com.utils.xls.cell.XlsCell;
 import com.utils.xls.cell.XlsCellBlank;
@@ -29,21 +31,12 @@ import com.utils.xls.row.XlsRow;
 import com.utils.xls.sheet.XlsSheet;
 import com.utils.xls.style.FactoryXlsCellStyles;
 import com.utils.xls.workbook.XlsxWorkbook;
-import com.vitesco.pa.writers.file_writers.data.DataTable;
 
-public class DataFileWriterXlsx extends AbstractDataFileWriter {
+public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
-	private final int totalColumnWidth;
+	public static final DataFileWriterXlsx INSTANCE = new DataFileWriterXlsx();
 
-	public DataFileWriterXlsx() {
-
-		this(-1);
-	}
-
-	public DataFileWriterXlsx(
-			final int totalColumnWidth) {
-
-		this.totalColumnWidth = totalColumnWidth;
+	private DataFileWriterXlsx() {
 	}
 
 	@Override
@@ -73,7 +66,7 @@ public class DataFileWriterXlsx extends AbstractDataFileWriter {
 		}
 	}
 
-	private void writeToXlsx(
+	private static void writeToXlsx(
 			final DataTable dataTable,
 			final Workbook workbook,
 			final CellStyle cellStyleTitle,
@@ -81,8 +74,15 @@ public class DataFileWriterXlsx extends AbstractDataFileWriter {
 			final CellStyle cellStyleDecimalNumber) {
 
 		final String displayName = dataTable.getDisplayName();
+
+		int totalColumnWidth = dataTable.getTotalColumnWidth();
+		if (totalColumnWidth < 0) {
+			totalColumnWidth = DataInfo.DEFAULT_TOTAL_COLUMN_WIDTH;
+		}
+
 		final TableColumnData[] columnsData = dataTable.getColumnsData();
 		final double[] columnWidthRatioArray = createColumnWidthPercentages(columnsData);
+
 		final XlsSheet xlsSheet = new XlsSheet(displayName, totalColumnWidth, columnWidthRatioArray);
 
 		final XlsRow xlsRowTitle = createTitleRow(columnsData, cellStyleTitle);
@@ -263,5 +263,15 @@ public class DataFileWriterXlsx extends AbstractDataFileWriter {
 			}
 			xlsRowList.add(xlsRow);
 		}
+	}
+
+	@Override
+	public String getExtension() {
+		return "xlsx";
+	}
+
+	@Override
+	public int getOrder() {
+		return 201;
 	}
 }

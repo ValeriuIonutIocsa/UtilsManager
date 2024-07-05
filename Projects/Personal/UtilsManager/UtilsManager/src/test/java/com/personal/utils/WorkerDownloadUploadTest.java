@@ -25,9 +25,6 @@ class WorkerDownloadUploadTest {
 		final String pathString;
 		final int inputPathString = StrUtils.tryParsePositiveInt("1");
 		if (inputPathString == 1) {
-			pathString = "C:\\IVI\\Vitesco\\Main";
-
-		} else if (inputPathString == 11) {
 			pathString = "C:\\IVI\\Prog\\JavaGradle\\Scripts\\General\\GradleCnfMan";
 
 		} else {

@@ -1,4 +1,4 @@
-package com.vitesco.pa.writers.file_writers;
+package com.utils.writers.file_writers;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -11,10 +11,15 @@ import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
 import com.utils.json.JsonUtils;
 import com.utils.log.Logger;
-import com.vitesco.pa.writers.file_writers.data.DataTable;
-import com.vitesco.pa.writers.file_writers.data.JsonFirstLevelRoot;
+import com.utils.writers.file_writers.data.DataTable;
+import com.utils.writers.file_writers.data.JsonFirstLevelRoot;
 
-public class DataFileWriterJson extends AbstractDataFileWriter {
+public final class DataFileWriterJson extends AbstractDataFileWriter {
+
+	public static final DataFileWriterJson INSTANCE = new DataFileWriterJson();
+
+	private DataFileWriterJson() {
+	}
 
 	@Override
 	void writeData(
@@ -53,5 +58,15 @@ public class DataFileWriterJson extends AbstractDataFileWriter {
 			final JsonFirstLevelRoot jsonFirstLevelRoot = new JsonFirstLevelRoot(dataTableList);
 			JsonUtils.writeObject(jsonFirstLevelRoot, 0, printStream, JsonFirstLevelRoot::writeToJson);
 		}
+	}
+
+	@Override
+	public String getExtension() {
+		return "json";
+	}
+
+	@Override
+	public int getOrder() {
+		return 102;
 	}
 }

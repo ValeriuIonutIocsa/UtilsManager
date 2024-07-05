@@ -23,13 +23,7 @@ public class XlsSheet {
 			final double[] columnWidthRatioArray) {
 
 		this.name = name;
-
-		if (totalColumnWidth > 0) {
-			this.totalColumnWidth = totalColumnWidth;
-		} else {
-			this.totalColumnWidth = 54_000;
-		}
-
+		this.totalColumnWidth = totalColumnWidth;
 		this.columnWidthRatioArray = columnWidthRatioArray;
 
 		xlsRowList = new ArrayList<>();

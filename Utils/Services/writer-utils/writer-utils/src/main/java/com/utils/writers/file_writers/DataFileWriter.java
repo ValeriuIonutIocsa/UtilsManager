@@ -1,8 +1,8 @@
-package com.vitesco.pa.writers.file_writers;
+package com.utils.writers.file_writers;
 
 import java.util.List;
 
-import com.vitesco.pa.writers.file_writers.data.DataTable;
+import com.utils.writers.file_writers.data.DataTable;
 
 public interface DataFileWriter {
 
@@ -10,4 +10,8 @@ public interface DataFileWriter {
 			String displayName,
 			String outputPathString,
 			List<DataTable> dataTableList) throws Exception;
+
+	String getExtension();
+
+	int getOrder();
 }

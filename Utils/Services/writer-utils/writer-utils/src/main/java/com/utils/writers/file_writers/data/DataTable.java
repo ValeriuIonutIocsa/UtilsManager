@@ -1,4 +1,4 @@
-package com.vitesco.pa.writers.file_writers.data;
+package com.utils.writers.file_writers.data;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ public class DataTable {
 	private final String displayName;
 	private final String xmlRootElementTagName;
 	private final String xmlDataElementTagName;
+	private final int totalColumnWidth;
 	private final TableColumnData[] columnsData;
 	private final List<? extends TableRowData> rowDataList;
 
@@ -23,28 +24,31 @@ public class DataTable {
 			final DataInfo dataInfo,
 			final Collection<? extends TableRowData> rowDataList) {
 
-		this(dataInfo, dataInfo.getColumnsData(), rowDataList);
+		this(dataInfo, dataInfo.totalColumnWidth(), dataInfo.columnsData(), rowDataList);
 	}
 
 	public DataTable(
 			final DataInfo dataInfo,
+			final int totalColumnWidth,
 			final TableColumnData[] columnsData,
 			final Collection<? extends TableRowData> rowDataList) {
 
-		this(dataInfo.getDisplayName(), dataInfo.getXmlRootElementTagName(), dataInfo.getXmlDataElementTagName(),
-				columnsData, rowDataList);
+		this(dataInfo.displayName(), dataInfo.xmlRootElementTagName(), dataInfo.xmlDataElementTagName(),
+				totalColumnWidth, columnsData, rowDataList);
 	}
 
 	public DataTable(
 			final String displayName,
 			final String xmlRootElementTagName,
 			final String xmlDataElementTagName,
+			final int totalColumnWidth,
 			final TableColumnData[] columnsData,
 			final Collection<? extends TableRowData> rowDataList) {
 
 		this.displayName = displayName;
 		this.xmlRootElementTagName = xmlRootElementTagName;
 		this.xmlDataElementTagName = xmlDataElementTagName;
+		this.totalColumnWidth = totalColumnWidth;
 		this.columnsData = columnsData;
 		this.rowDataList = new ArrayList<>(rowDataList);
 	}
@@ -78,6 +82,10 @@ public class DataTable {
 
 	public String getXmlDataElementTagName() {
 		return xmlDataElementTagName;
+	}
+
+	public int getTotalColumnWidth() {
+		return totalColumnWidth;
 	}
 
 	public TableColumnData[] getColumnsData() {

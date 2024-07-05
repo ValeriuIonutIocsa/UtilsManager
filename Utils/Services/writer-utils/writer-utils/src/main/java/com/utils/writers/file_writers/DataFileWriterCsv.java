@@ -1,4 +1,4 @@
-package com.vitesco.pa.writers.file_writers;
+package com.utils.writers.file_writers;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -11,9 +11,14 @@ import com.utils.data_types.table.TableRowData;
 import com.utils.io.PathUtils;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.log.Logger;
-import com.vitesco.pa.writers.file_writers.data.DataTable;
+import com.utils.writers.file_writers.data.DataTable;
 
-public class DataFileWriterCsv extends AbstractDataFileWriter {
+public final class DataFileWriterCsv extends AbstractDataFileWriter {
+
+	public static final DataFileWriterCsv INSTANCE = new DataFileWriterCsv();
+
+	private DataFileWriterCsv() {
+	}
 
 	@Override
 	void writeData(
@@ -100,5 +105,15 @@ public class DataFileWriterCsv extends AbstractDataFileWriter {
 				tableRowData.writeToCsv(printStream);
 			}
 		}
+	}
+
+	@Override
+	public String getExtension() {
+		return "csv";
+	}
+
+	@Override
+	public int getOrder() {
+		return 103;
 	}
 }

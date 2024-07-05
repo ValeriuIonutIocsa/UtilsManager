@@ -1,9 +1,9 @@
-package com.vitesco.pa.writers.file_writers;
+package com.utils.writers.file_writers;
 
 import java.util.List;
 
 import com.utils.log.Logger;
-import com.vitesco.pa.writers.file_writers.data.DataTable;
+import com.utils.writers.file_writers.data.DataTable;
 
 public abstract class AbstractDataFileWriter implements DataFileWriter {
 

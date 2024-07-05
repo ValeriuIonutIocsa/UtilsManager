@@ -7,47 +7,25 @@ import java.util.Objects;
 import com.utils.data_types.table.TableColumnData;
 import com.utils.string.StrUtils;
 
-public class DataInfo implements Serializable {
+public record DataInfo(
+		String option,
+		String displayName,
+		String xmlRootElementTagName,
+		String xmlDataElementTagName,
+		int totalColumnWidth,
+		TableColumnData[] columnsData,
+		TableColumnData[] columnsTable) implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3078827620097666118L;
 
-	private final String option;
-	private final String displayName;
-	private final String xmlRootElementTagName;
-	private final String xmlDataElementTagName;
-	private final TableColumnData[] columnsData;
-	private final TableColumnData[] columnsTable;
-
-	public DataInfo(
-			final String option,
-			final String displayName,
-			final String xmlRootElementTagName,
-			final String xmlDataElementTagName,
-			final TableColumnData[] columns) {
-		this(option, displayName, xmlRootElementTagName, xmlDataElementTagName, columns, columns);
-	}
-
-	public DataInfo(
-			final String option,
-			final String displayName,
-			final String xmlRootElementTagName,
-			final String xmlDataElementTagName,
-			final TableColumnData[] columnsData,
-			final TableColumnData[] columnsTable) {
-
-		this.option = option;
-		this.displayName = displayName;
-		this.xmlRootElementTagName = xmlRootElementTagName;
-		this.xmlDataElementTagName = xmlDataElementTagName;
-		this.columnsData = columnsData;
-		this.columnsTable = columnsTable;
-	}
+	public static final int DEFAULT_TOTAL_COLUMN_WIDTH = 54_000;
 
 	public DataInfo cloneOtherDisplayName(
 			final String displayName) {
+
 		return new DataInfo(option, displayName, xmlRootElementTagName, xmlDataElementTagName,
-				columnsData, columnsTable);
+				-1, columnsData, columnsTable);
 	}
 
 	@Override
@@ -69,29 +47,5 @@ public class DataInfo implements Serializable {
 	@Override
 	public String toString() {
 		return StrUtils.reflectionToString(this);
-	}
-
-	public String getOption() {
-		return option;
-	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public String getXmlRootElementTagName() {
-		return xmlRootElementTagName;
-	}
-
-	public String getXmlDataElementTagName() {
-		return xmlDataElementTagName;
-	}
-
-	public TableColumnData[] getColumnsData() {
-		return columnsData;
-	}
-
-	public TableColumnData[] getColumnsTable() {
-		return columnsTable;
 	}
 }

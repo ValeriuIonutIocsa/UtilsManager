@@ -1,4 +1,4 @@
-package com.vitesco.pa.writers.file_writers;
+package com.utils.writers.file_writers;
 
 import java.util.List;
 
@@ -7,11 +7,16 @@ import org.apache.commons.lang3.StringUtils;
 import com.utils.data_types.table.TableColumnData;
 import com.utils.data_types.table.TableRowData;
 import com.utils.log.Logger;
+import com.utils.writers.file_writers.data.DataTable;
 import com.utils.xml.stax.AbstractXmlStAXWriter;
 import com.utils.xml.stax.XmlStAXWriter;
-import com.vitesco.pa.writers.file_writers.data.DataTable;
 
-public class DataFileWriterXml extends AbstractDataFileWriter {
+public final class DataFileWriterXml extends AbstractDataFileWriter {
+
+	public static final DataFileWriterXml INSTANCE = new DataFileWriterXml();
+
+	private DataFileWriterXml() {
+	}
 
 	@Override
 	void writeData(
@@ -67,5 +72,15 @@ public class DataFileWriterXml extends AbstractDataFileWriter {
 		}
 
 		xmlStAXWriter.writeEndElement(xmlRootElementTagName);
+	}
+
+	@Override
+	public String getExtension() {
+		return "xml";
+	}
+
+	@Override
+	public int getOrder() {
+		return 101;
 	}
 }

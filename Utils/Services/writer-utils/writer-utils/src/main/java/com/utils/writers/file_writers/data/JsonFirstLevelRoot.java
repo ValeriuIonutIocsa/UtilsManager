@@ -1,4 +1,4 @@
-package com.vitesco.pa.writers.file_writers.data;
+package com.utils.writers.file_writers.data;
 
 import java.io.PrintStream;
 import java.util.List;

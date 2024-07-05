@@ -61,7 +61,7 @@ public class SplitPaneMessages extends AbstractCustomControl<SplitPane> {
 	private CustomTreeTableView<TableRowDataMessage> createCustomTreeTableView() {
 
 		final CustomTreeTableView<TableRowDataMessage> customTreeTableView =
-				new CustomTreeTableView<>(TableRowDataMessage.DATA_INFO.getColumnsTable(),
+				new CustomTreeTableView<>(TableRowDataMessage.DATA_INFO.columnsTable(),
 						true, true, true, true, 0);
 		customTreeTableView.setId("tree-table-view-messages");
 
