@@ -14,7 +14,7 @@ import javafx.scene.web.WebView;
 public class CustomWebViewGuiLogger extends CustomWebView {
 
 	public static final String HTML_FONT =
-			"<style> * { font-family: \"Helvetica\"; font-size: 12px; } </style>";
+			"<style> * { font-family: \"Helvetica\"; font-size: 12px; word-wrap: break-word; } </style>";
 	private static final String HTML_HEADER = "<html>" +
 			"<head>" +
 			HTML_FONT +
@@ -76,6 +76,7 @@ public class CustomWebViewGuiLogger extends CustomWebView {
 
 	static String escapeHtml(
 			final String text) {
+
 		return NEW_LINE_PATTERN.matcher(text).replaceAll("<br>");
 	}
 
@@ -94,6 +95,7 @@ public class CustomWebViewGuiLogger extends CustomWebView {
 
 	private void loadContent(
 			final String content) {
+
 		GuiUtils.run(() -> getRoot().getEngine().loadContent(content));
 	}
 }
