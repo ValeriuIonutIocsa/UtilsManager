@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 
 public abstract class AbstractCustomTableCellPercentage<
 		RowDataT,
-		CellDataT> extends AbstractCustomTableCell<RowDataT, CellDataT> {
+		CellDataT> extends CustomTableCell<RowDataT, CellDataT> {
 
 	private final String tempFolderPathString;
 	private final Color fullSpaceColor;
