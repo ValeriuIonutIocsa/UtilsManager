@@ -11,6 +11,8 @@ import com.utils.xls.row.XlsRow;
 
 public class XlsSheet {
 
+	public static final int DEFAULT_TOTAL_COLUMN_WIDTH = 54_000;
+
 	private final String name;
 	private final int totalColumnWidth;
 	private final double[] columnWidthRatioArray;
@@ -64,6 +66,13 @@ public class XlsSheet {
 	private void sizeColumns(
 			final Sheet sheet,
 			final double[] columnWidthRatioArray) {
+
+		final int totalColumnWidth;
+		if (this.totalColumnWidth > 0) {
+			totalColumnWidth = this.totalColumnWidth;
+		} else {
+			totalColumnWidth = DEFAULT_TOTAL_COLUMN_WIDTH;
+		}
 
 		for (int columnIndex = 0; columnIndex < columnWidthRatioArray.length; columnIndex++) {
 

@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.utils.data_types.DataInfo;
 import com.utils.data_types.data_items.DataItem;
 import com.utils.data_types.data_items.di_boolean.DataItemBoolean;
 import com.utils.data_types.data_items.di_byte.DataItemUByte;
@@ -75,10 +74,7 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
 		final String displayName = dataTable.getDisplayName();
 
-		int totalColumnWidth = dataTable.getTotalColumnWidth();
-		if (totalColumnWidth < 0) {
-			totalColumnWidth = DataInfo.DEFAULT_TOTAL_COLUMN_WIDTH;
-		}
+		final int totalColumnWidth = dataTable.getTotalColumnWidth();
 
 		final TableColumnData[] columnsData = dataTable.getColumnsData();
 		final double[] columnWidthRatioArray = createColumnWidthPercentages(columnsData);
