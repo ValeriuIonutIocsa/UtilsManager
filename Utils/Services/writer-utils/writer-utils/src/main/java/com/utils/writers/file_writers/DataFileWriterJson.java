@@ -22,7 +22,7 @@ public final class DataFileWriterJson extends AbstractDataFileWriter {
 	}
 
 	@Override
-	void writeData(
+	String writeData(
 			final String displayName,
 			final String outputPathString,
 			final List<DataTable> dataTableList) {
@@ -47,6 +47,7 @@ public final class DataFileWriterJson extends AbstractDataFileWriter {
 				Logger.printLine(outputPathString);
 			}
 		}
+		return outputPathString;
 	}
 
 	public static void write(

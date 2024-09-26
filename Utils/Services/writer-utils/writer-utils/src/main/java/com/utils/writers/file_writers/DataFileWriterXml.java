@@ -19,7 +19,7 @@ public final class DataFileWriterXml extends AbstractDataFileWriter {
 	}
 
 	@Override
-	void writeData(
+	String writeData(
 			final String displayName,
 			final String outputPathString,
 			final List<DataTable> dataTableList) {
@@ -37,6 +37,8 @@ public final class DataFileWriterXml extends AbstractDataFileWriter {
 			Logger.printStatus("Successfully generated the \"" + displayName + "\" data file:");
 			Logger.printLine(outputPathString);
 		}
+
+		return outputPathString;
 	}
 
 	private static void writeToXml(

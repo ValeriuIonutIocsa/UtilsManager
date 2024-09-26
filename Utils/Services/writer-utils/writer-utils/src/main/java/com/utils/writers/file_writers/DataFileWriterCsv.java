@@ -21,15 +21,15 @@ public final class DataFileWriterCsv extends AbstractDataFileWriter {
 	}
 
 	@Override
-	void writeData(
+	String writeData(
 			final String displayName,
 			final String outputPathString,
 			final List<DataTable> dataTableList) {
 
+		final String generatedOutputPathString;
+		final String outputPathWoExt = PathUtils.computePathWoExt(outputPathString);
 		final int dataTableCount = dataTableList.size();
 		if (dataTableCount > 1) {
-
-			final String outputPathWoExt = PathUtils.computePathWoExt(outputPathString);
 			FactoryFolderCreator.getInstance().createDirectories(outputPathWoExt, false, true);
 		}
 
@@ -39,15 +39,16 @@ public final class DataFileWriterCsv extends AbstractDataFileWriter {
 
 		if (dataTableCount > 1) {
 
-			final String outputPathWoExt =
-					PathUtils.computePathWoExt(outputPathString);
 			Logger.printStatus("Successfully generated the CSV data files inside folder:");
 			Logger.printLine(outputPathWoExt);
+			generatedOutputPathString = outputPathWoExt;
 
 		} else {
 			Logger.printStatus("Successfully generated the \"" + displayName + "\" data file:");
 			Logger.printLine(outputPathString);
+			generatedOutputPathString = outputPathString;
 		}
+		return generatedOutputPathString;
 	}
 
 	private static void writeToCsv(

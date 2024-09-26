@@ -257,7 +257,7 @@ public final class IoUtils {
 		boolean success = false;
 		try {
 			final Process process = new ProcessBuilder()
-					.command("cmd", "/c", "start", filePathString)
+					.command("cmd", "/c", "start", "open file with default app", filePathString)
 					.redirectErrorStream(true)
 					.start();
 
