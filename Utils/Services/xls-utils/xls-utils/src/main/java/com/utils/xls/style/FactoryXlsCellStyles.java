@@ -91,9 +91,11 @@ public final class FactoryXlsCellStyles {
 			final Workbook workbook) {
 
 		final CellStyle cellStyleDecimalNumber = workbook.createCellStyle();
+
 		cellStyleDecimalNumber.setAlignment(HorizontalAlignment.LEFT);
 		cellStyleDecimalNumber.setDataFormat(workbook.createDataFormat()
 				.getFormat("[<0.001]0.000#;[<0.01]0.00#;0.00"));
+
 		return cellStyleDecimalNumber;
 	}
 

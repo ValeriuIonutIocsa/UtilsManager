@@ -8,6 +8,8 @@ import com.utils.xml.stax.XmlStAXWriter;
 public abstract class AbstractDataItem<
 		ObjectT> implements DataItem<ObjectT> {
 
+	private short indent;
+
 	@Override
 	public String createCsvString() {
 
@@ -45,5 +47,16 @@ public abstract class AbstractDataItem<
 	@Override
 	public ObjectT createXlsxValue() {
 		return getValue();
+	}
+
+	@Override
+	public void setIndent(
+			final short indent) {
+		this.indent = indent;
+	}
+
+	@Override
+	public short getIndent() {
+		return indent;
 	}
 }

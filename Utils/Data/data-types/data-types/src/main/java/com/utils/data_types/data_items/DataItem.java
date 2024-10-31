@@ -30,4 +30,9 @@ public interface DataItem<
 			String columnTitleName);
 
 	ObjectT createXlsxValue();
+
+	void setIndent(
+			short indent);
+
+	short getIndent();
 }

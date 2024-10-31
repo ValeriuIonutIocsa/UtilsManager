@@ -28,7 +28,6 @@ import com.utils.xls.cell.XlsCellNumber;
 import com.utils.xls.cell.XlsCellString;
 import com.utils.xls.row.XlsRow;
 import com.utils.xls.sheet.XlsSheet;
-import com.utils.xls.style.FactoryXlsCellStyles;
 import com.utils.xls.workbook.XlsxWorkbook;
 
 public final class DataFileWriterXlsx extends AbstractDataFileWriter {
@@ -46,16 +45,11 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
 		try (Workbook workbook = XlsxWorkbook.createNew()) {
 
-			final CellStyle cellStyleTitle =
-					FactoryXlsCellStyles.createCellStyleTitle(workbook);
-			final CellStyle cellStyleRegular =
-					FactoryXlsCellStyles.createCellStyleRegular(workbook);
-			final CellStyle cellStyleDecimalNumber =
-					FactoryXlsCellStyles.createCellStyleDecimalNumber(workbook);
+			final WriterCellStyles writerCellStyles = new WriterCellStyles();
+			writerCellStyles.initialize(workbook);
 
 			for (final DataTable dataTable : dataTableList) {
-				writeToXlsx(dataTable, workbook,
-						cellStyleTitle, cellStyleRegular, cellStyleDecimalNumber);
+				writeToXlsx(dataTable, workbook, writerCellStyles);
 			}
 
 			XlsUtils.saveWorkbook(workbook, outputPathString);
@@ -69,9 +63,7 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 	private static void writeToXlsx(
 			final DataTable dataTable,
 			final Workbook workbook,
-			final CellStyle cellStyleTitle,
-			final CellStyle cellStyleRegular,
-			final CellStyle cellStyleDecimalNumber) {
+			final WriterCellStyles writerCellStyles) {
 
 		final String displayName = dataTable.getDisplayName();
 
@@ -82,13 +74,14 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
 		final XlsSheet xlsSheet = new XlsSheet(displayName, totalColumnWidth, columnWidthRatioArray);
 
+		final CellStyle cellStyleTitle = writerCellStyles.getCellStyleTitle();
 		final XlsRow xlsRowTitle = createTitleRow(columnsData, cellStyleTitle);
 		final List<XlsRow> xlsRowList = xlsSheet.getXlsRowList();
 		xlsRowList.add(xlsRowTitle);
 
 		final List<? extends TableRowData> rowDataList = dataTable.getRowDataList();
 		for (final TableRowData tableRowData : rowDataList) {
-			fillRowList(tableRowData, cellStyleRegular, cellStyleDecimalNumber, xlsRowList);
+			fillRowList(tableRowData, workbook, writerCellStyles, xlsRowList);
 		}
 
 		xlsSheet.write(workbook);
@@ -132,8 +125,8 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
 	private static void fillRowList(
 			final TableRowData tableRowData,
-			final CellStyle cellStyleRegular,
-			final CellStyle cellStyleDecimalNumber,
+			final Workbook workbook,
+			final WriterCellStyles writerCellStyles,
 			final List<XlsRow> xlsRowList) {
 
 		final List<List<XlsCell>> xlsCellsByColumnList = new ArrayList<>();
@@ -145,6 +138,14 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 		for (int i = 0; i < dataItemArray.length; i++) {
 
 			final DataItem<?> dataItem = dataItemArray[i];
+
+			final short indent;
+			if (dataItem != null) {
+				indent = dataItem.getIndent();
+			} else {
+				indent = 0;
+			}
+
 			final List<XlsCell> xlsCellList = xlsCellsByColumnList.get(i);
 
 			switch (dataItem) {
@@ -152,7 +153,10 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 				case final DataItemBoolean dataItemBoolean -> {
 
 					final boolean booleanValue = dataItemBoolean.createXlsxValue();
-					final XlsCell xlsCell = new XlsCellBoolean(cellStyleRegular, booleanValue);
+
+					final CellStyle cellStyle = writerCellStyles.computeCellStyleRegular(workbook, indent);
+
+					final XlsCell xlsCell = new XlsCellBoolean(cellStyle, booleanValue);
 					xlsCellList.add(xlsCell);
 				}
 				case final DataItemUByteHex dataItemUByteHex -> {
@@ -161,7 +165,10 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 					if (byteValue >= 0) {
 
 						final String hexStringValue = StrUtils.createHexString(byteValue);
-						final XlsCell xlsCell = new XlsCellString(cellStyleRegular, hexStringValue);
+
+						final CellStyle cellStyle = writerCellStyles.computeCellStyleRegular(workbook, indent);
+
+						final XlsCell xlsCell = new XlsCellString(cellStyle, hexStringValue);
 						xlsCellList.add(xlsCell);
 					}
 				}
@@ -170,7 +177,9 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 					final byte byteValue = dataItemUByte.createXlsxValue();
 					if (byteValue >= 0) {
 
-						final XlsCell xlsCell = new XlsCellNumber(cellStyleRegular, byteValue);
+						final CellStyle cellStyle = writerCellStyles.computeCellStyleRegular(workbook, indent);
+
+						final XlsCell xlsCell = new XlsCellNumber(cellStyle, byteValue);
 						xlsCellList.add(xlsCell);
 					}
 				}
@@ -180,7 +189,10 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 					if (integerValue >= 0) {
 
 						final String hexStringValue = StrUtils.createHexString(integerValue);
-						final XlsCell xlsCell = new XlsCellString(cellStyleRegular, hexStringValue);
+
+						final CellStyle cellStyle = writerCellStyles.computeCellStyleRegular(workbook, indent);
+
+						final XlsCell xlsCell = new XlsCellString(cellStyle, hexStringValue);
 						xlsCellList.add(xlsCell);
 					}
 				}
@@ -189,7 +201,9 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 					final int integerValue = dataItemUInt.createXlsxValue();
 					if (integerValue >= 0) {
 
-						final XlsCell xlsCell = new XlsCellNumber(cellStyleRegular, integerValue);
+						final CellStyle cellStyle = writerCellStyles.computeCellStyleRegular(workbook, indent);
+
+						final XlsCell xlsCell = new XlsCellNumber(cellStyle, integerValue);
 						xlsCellList.add(xlsCell);
 					}
 				}
@@ -199,7 +213,10 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 					if (longValue >= 0) {
 
 						final String hexStringValue = StrUtils.createHexString(longValue);
-						final XlsCell xlsCell = new XlsCellString(cellStyleRegular, hexStringValue);
+
+						final CellStyle cellStyle = writerCellStyles.computeCellStyleRegular(workbook, indent);
+
+						final XlsCell xlsCell = new XlsCellString(cellStyle, hexStringValue);
 						xlsCellList.add(xlsCell);
 					}
 				}
@@ -208,7 +225,9 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 					final long longValue = dataItemULong.createXlsxValue();
 					if (longValue >= 0) {
 
-						final XlsCell xlsCell = new XlsCellNumber(cellStyleRegular, longValue);
+						final CellStyle cellStyle = writerCellStyles.computeCellStyleRegular(workbook, indent);
+
+						final XlsCell xlsCell = new XlsCellNumber(cellStyle, longValue);
 						xlsCellList.add(xlsCell);
 					}
 				}
@@ -217,7 +236,10 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 					final double doubleValue = dataItemDouble.createXlsxValue();
 					if (!Double.isNaN(doubleValue)) {
 
-						final XlsCell xlsCell = new XlsCellNumber(cellStyleDecimalNumber, doubleValue);
+						final CellStyle cellStyle =
+								writerCellStyles.computeCellStyleDecimalNumber(workbook, indent);
+
+						final XlsCell xlsCell = new XlsCellNumber(cellStyle, doubleValue);
 						xlsCellList.add(xlsCell);
 					}
 				}
@@ -232,7 +254,10 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
 							final String stringValuePart = stringValue.substring(j,
 									Math.min(j + TableRowData.XLSX_CELL_CHARACTER_LIMIT, stringValue.length()));
-							final XlsCell xlsCell = new XlsCellString(cellStyleRegular, stringValuePart);
+
+							final CellStyle cellStyle = writerCellStyles.computeCellStyleRegular(workbook, indent);
+
+							final XlsCell xlsCell = new XlsCellString(cellStyle, stringValuePart);
 							xlsCellList.add(xlsCell);
 						}
 					}
@@ -254,6 +279,7 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 				if (i < xlsCellList.size()) {
 					xlsCell = xlsCellList.get(i);
 				} else {
+					final CellStyle cellStyleRegular = writerCellStyles.getCellStyleRegular();
 					xlsCell = new XlsCellBlank(cellStyleRegular);
 				}
 				xlsRow.getXlsCellList().add(xlsCell);

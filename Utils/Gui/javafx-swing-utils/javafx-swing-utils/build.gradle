@@ -1,7 +1,9 @@
 ext {
-    subProjectNames = [':gui-utils']
+    subProjectNames = [
+            ':gui-utils'
+    ]
     compileClassPaths = [
-            'org.openjfx:javafx-swing:11.0.2:win'
+            'org.openjfx:javafx-swing:21.0.5:win'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = [
