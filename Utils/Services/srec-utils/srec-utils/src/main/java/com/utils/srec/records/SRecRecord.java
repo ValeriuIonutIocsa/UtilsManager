@@ -55,7 +55,7 @@ public class SRecRecord {
 		checksum = ~checksum & 0xff;
 		printStream.print(StrUtils.unsignedIntToPaddedHexString(checksum, 2).toUpperCase(Locale.US));
 
-		printStream.print(System.lineSeparator());
+		printStream.println();
 	}
 
 	@Override

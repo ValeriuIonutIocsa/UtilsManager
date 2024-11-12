@@ -21,7 +21,7 @@ public final class SRecUtils {
 	private SRecUtils() {
 	}
 
-	public static String writePatchDataCsv(
+	public static void writePatchDataCsv(
 			final String csvName,
 			final List<SRecPatcherSymbol> sRecPatcherSymbolList,
 			final String patchDataCsvPathString) {
@@ -44,7 +44,6 @@ public final class SRecUtils {
 			}
 
 		}.writeCsv();
-		return patchDataCsvPathString;
 	}
 
 	public static void comparePatchedWithOriginal(
