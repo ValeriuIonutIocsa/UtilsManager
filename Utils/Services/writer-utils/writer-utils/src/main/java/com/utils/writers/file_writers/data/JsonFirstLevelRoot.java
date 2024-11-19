@@ -1,9 +1,8 @@
 package com.utils.writers.file_writers.data;
 
-import java.io.PrintStream;
 import java.util.List;
 
-import com.utils.json.JsonUtils;
+import com.utils.json.JsonWriter;
 import com.utils.string.StrUtils;
 
 public class JsonFirstLevelRoot {
@@ -18,11 +17,11 @@ public class JsonFirstLevelRoot {
 
 	public void writeToJson(
 			final int indentCount,
-			final PrintStream printStream) {
+			final JsonWriter jsonWriter) {
 
 		final JsonSecondLevelRoot jsonSecondLevelRoot = new JsonSecondLevelRoot(dataTableList);
-		JsonUtils.writeObjectAttribute("ExportedData", jsonSecondLevelRoot, false,
-				indentCount, printStream, JsonSecondLevelRoot::writeToJson);
+		jsonWriter.writeObjectAttribute("ExportedData", jsonSecondLevelRoot, false,
+				indentCount, JsonSecondLevelRoot::writeToJson);
 	}
 
 	@Override

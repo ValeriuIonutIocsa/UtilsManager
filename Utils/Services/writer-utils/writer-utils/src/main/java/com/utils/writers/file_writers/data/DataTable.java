@@ -1,6 +1,5 @@
 package com.utils.writers.file_writers.data;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,7 +7,7 @@ import java.util.List;
 import com.utils.data_types.DataInfo;
 import com.utils.data_types.table.TableColumnData;
 import com.utils.data_types.table.TableRowData;
-import com.utils.json.JsonUtils;
+import com.utils.json.JsonWriter;
 import com.utils.string.StrUtils;
 
 public class DataTable {
@@ -55,16 +54,16 @@ public class DataTable {
 
 	public void writeToJson(
 			final int indentCount,
-			final PrintStream printStream) {
+			final JsonWriter jsonWriter) {
 
-		JsonUtils.writeStringAttribute("Name", displayName, true, indentCount, printStream);
+		jsonWriter.writeStringAttribute("Name", displayName, true, indentCount);
 
-		JsonUtils.writeListAttribute(xmlDataElementTagName, rowDataList, false,
-				indentCount, printStream, (
+		jsonWriter.writeListAttribute(xmlDataElementTagName, rowDataList, false,
+				indentCount, (
 						tableRowDataArg,
 						indentCountArg,
-						printStreamArg) -> tableRowDataArg.writeToJson(
-								columnsData, indentCountArg, printStreamArg));
+						argJsonWriter) -> tableRowDataArg.writeToJson(
+								columnsData, indentCountArg, argJsonWriter));
 	}
 
 	@Override
