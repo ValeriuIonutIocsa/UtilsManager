@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.utils.io.StreamUtils;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
-import com.utils.json.FactoryJsonWriter;
+import com.utils.json.FactoryJsonWriterRegular;
 import com.utils.json.JsonWriter;
 import com.utils.log.Logger;
 import com.utils.writers.file_writers.data.DataTable;
@@ -57,7 +57,7 @@ public final class DataFileWriterJson extends AbstractDataFileWriter {
 
 		try (PrintStream printStream = new PrintStream(outputStream)) {
 
-			final JsonWriter jsonWriter = FactoryJsonWriter.newInstance(printStream);
+			final JsonWriter jsonWriter = FactoryJsonWriterRegular.INSTANCE.newInstance(printStream);
 			final JsonFirstLevelRoot jsonFirstLevelRoot = new JsonFirstLevelRoot(dataTableList);
 			jsonWriter.writeObject(jsonFirstLevelRoot, 0, JsonFirstLevelRoot::writeToJson);
 		}

@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.function.TriConsumer;
 
+import com.utils.annotations.ApiMethod;
 import com.utils.string.StrUtils;
 
 public class JsonWriter {
@@ -29,6 +30,7 @@ public class JsonWriter {
 		this.printStream = printStream;
 	}
 
+	@ApiMethod
 	public <
 			ObjectT> void writeObject(
 					final ObjectT object,
@@ -47,6 +49,7 @@ public class JsonWriter {
 		printStream.print('}');
 	}
 
+	@ApiMethod
 	public <
 			ObjectT> void writeListAttribute(
 					final String name,
@@ -97,6 +100,7 @@ public class JsonWriter {
 		printStream.print(lineIndent);
 	}
 
+	@ApiMethod
 	public <
 			ObjectT> void writeObjectAttribute(
 					final String name,
@@ -136,6 +140,7 @@ public class JsonWriter {
 		printStream.print(lineIndent);
 	}
 
+	@ApiMethod
 	public void writeStringAttribute(
 			final String name,
 			final String value,
@@ -167,6 +172,7 @@ public class JsonWriter {
 		printStream.print(lineIndent);
 	}
 
+	@ApiMethod
 	public void writeNumberAttribute(
 			final String name,
 			final String valueString,
