@@ -9,6 +9,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.utils.io.file_deleters.FileDeleterWin;
 import com.utils.log.Logger;
 import com.utils.string.exc.SilentException;
 
@@ -83,7 +84,7 @@ public class FolderDeleterWin extends FolderDeleterImpl {
 					boolean success = false;
 					try {
 						final String filePathString = filePath.toString();
-						success = deleteFileWin(filePathString);
+						success = FileDeleterWin.deleteFileWin(filePathString);
 
 					} catch (final Exception ignored) {
 					}
@@ -137,7 +138,7 @@ public class FolderDeleterWin extends FolderDeleterImpl {
 			Logger.printLine(StringUtils.join(rmDirCommandPartArray, ' '));
 
 			final Process rmDirProcess = new ProcessBuilder()
-					.command(delCommandPartArray)
+					.command(rmDirCommandPartArray)
 					.redirectOutput(ProcessBuilder.Redirect.DISCARD)
 					.redirectError(ProcessBuilder.Redirect.DISCARD)
 					.start();
@@ -148,32 +149,6 @@ public class FolderDeleterWin extends FolderDeleterImpl {
 			} else {
 				success = true;
 			}
-		}
-		return success;
-	}
-
-	private static boolean deleteFileWin(
-			final String filePathString) throws Exception {
-
-		boolean success = false;
-		final String[] delCommandPartArray =
-				{ "cmd", "/c", "del", "/f", "/q", filePathString };
-
-		Logger.printProgress("executing command:");
-		Logger.printLine(StringUtils.join(delCommandPartArray, ' '));
-
-		final Process delProcess = new ProcessBuilder()
-				.command(delCommandPartArray)
-				.redirectOutput(ProcessBuilder.Redirect.DISCARD)
-				.redirectError(ProcessBuilder.Redirect.DISCARD)
-				.start();
-
-		final int delExitCode = delProcess.waitFor();
-		if (delExitCode != 0) {
-			Logger.printError("failed to run del command");
-
-		} else {
-			success = true;
 		}
 		return success;
 	}
