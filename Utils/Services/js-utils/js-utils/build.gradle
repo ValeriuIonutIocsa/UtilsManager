@@ -3,7 +3,7 @@ ext {
             ':logger'
     ]
     compileClassPaths = [
-            'org.openjdk.nashorn:nashorn-core:15.4'
+            'org.openjdk.nashorn:nashorn-core:15.6'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []
