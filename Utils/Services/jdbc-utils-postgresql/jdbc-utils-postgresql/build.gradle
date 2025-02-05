@@ -3,7 +3,7 @@ ext {
             ':jdbc-utils'
     ]
     compileClassPaths = [
-            'org.postgresql:postgresql:42.7.4'
+            'org.postgresql:postgresql:42.7.5'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []
