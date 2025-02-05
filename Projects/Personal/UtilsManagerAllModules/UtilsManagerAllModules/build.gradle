@@ -9,11 +9,11 @@ buildscript {
 
 apply plugin: 'com.github.ben-manes.versions'
 
-final def isNonStable = { final String version ->
-    final def lowerCaseVersion = version.toLowerCase(Locale.US)
-    final def containsStableKeyword =
-            ['release', 'final', 'ga'].any { final it -> lowerCaseVersion.contains(it) }
-    final def regex = /^[0-9,.v-]+(-r)?$/
+def isNonStable = { String version ->
+    def lowerCaseVersion = version.toLowerCase(Locale.US)
+    def containsStableKeyword =
+            ['release', 'final', 'ga'].any { it -> lowerCaseVersion.contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
     return !containsStableKeyword && !(version ==~ regex)
 }
 
