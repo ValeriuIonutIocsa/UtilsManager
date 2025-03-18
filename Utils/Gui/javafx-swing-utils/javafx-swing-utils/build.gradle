@@ -3,7 +3,7 @@ ext {
             ':gui-utils'
     ]
     compileClassPaths = [
-            'org.openjfx:javafx-swing:21.0.5:win'
+            'org.openjfx:javafx-swing:21.0.6:win'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = [
