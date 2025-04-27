@@ -76,14 +76,12 @@ public class CustomWebView extends AbstractCustomControl<WebView> {
 							final EventTarget target = evt.getCurrentTarget();
 							final HTMLAnchorElement anchorElement = (HTMLAnchorElement) target;
 							final String href = anchorElement.getHref();
-							if (!"#".equals(href)) {
+							if ("#".equals(href)) {
+								webView.getEngine().executeScript("window.scrollTo(0,0)");
 
-								if ("#top".equals(href)) {
-									webView.getEngine().executeScript("window.scrollTo(0,0)");
-								} else {
-									handleHref(href);
-									evt.preventDefault();
-								}
+							} else {
+								handleHref(href);
+								evt.preventDefault();
 							}
 						}, false);
 					}
@@ -94,6 +92,7 @@ public class CustomWebView extends AbstractCustomControl<WebView> {
 
 	public void handleHref(
 			final String href) {
+
 		DesktopUtils.tryBrowse(href);
 	}
 

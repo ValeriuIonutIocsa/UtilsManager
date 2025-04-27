@@ -3,7 +3,7 @@ ext {
             ':gui-utils'
     ]
     compileClassPaths = [
-            'org.controlsfx:controlsfx:11.2.1'
+            'org.controlsfx:controlsfx:11.2.2'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []

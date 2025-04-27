@@ -3,7 +3,7 @@ ext {
             ':io-utils'
     ]
     compileClassPaths = [
-            'org.influxdb:influxdb-java:2.24'
+            'org.influxdb:influxdb-java:2.25'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []
