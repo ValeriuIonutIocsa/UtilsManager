@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -102,24 +103,23 @@ class CustomLoggingInterceptor implements Interceptor {
 		final Headers responseHeaders = response.headers();
 		final String responseHeadersString = responseHeaders.toString();
 
-		final String tmpResponseBodyString;
+		final byte[] tmpResponseBodyByteArray;
 		final MediaType responseBodyContentType;
 		final ResponseBody responseBody = response.body();
 		if (responseBody != null) {
-			tmpResponseBodyString = responseBody.string();
+			tmpResponseBodyByteArray = responseBody.bytes();
 			responseBodyContentType = responseBody.contentType();
 		} else {
-			tmpResponseBodyString = "";
+			tmpResponseBodyByteArray = new byte[] {};
 			responseBodyContentType = MediaType.parse("text/plain;charset=utf-8");
 		}
 
-		final byte[] responseBodyStringBytes =
-				tmpResponseBodyString.getBytes(Charset.defaultCharset());
 		final ResponseBody newResponseBody =
-				ResponseBody.create(responseBodyStringBytes, responseBodyContentType);
+				ResponseBody.create(tmpResponseBodyByteArray, responseBodyContentType);
 		response = response.newBuilder().body(newResponseBody).build();
 
 		final String responseBodyString;
+		final String tmpResponseBodyString = new String(tmpResponseBodyByteArray, StandardCharsets.UTF_8);
 		if (formatJson) {
 			responseBodyString = formatJsonString(tmpResponseBodyString);
 		} else {

@@ -38,4 +38,23 @@ public final class HttpUtils {
 		}
 		return responseObject;
 	}
+
+	@ApiMethod
+	public static <
+			ObjectT> Response<ObjectT> executeCallWithResponse(
+					final Call<ObjectT> call,
+					final boolean verbose) {
+
+		Response<ObjectT> response = null;
+		try {
+			response = call.execute();
+
+		} catch (final Exception exc) {
+			if (verbose) {
+				Logger.printError("failed to execute HTTP call");
+			}
+			Logger.printException(exc);
+		}
+		return response;
+	}
 }

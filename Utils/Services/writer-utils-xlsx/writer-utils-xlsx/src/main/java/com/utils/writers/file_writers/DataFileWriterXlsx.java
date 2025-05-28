@@ -34,6 +34,8 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
 	public static final DataFileWriterXlsx INSTANCE = new DataFileWriterXlsx();
 
+	private static final int DATA_ROW_INDEX_LIMIT = 1_048_576;
+
 	private DataFileWriterXlsx() {
 	}
 
@@ -80,8 +82,18 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 		xlsRowList.add(xlsRowTitle);
 
 		final List<? extends TableRowData> rowDataList = dataTable.getRowDataList();
-		for (final TableRowData tableRowData : rowDataList) {
-			fillRowList(tableRowData, workbook, writerCellStyles, xlsRowList);
+		int rowIndex = 2;
+		for (final TableRowData rowData : rowDataList) {
+
+			if (rowIndex == DATA_ROW_INDEX_LIMIT) {
+
+				Logger.printWarning("the number of rows exceeds XLSX limit of " +
+						StrUtils.positiveIntToString(DATA_ROW_INDEX_LIMIT, true) +
+						"; the remaining rows will not be written to the file.");
+				break;
+			}
+			fillRowList(rowData, workbook, writerCellStyles, xlsRowList);
+			rowIndex++;
 		}
 
 		xlsSheet.write(workbook);
