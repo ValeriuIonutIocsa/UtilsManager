@@ -41,7 +41,8 @@ ext {
             ':math-utils',
             ':srec-utils',
             ':writer-utils-xlsx',
-            ':xml-obfuscator'
+            ':xml-obfuscator',
+            ':yaml-utils'
     ]
     compileClassPaths = []
     compileJarFilePaths = []

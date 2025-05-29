@@ -18,7 +18,8 @@ final String[] subProjectsRelativePaths = [
         '/Utils/Services/math-utils/math-utils',
         '/Utils/Services/srec-utils/srec-utils',
         '/Utils/Services/writer-utils-xlsx/writer-utils-xlsx',
-        '/Utils/Services/xml-obfuscator/xml-obfuscator'
+        '/Utils/Services/xml-obfuscator/xml-obfuscator',
+        '/Utils/Services/yaml-utils/yaml-utils'
 ]
 
 apply from: rootDirPath + '/common_settings.gradle'

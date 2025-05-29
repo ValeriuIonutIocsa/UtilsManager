@@ -1,0 +1,13 @@
+ext {
+    subProjectNames = [
+            ':io-utils'
+    ]
+    compileClassPaths = [
+            'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0'
+    ]
+    compileJarFilePaths = []
+    testCompileClassPaths = []
+    testCompileJarFilePaths = []
+}
+
+apply from: gradle.ext.rootDirPath + '/common_build.gradle'
