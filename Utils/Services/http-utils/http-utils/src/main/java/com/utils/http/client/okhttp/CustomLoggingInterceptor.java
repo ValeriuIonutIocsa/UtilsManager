@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -62,15 +63,83 @@ class CustomLoggingInterceptor implements Interceptor {
 
 		final Request request = chain.request();
 
-		final long start = System.nanoTime();
-
 		final HttpUrl requestUrl = request.url();
-		final Headers requestHeaders = request.headers();
-		final String requestHeadersString = requestHeaders.toString();
-		final String requestBodyString = createRequestBodyString(request);
-
-		printStream.print("sending HTTP request " + requestUrl);
+		final String requestUrlString = requestUrl.toString();
+		printStream.print("sending HTTP request " + requestUrlString);
 		printStream.println();
+
+		writeRequestParameters(requestUrl, printStream);
+
+		final Headers requestHeaders = request.headers();
+		writeRequestHeaders(requestHeaders, printStream);
+
+		writeRequestBody(request, printStream);
+
+		Response response = chain.proceed(request);
+
+		final Request responseRequest = response.request();
+		final HttpUrl responseRequestUrl = responseRequest.url();
+		final String responseRequestUrlString = responseRequestUrl.toString();
+
+		final long durationMs = response.receivedResponseAtMillis() - response.sentRequestAtMillis();
+		final String durationString = StrUtils.timeMsToString(durationMs);
+
+		printStream.print("received HTTP response for " + responseRequestUrlString + " in " + durationString);
+		printStream.println();
+
+		final Headers responseHeaders = response.headers();
+		writeResponseHeaders(responseHeaders, printStream);
+
+		final byte[] responseBodyByteArray;
+		final MediaType responseBodyContentType;
+		final ResponseBody responseBody = response.body();
+		if (responseBody != null) {
+			responseBodyByteArray = responseBody.bytes();
+			responseBodyContentType = responseBody.contentType();
+		} else {
+			responseBodyByteArray = new byte[] {};
+			responseBodyContentType = MediaType.parse("text/plain;charset=utf-8");
+		}
+
+		writeResponseBody(responseBodyByteArray, printStream);
+
+		final ResponseBody newResponseBody =
+				ResponseBody.create(responseBodyByteArray, responseBodyContentType);
+		response = response.newBuilder().body(newResponseBody).build();
+
+		return response;
+	}
+
+	private static void writeRequestParameters(
+			final HttpUrl requestUrl,
+			final PrintStream printStream) {
+
+		final Set<String> queryParameterNameSet = requestUrl.queryParameterNames();
+		if (!queryParameterNameSet.isEmpty()) {
+
+			printStream.print("HTTP REQUEST PARAMETERS BEGIN");
+			printStream.println();
+			for (final String queryParameterName : queryParameterNameSet) {
+
+				final String queryParameterValue = requestUrl.queryParameter(queryParameterName);
+				printStream.print(queryParameterName + " = " + queryParameterValue);
+				printStream.println();
+			}
+			printStream.print("HTTP REQUEST PARAMETERS END");
+
+		} else {
+			printStream.print("HTTP REQUEST PARAMETERS EMPTY");
+		}
+		printStream.println();
+	}
+
+	private static void writeRequestHeaders(
+			final Headers requestHeaders,
+			final PrintStream printStream) {
+
+		String requestHeadersString = requestHeaders.toString();
+		requestHeadersString = requestHeadersString.trim();
+
 		if (StringUtils.isNotBlank(requestHeadersString)) {
 
 			printStream.print("HTTP REQUEST HEADERS BEGIN");
@@ -83,6 +152,13 @@ class CustomLoggingInterceptor implements Interceptor {
 			printStream.print("HTTP REQUEST HEADERS EMPTY");
 		}
 		printStream.println();
+	}
+
+	private void writeRequestBody(
+			final Request request,
+			final PrintStream printStream) {
+
+		final String requestBodyString = createRequestBodyString(request);
 		if (StringUtils.isNotBlank(requestBodyString)) {
 
 			printStream.print("HTTP REQUEST BODY BEGIN");
@@ -95,68 +171,6 @@ class CustomLoggingInterceptor implements Interceptor {
 			printStream.print("HTTP REQUEST BODY EMPTY");
 		}
 		printStream.println();
-
-		Response response = chain.proceed(request);
-
-		final Request responseRequest = response.request();
-		final HttpUrl responseRequestUrl = responseRequest.url();
-		final Headers responseHeaders = response.headers();
-		final String responseHeadersString = responseHeaders.toString();
-
-		final byte[] tmpResponseBodyByteArray;
-		final MediaType responseBodyContentType;
-		final ResponseBody responseBody = response.body();
-		if (responseBody != null) {
-			tmpResponseBodyByteArray = responseBody.bytes();
-			responseBodyContentType = responseBody.contentType();
-		} else {
-			tmpResponseBodyByteArray = new byte[] {};
-			responseBodyContentType = MediaType.parse("text/plain;charset=utf-8");
-		}
-
-		final ResponseBody newResponseBody =
-				ResponseBody.create(tmpResponseBodyByteArray, responseBodyContentType);
-		response = response.newBuilder().body(newResponseBody).build();
-
-		final String responseBodyString;
-		final String tmpResponseBodyString = new String(tmpResponseBodyByteArray, StandardCharsets.UTF_8);
-		if (formatJson) {
-			responseBodyString = formatJsonString(tmpResponseBodyString);
-		} else {
-			responseBodyString = tmpResponseBodyString;
-		}
-
-		final long end = System.nanoTime();
-		final String durationString = StrUtils.nanoTimeToString(end - start);
-
-		printStream.print("received HTTP response for " +
-				responseRequestUrl + " in " + durationString);
-		printStream.println();
-		if (StringUtils.isNotBlank(requestHeadersString)) {
-
-			printStream.print("HTTP RESPONSE HEADERS BEGIN");
-			printStream.println();
-			printStream.print(responseHeadersString);
-			printStream.println();
-			printStream.print("HTTP RESPONSE HEADERS END");
-
-		} else {
-			printStream.print("HTTP RESPONSE HEADERS EMPTY");
-		}
-		printStream.println();
-		if (StringUtils.isNotBlank(responseBodyString)) {
-
-			printStream.print("HTTP RESPONSE BODY BEGIN");
-			printStream.println();
-			printStream.print(responseBodyString);
-			printStream.println();
-			printStream.print("HTTP RESPONSE BODY END");
-
-		} else {
-			printStream.print("HTTP RESPONSE BODY EMPTY");
-		}
-
-		return response;
 	}
 
 	private String createRequestBodyString(
@@ -206,5 +220,48 @@ class CustomLoggingInterceptor implements Interceptor {
 			Logger.printException(exc);
 		}
 		return formattedJsonString;
+	}
+
+	private static void writeResponseHeaders(
+			final Headers responseHeaders,
+			final PrintStream printStream) {
+
+		String responseHeadersString = responseHeaders.toString();
+		responseHeadersString = responseHeadersString.trim();
+
+		if (StringUtils.isNotBlank(responseHeadersString)) {
+
+			printStream.print("HTTP RESPONSE HEADERS BEGIN");
+			printStream.println();
+			printStream.print(responseHeadersString);
+			printStream.println();
+			printStream.print("HTTP RESPONSE HEADERS END");
+
+		} else {
+			printStream.print("HTTP RESPONSE HEADERS EMPTY");
+		}
+		printStream.println();
+	}
+
+	private void writeResponseBody(
+			final byte[] responseBodyByteArray,
+			final PrintStream printStream) {
+
+		String responseBodyString = new String(responseBodyByteArray, StandardCharsets.UTF_8);
+		if (formatJson) {
+			responseBodyString = formatJsonString(responseBodyString);
+		}
+
+		if (StringUtils.isNotBlank(responseBodyString)) {
+
+			printStream.print("HTTP RESPONSE BODY BEGIN");
+			printStream.println();
+			printStream.print(responseBodyString);
+			printStream.println();
+			printStream.print("HTTP RESPONSE BODY END");
+
+		} else {
+			printStream.print("HTTP RESPONSE BODY EMPTY");
+		}
 	}
 }
