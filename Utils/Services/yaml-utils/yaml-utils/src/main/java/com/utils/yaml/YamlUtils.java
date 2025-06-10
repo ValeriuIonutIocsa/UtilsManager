@@ -2,6 +2,7 @@ package com.utils.yaml;
 
 import java.io.InputStream;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.utils.annotations.ApiMethod;
@@ -32,6 +33,9 @@ public final class YamlUtils {
 
 			} else {
 				final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+
+				mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
 				try (InputStream inputStream = StreamUtils.openBufferedInputStream(yamlFilePathString)) {
 
 					object = mapper.readValue(inputStream, objectClass);

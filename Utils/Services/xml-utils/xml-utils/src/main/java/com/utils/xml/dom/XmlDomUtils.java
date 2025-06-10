@@ -457,7 +457,7 @@ public final class XmlDomUtils {
 	}
 
 	@ApiMethod
-	public static void createChildWithTextContent(
+	public static Element createChildWithTextContent(
 			final Element parentElement,
 			final String childTagName,
 			final String textContent) {
@@ -467,6 +467,8 @@ public final class XmlDomUtils {
 		childElement.setTextContent(textContent);
 
 		parentElement.appendChild(childElement);
+
+		return childElement;
 	}
 
 	@ApiMethod
