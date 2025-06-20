@@ -163,7 +163,7 @@ public final class IoUtils {
 
 		byte[] md5HashCode = null;
 		try {
-			final byte[] fileBytes = ReaderUtils.fileToByteArray(filePathString);
+			final byte[] fileBytes = ReaderUtils.tryFileToByteArray(filePathString);
 			final MessageDigest messageDigestMd5 = MessageDigest.getInstance("MD5");
 			md5HashCode = messageDigestMd5.digest(fileBytes);
 

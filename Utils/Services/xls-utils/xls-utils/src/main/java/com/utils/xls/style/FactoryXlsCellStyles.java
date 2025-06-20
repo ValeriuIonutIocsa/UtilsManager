@@ -99,6 +99,17 @@ public final class FactoryXlsCellStyles {
 		return cellStyleDecimalNumber;
 	}
 
+	public static CellStyle createCellStylePercentage(
+			final Workbook workbook) {
+
+		final CellStyle cellStylePercentage = workbook.createCellStyle();
+
+		cellStylePercentage.setAlignment(HorizontalAlignment.LEFT);
+		cellStylePercentage.setDataFormat(workbook.createDataFormat().getFormat("0.00%"));
+
+		return cellStylePercentage;
+	}
+
 	public static CellStyle createHyperlinkCellStyle(
 			final Workbook workbook) {
 

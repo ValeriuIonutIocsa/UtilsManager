@@ -28,7 +28,6 @@ import com.utils.xls.cell.XlsCellNumber;
 import com.utils.xls.cell.XlsCellString;
 import com.utils.xls.row.XlsRow;
 import com.utils.xls.sheet.XlsSheet;
-import com.utils.xls.workbook.XlsxWorkbook;
 
 public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
@@ -45,7 +44,7 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 			final String outputPathString,
 			final List<DataTable> dataTableList) throws Exception {
 
-		try (Workbook workbook = XlsxWorkbook.createNew()) {
+		try (Workbook workbook = XlsUtils.createNewWorkbook()) {
 
 			final WriterCellStyles writerCellStyles = new WriterCellStyles();
 			writerCellStyles.initialize(workbook);

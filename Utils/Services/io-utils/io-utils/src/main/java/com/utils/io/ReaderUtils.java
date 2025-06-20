@@ -36,7 +36,7 @@ public final class ReaderUtils {
 	}
 
 	@ApiMethod
-	public static byte[] fileToByteArray(
+	public static byte[] tryFileToByteArray(
 			final String filePathString) {
 
 		byte[] byteArray = null;
