@@ -1,0 +1,13 @@
+* {
+    font-family: "Helvetica";
+    font-size: 12px;
+    word-wrap: break-word;
+
+    base: rgb(50, 50, 50);
+    background: rgb(50, 50, 50);
+    color: rgb(220, 220, 220);
+    accent-color: rgb(0, 80, 100);
+}
+a:hover {
+    color: rgb(240, 240, 240);
+}

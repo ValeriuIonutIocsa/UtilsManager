@@ -18,6 +18,14 @@ import javafx.stage.Modality;
 public abstract class AbstractVBoxHelpHtml
 		extends AbstractCustomControl<VBox> implements VBoxHelpHtml {
 
+	private final String webViewStyleCss;
+
+	protected AbstractVBoxHelpHtml(
+			final String webViewStyleCss) {
+
+		this.webViewStyleCss = webViewStyleCss;
+	}
+
 	@Override
 	protected VBox createRoot() {
 
@@ -36,9 +44,9 @@ public abstract class AbstractVBoxHelpHtml
 
 	private CustomWebView createCustomWebView() {
 
-		final CustomWebView customWebView = new CustomWebView();
+		final CustomWebView customWebView = new CustomWebView(webViewStyleCss);
 		final String htmlContent = createHtmlContent();
-		customWebView.getRoot().getEngine().loadContent(htmlContent);
+		customWebView.load(htmlContent);
 		return customWebView;
 	}
 

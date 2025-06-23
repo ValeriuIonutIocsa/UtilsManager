@@ -11,7 +11,10 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLAnchorElement;
 
 import com.utils.gui.AbstractCustomControl;
+import com.utils.gui.GuiUtils;
 import com.utils.gui.clipboard.ClipboardUtils;
+import com.utils.log.Logger;
+import com.utils.string.StrUtils;
 import com.utils.swing.desktop.DesktopUtils;
 
 import javafx.concurrent.Worker;
@@ -21,6 +24,24 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 public class CustomWebView extends AbstractCustomControl<WebView> {
+
+	public static final int MAX_CSS_LENGTH = 500;
+
+	private static final String HTML_START = "<style>";
+	private static final String HTML_MID = "</style>";
+
+	private String styleCss;
+
+	private final StringBuilder stringBuilder;
+
+	public CustomWebView(
+			final String styleCss) {
+
+		this.styleCss = styleCss;
+
+		stringBuilder = new StringBuilder();
+		clear();
+	}
 
 	@Override
 	protected WebView createRoot() {
@@ -118,7 +139,71 @@ public class CustomWebView extends AbstractCustomControl<WebView> {
 		}
 	}
 
+	public void load(
+			final String html) {
+
+		stringBuilder.append(html);
+
+		final String content = stringBuilder.toString();
+		loadContent(content);
+	}
+
+	public void refreshStyle(
+			final String styleCss) {
+
+		this.styleCss = styleCss;
+
+		final String paddedStyleCss = createPaddedStyleCss();
+		stringBuilder.replace(HTML_START.length(), HTML_START.length() + MAX_CSS_LENGTH, paddedStyleCss);
+
+		final String content = stringBuilder.toString();
+		loadContent(content);
+	}
+
 	public void clear() {
-		getRoot().getEngine().loadContent("");
+
+		initStringBuilder();
+		load("");
+	}
+
+	protected void loadContent(
+			final String content) {
+
+		GuiUtils.run(() -> getRoot().getEngine().loadContent(content));
+	}
+
+	public void initStringBuilder() {
+
+		stringBuilder.setLength(0);
+
+		stringBuilder.append(HTML_START);
+		final String paddedStyleCss = createPaddedStyleCss();
+		stringBuilder.append(paddedStyleCss);
+		stringBuilder.append(HTML_MID);
+	}
+
+	protected String createPaddedStyleCss() {
+
+		final String paddedStyleCss;
+		if (styleCss.length() <= MAX_CSS_LENGTH) {
+			paddedStyleCss = styleCss;
+		} else {
+			Logger.printError("WebView CSS exceed maximum length of " + MAX_CSS_LENGTH + " characters");
+			paddedStyleCss = "";
+		}
+		return StrUtils.createRightPaddedString(paddedStyleCss, MAX_CSS_LENGTH);
+	}
+
+	protected void setStyleCss(
+			final String styleCss) {
+		this.styleCss = styleCss;
+	}
+
+	protected String getStyleCss() {
+		return styleCss;
+	}
+
+	protected StringBuilder getStringBuilder() {
+		return stringBuilder;
 	}
 }

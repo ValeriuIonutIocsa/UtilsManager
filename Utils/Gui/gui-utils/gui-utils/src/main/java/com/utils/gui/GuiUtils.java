@@ -69,6 +69,8 @@ public final class GuiUtils {
 			final Image image) {
 
 		if (image != null) {
+
+			stage.getIcons().clear();
 			stage.getIcons().add(image);
 		}
 	}

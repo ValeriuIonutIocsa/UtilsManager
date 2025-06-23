@@ -38,7 +38,7 @@ class MessageConsumerGuiLogger extends AbstractMessageConsumer {
 			} else {
 				text = message + "<br>";
 			}
-			customWebViewGuiLogger.log(text);
+			customWebViewGuiLogger.load(text);
 
 		} catch (final Throwable throwable) {
 			oldMessageConsumer.printMessageSpecific(

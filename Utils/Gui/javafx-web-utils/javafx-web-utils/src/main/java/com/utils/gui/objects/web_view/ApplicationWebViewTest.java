@@ -24,7 +24,9 @@ public class ApplicationWebViewTest extends Application {
 	public ApplicationWebViewTest() {
 
 		textArea = BasicControlsFactories.getInstance().createTextArea("");
-		customWebView = new CustomWebView();
+
+		final String webViewStyleCss = CustomWebViewUtils.createWebViewStyleCss();
+		customWebView = new CustomWebView(webViewStyleCss);
 	}
 
 	@Override
@@ -78,6 +80,6 @@ public class ApplicationWebViewTest extends Application {
 	private void load() {
 
 		final String text = textArea.getText();
-		customWebView.getRoot().getEngine().loadContent(text);
+		customWebView.load(text);
 	}
 }
