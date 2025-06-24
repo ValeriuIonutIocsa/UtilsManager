@@ -45,7 +45,7 @@ public class FileLocker {
 					bufferedWriter.write(text);
 				}
 
-			} catch (final Exception ignored) {
+			} catch (final Throwable ignored) {
 				success = false;
 			}
 			if (success) {

@@ -122,7 +122,7 @@ public abstract class AbstractXmlStAXReader implements XmlStAXReader {
 		try {
 			xmlEventReader.close();
 			inputStream.close();
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 	}
 }

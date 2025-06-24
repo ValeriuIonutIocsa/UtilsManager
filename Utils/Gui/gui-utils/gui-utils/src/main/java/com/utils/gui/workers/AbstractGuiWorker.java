@@ -36,8 +36,8 @@ public abstract class AbstractGuiWorker extends Thread implements GuiWorker {
 			Logger.printThrowable(throwable);
 			try {
 				error();
-			} catch (final Exception exc2) {
-				Logger.printThrowable(exc2);
+			} catch (final Throwable errorThrowable) {
+				Logger.printThrowable(errorThrowable);
 			}
 
 		} finally {
@@ -48,8 +48,8 @@ public abstract class AbstractGuiWorker extends Thread implements GuiWorker {
 					setControlsDisabled(false);
 					Logger.printFinishMessage(start);
 
-				} catch (final Exception exc2) {
-					Logger.printThrowable(exc2);
+				} catch (final Throwable errorThrowable) {
+					Logger.printThrowable(errorThrowable);
 				}
 			});
 		}

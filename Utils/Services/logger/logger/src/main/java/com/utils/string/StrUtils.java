@@ -209,7 +209,7 @@ public final class StrUtils {
 				startAddress = StrUtils.tryParsePositiveLongFromHexString(startAddressString);
 			}
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return startAddress;
 	}
@@ -228,7 +228,7 @@ public final class StrUtils {
 				endAddress = StrUtils.tryParsePositiveLongFromHexString(endAddressString);
 			}
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return endAddress;
 	}
@@ -998,7 +998,7 @@ public final class StrUtils {
 		Byte value = null;
 		try {
 			value = (byte) Integer.parseInt(byteString);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1010,7 +1010,7 @@ public final class StrUtils {
 		Byte value = null;
 		try {
 			value = (byte) Integer.parseInt(byteString, 16);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1022,7 +1022,7 @@ public final class StrUtils {
 		Byte value = null;
 		try {
 			value = (byte) Integer.parseInt(byteString, 2);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1034,7 +1034,7 @@ public final class StrUtils {
 		byte value = -1;
 		try {
 			value = Byte.parseByte(byteString);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1046,7 +1046,7 @@ public final class StrUtils {
 		Short value = null;
 		try {
 			value = Short.parseShort(shortString);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1058,7 +1058,7 @@ public final class StrUtils {
 		Integer value = null;
 		try {
 			value = Integer.parseInt(intString);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1070,7 +1070,7 @@ public final class StrUtils {
 		int value = -1;
 		try {
 			value = Integer.parseInt(intString);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1084,7 +1084,7 @@ public final class StrUtils {
 			String hexString = hexStringParam;
 			hexString = hexString.substring(2);
 			value = Integer.parseInt(hexString, 16);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1109,7 +1109,7 @@ public final class StrUtils {
 		Long value = null;
 		try {
 			value = Long.parseLong(longString);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1121,7 +1121,7 @@ public final class StrUtils {
 		long value = -1;
 		try {
 			value = Long.parseLong(longString);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1135,7 +1135,7 @@ public final class StrUtils {
 			String hexString = hexStringParam;
 			hexString = hexString.substring(2);
 			value = Long.parseLong(hexString, 16);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1147,7 +1147,7 @@ public final class StrUtils {
 		long value = -1;
 		try {
 			value = Long.parseLong(hexString, 16);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return value;
 	}
@@ -1173,7 +1173,7 @@ public final class StrUtils {
 		double result = defaultValue;
 		try {
 			result = Double.parseDouble(doubleString);
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return result;
 	}
@@ -1207,7 +1207,7 @@ public final class StrUtils {
 			}
 			byteArray = data;
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 			byteArray = new byte[] {};
 		}
 		return byteArray;
@@ -1229,7 +1229,7 @@ public final class StrUtils {
 			}
 			byteArray = data;
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 			byteArray = new byte[] {};
 		}
 		return byteArray;

@@ -54,7 +54,7 @@ public abstract class AbstractXlsxWorkbook implements XlsxWorkbook {
 				final String stringCellValue = cell.getStringCellValue().trim();
 				columnTitleByIndexMap.put(columnIndex, stringCellValue);
 
-			} catch (final Exception ignored) {
+			} catch (final Throwable ignored) {
 			}
 		}
 	}

@@ -46,7 +46,7 @@ public abstract class AbstractHttpServer<
 					serverPort = port;
 					break;
 
-				} catch (final Exception ignored) {
+				} catch (final Throwable ignored) {
 				}
 			}
 			if (httpServer == null) {

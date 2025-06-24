@@ -32,7 +32,7 @@ final class ReflectionToString {
 			final Class<?> cls = obj.getClass();
 			appendClassInfoRec(obj, cls, objList, sb);
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 	}
 

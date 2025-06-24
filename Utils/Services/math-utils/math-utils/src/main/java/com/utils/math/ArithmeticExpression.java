@@ -59,7 +59,7 @@ public class ArithmeticExpression {
 		double result = defaultValue;
 		try {
 			result = parse();
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return result;
 	}

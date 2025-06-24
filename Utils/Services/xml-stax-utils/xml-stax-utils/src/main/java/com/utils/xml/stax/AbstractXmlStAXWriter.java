@@ -141,7 +141,7 @@ public abstract class AbstractXmlStAXWriter implements XmlStAXWriter {
 		try {
 			xmlEventWriter.close();
 			bufferedOutputStream.close();
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 	}
 

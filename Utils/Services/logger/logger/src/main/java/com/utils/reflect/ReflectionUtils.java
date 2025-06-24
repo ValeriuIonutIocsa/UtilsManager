@@ -30,7 +30,7 @@ public final class ReflectionUtils {
 				Field fieldInstance = null;
 				try {
 					fieldInstance = singletonClass.getField("INSTANCE");
-				} catch (final Exception ignored) {
+				} catch (final Throwable ignored) {
 				}
 				if (fieldInstance != null) {
 

@@ -134,7 +134,7 @@ public class CustomWebView extends AbstractCustomControl<WebView> {
 						String.class, boolean.class, boolean.class, boolean.class);
 				method.invoke(webPage, text, true, true, caseSensitive);
 
-			} catch (final Exception ignored) {
+			} catch (final Throwable ignored) {
 			}
 		}
 	}

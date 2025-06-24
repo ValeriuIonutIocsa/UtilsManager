@@ -40,7 +40,7 @@ public final class IoUtils {
 		try {
 			return StringUtils.isNotBlank(pathString) && Files.exists(Paths.get(pathString));
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return fileExists;
 	}
@@ -58,7 +58,7 @@ public final class IoUtils {
 		try {
 			regularFileExists = StringUtils.isNotBlank(pathString) && Files.isRegularFile(Paths.get(pathString));
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return regularFileExists;
 	}
@@ -76,7 +76,7 @@ public final class IoUtils {
 		try {
 			directoryExists = StringUtils.isNotBlank(pathString) && Files.isDirectory(Paths.get(pathString));
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return directoryExists;
 	}
@@ -93,7 +93,7 @@ public final class IoUtils {
 				fileHidden = checkFileHidden(path);
 			}
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return fileHidden;
 	}
@@ -119,7 +119,7 @@ public final class IoUtils {
 				fileHidden = true;
 			}
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return fileHidden;
 	}

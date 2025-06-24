@@ -351,7 +351,7 @@ public final class PathUtils {
 			final Path relativePath = fromPath.relativize(toPath);
 			relativePathString = relativePath.toString();
 
-		} catch (final Exception ignored) {
+		} catch (final Throwable ignored) {
 		}
 		return relativePathString;
 	}
