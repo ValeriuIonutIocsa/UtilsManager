@@ -60,7 +60,7 @@ public class CustomAlertException extends AbstractCustomAlert {
 		GuiUtils.addToVBox(vBoxExpandableContent, labelDetails,
 				Pos.CENTER_LEFT, Priority.NEVER, 0, 0, 5, 3);
 
-		final String exceptionString = Logger.exceptionToString(exc);
+		final String exceptionString = Logger.throwableToString(exc);
 		final TextArea textAreaExceptionString = BasicControlsFactories.getInstance().createTextArea(exceptionString);
 		textAreaExceptionString.setEditable(false);
 		textAreaExceptionString.setWrapText(true);

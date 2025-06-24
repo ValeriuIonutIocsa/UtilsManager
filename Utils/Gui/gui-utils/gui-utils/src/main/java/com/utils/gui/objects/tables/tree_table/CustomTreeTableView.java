@@ -723,9 +723,9 @@ public class CustomTreeTableView<
 				}
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to add cells to tree view");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 
 		} finally {
 			expandedListenerActive = true;

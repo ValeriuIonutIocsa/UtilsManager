@@ -71,10 +71,10 @@ public final class IdeaFilesSynchronizer {
 			}
 			XmlDomUtils.saveXmlFile(document, false, 4, gradleSettingsFilePathString);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to edit Gradle idea settings XML file:" +
 					System.lineSeparator() + gradleSettingsFilePathString);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 }

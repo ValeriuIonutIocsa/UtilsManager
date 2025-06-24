@@ -32,12 +32,12 @@ public abstract class AbstractGuiWorker extends Thread implements GuiWorker {
 			work();
 
 		} catch (final SilentException ignored) {
-		} catch (final Exception exc) {
-			Logger.printException(exc);
+		} catch (final Throwable throwable) {
+			Logger.printThrowable(throwable);
 			try {
 				error();
 			} catch (final Exception exc2) {
-				Logger.printException(exc2);
+				Logger.printThrowable(exc2);
 			}
 
 		} finally {
@@ -49,7 +49,7 @@ public abstract class AbstractGuiWorker extends Thread implements GuiWorker {
 					Logger.printFinishMessage(start);
 
 				} catch (final Exception exc2) {
-					Logger.printException(exc2);
+					Logger.printThrowable(exc2);
 				}
 			});
 		}

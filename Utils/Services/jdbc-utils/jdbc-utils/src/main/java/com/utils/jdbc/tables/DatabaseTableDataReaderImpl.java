@@ -83,12 +83,12 @@ public class DatabaseTableDataReaderImpl<
 			}
 			success = true;
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			if (verbose) {
 				final String tableName = databaseTableInfo.name();
 				Logger.printError("failed to retrieve the data from table \"" + tableName + "\"");
 			}
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 
 		} finally {
 			ProgressIndicators.getInstance().update(0);

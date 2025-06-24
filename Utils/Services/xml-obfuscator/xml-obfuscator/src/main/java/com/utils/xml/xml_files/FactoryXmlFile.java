@@ -41,9 +41,9 @@ public final class FactoryXmlFile {
 
 			xmlFile = new XmlFile(inputPathString, outputPathString, mappingsPathString, obfuscationsByXpathMap);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to parse a xml file element");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return xmlFile;
 	}

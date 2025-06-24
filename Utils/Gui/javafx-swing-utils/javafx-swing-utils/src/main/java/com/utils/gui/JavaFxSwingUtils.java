@@ -32,9 +32,9 @@ public final class JavaFxSwingUtils {
 			final byte[] imageBytes = byteArrayOutputStream.toByteArray();
 			imgElement = HtmlUtils.embedImage(element, imageBytes);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to embed image to HTML");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return imgElement;
 	}

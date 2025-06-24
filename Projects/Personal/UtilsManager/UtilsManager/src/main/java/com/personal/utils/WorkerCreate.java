@@ -137,10 +137,10 @@ final class WorkerCreate {
 			WriterUtils.stringToFile(buildGradleContents, StandardCharsets.UTF_8,
 					buildGradleFilePathString);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to replace dependencies in file:" +
 					System.lineSeparator() + buildGradleFilePathString);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 
 		final String settingsGradleFilePathString =
@@ -172,10 +172,10 @@ final class WorkerCreate {
 			WriterUtils.stringToFile(settingsGradleContents, StandardCharsets.UTF_8,
 					settingsGradleFilePathString);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to replace dependencies in file:" +
 					System.lineSeparator() + settingsGradleFilePathString);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 
@@ -244,9 +244,9 @@ final class WorkerCreate {
 				printStream.print("}");
 				printStream.println();
 
-			} catch (final Exception exc) {
+			} catch (final Throwable throwable) {
 				Logger.printError("failed to write the main class file");
-				Logger.printException(exc);
+				Logger.printThrowable(throwable);
 			}
 		}
 	}
@@ -340,9 +340,9 @@ final class WorkerCreate {
 				printStream.print("}");
 				printStream.println();
 
-			} catch (final Exception exc) {
+			} catch (final Throwable throwable) {
 				Logger.printError("failed to write the test main class file");
-				Logger.printException(exc);
+				Logger.printThrowable(throwable);
 			}
 		}
 	}

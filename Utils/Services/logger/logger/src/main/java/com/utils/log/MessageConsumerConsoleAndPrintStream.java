@@ -29,7 +29,7 @@ public class MessageConsumerConsoleAndPrintStream extends MessageConsumerDefault
 
 		} else if (messageLevel == MessageLevel.WARNING ||
 				messageLevel == MessageLevel.ERROR ||
-				messageLevel == MessageLevel.EXCEPTION) {
+				messageLevel == MessageLevel.THROWABLE) {
 			errPrintStream.println(message);
 		}
 	}

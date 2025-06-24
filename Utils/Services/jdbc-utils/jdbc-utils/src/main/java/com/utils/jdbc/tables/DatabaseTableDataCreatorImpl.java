@@ -53,16 +53,16 @@ public class DatabaseTableDataCreatorImpl<
 				}
 				success = true;
 
-			} catch (final Exception exc) {
-				Logger.printException(exc);
+			} catch (final Throwable throwable) {
+				Logger.printThrowable(throwable);
 				connection.rollback();
 
 			} finally {
 				connection.setAutoCommit(oldAutoCommit);
 			}
 
-		} catch (final Exception exc) {
-			Logger.printException(exc);
+		} catch (final Throwable throwable) {
+			Logger.printThrowable(throwable);
 
 		} finally {
 			ProgressIndicators.getInstance().update(0);

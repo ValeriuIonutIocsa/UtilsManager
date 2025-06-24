@@ -192,8 +192,8 @@ class CustomLoggingInterceptor implements Interceptor {
 				}
 			}
 
-		} catch (final Exception exc) {
-			Logger.printException(exc);
+		} catch (final Throwable throwable) {
+			Logger.printThrowable(throwable);
 		}
 		return requestBodyString;
 	}
@@ -216,8 +216,8 @@ class CustomLoggingInterceptor implements Interceptor {
 				}
 			}
 
-		} catch (final Exception exc) {
-			Logger.printException(exc);
+		} catch (final Throwable throwable) {
+			Logger.printThrowable(throwable);
 		}
 		return formattedJsonString;
 	}

@@ -53,10 +53,10 @@ abstract class AbstractDataSource implements DataSource {
 				System.setProperty("java.io.tmpdir", javaTmpDir);
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to create a connection to the database:" +
 					System.lineSeparator() + databaseUrl);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return connection;
 	}

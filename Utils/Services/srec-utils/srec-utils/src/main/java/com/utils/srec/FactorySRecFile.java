@@ -129,10 +129,10 @@ public final class FactorySRecFile {
 				sRecFile = new SRecFile(sRecRecordList);
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to parse " + displayName + " file:" +
 					System.lineSeparator() + sRecFilePathString);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return sRecFile;
 	}

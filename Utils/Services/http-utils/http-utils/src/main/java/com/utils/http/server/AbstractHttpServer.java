@@ -82,9 +82,9 @@ public abstract class AbstractHttpServer<
 				}
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to start " + displayName + " server");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 

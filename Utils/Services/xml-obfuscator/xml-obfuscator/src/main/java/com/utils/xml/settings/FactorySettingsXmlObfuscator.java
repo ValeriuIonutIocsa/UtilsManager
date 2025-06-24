@@ -40,9 +40,9 @@ public final class FactorySettingsXmlObfuscator {
 
 			settingsXmlObfuscator = new SettingsXmlObfuscator(xmlFileList);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to parse configuration file");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return settingsXmlObfuscator;
 	}

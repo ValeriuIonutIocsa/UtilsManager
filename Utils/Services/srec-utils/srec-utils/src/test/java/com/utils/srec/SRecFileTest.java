@@ -63,10 +63,10 @@ class SRecFileTest {
 					FileUtils.contentEquals(new File(sRecFilePathString), new File(copySRecFilePathString));
 			Assertions.assertTrue(contentEquals);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("error while parsing and saving SREC file:" +
 					System.lineSeparator() + sRecFilePathString);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 }

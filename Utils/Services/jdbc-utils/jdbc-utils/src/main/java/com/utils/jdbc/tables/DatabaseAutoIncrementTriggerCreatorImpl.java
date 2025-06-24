@@ -33,9 +33,9 @@ public class DatabaseAutoIncrementTriggerCreatorImpl implements DatabaseAutoIncr
 			Logger.printStatus("Successfully created trigger \"" + triggerName + "\".");
 			success = true;
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to create trigger \"" + triggerName + "\"");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return success;
 	}

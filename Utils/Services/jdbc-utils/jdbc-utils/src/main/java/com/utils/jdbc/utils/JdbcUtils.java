@@ -76,8 +76,8 @@ public final class JdbcUtils {
 				stringBuilder.append(System.lineSeparator());
 			}
 
-		} catch (final Exception exc) {
-			Logger.printException(exc);
+		} catch (final Throwable throwable) {
+			Logger.printThrowable(throwable);
 		}
 
 		return stringBuilder.toString();
@@ -120,8 +120,8 @@ public final class JdbcUtils {
 						printStream.println();
 					}
 
-				} catch (final Exception exc) {
-					Logger.printException(exc);
+				} catch (final Throwable throwable) {
+					Logger.printThrowable(throwable);
 				}
 			}
 		};

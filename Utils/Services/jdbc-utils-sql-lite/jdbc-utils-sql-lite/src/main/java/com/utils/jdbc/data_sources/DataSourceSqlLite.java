@@ -20,7 +20,7 @@ public class DataSourceSqlLite extends AbstractDataSource {
 			Class.forName("org.sqlite.JDBC");
 			success = true;
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to load SQLLite driver");
 		}
 		return success;

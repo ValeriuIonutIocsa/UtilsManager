@@ -35,10 +35,10 @@ public class DatabaseTableDeleterImpl implements DatabaseTableDeleter {
 			Logger.printStatus("Successfully deleted data from table \"" + tableName + "\".");
 			success = true;
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			final String tableName = databaseTableInfo.name();
 			Logger.printError("failed to delete data from table \"" + tableName + "\"");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return success;
 	}

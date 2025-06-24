@@ -31,9 +31,9 @@ public final class FactoryDataSourcePostgresql {
 		try (InputStream inputStream = StreamUtils.openBufferedInputStream(propertiesFilePathString)) {
 			properties.load(inputStream);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to load postgresql DB properties");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return properties;
 	}

@@ -26,9 +26,9 @@ public class DatabaseDropEverythingImpl implements DatabaseDropEverything {
 				statement.execute(sql);
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to drop everything from the database");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return true;
 	}

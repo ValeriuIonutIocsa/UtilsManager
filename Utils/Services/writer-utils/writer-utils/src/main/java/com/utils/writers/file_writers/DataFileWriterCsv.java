@@ -73,9 +73,9 @@ public final class DataFileWriterCsv extends AbstractDataFileWriter {
 				throw new Exception();
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to generate the \"" + displayName + "\" data file");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 

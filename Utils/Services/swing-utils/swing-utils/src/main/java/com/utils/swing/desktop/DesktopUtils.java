@@ -20,9 +20,9 @@ public final class DesktopUtils {
 			final Desktop desktop = Desktop.getDesktop();
 			desktop.browse(new URI(url));
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to browse url:" + System.lineSeparator() + url);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 
@@ -34,9 +34,9 @@ public final class DesktopUtils {
 			final Desktop desktop = Desktop.getDesktop();
 			desktop.open(file);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to open file:" + System.lineSeparator() + file);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 }

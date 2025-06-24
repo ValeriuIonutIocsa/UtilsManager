@@ -144,9 +144,9 @@ public final class FactoryXlsCellStyles {
 			}
 			cellStyleColored.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to set Excel cell color");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 
 		return cellStyleColored;

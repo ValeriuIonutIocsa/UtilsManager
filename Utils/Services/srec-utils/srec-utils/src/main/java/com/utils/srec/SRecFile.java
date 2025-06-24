@@ -234,9 +234,9 @@ public class SRecFile {
 				}
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to save SREC file");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 

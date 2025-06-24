@@ -38,9 +38,9 @@ public final class FactoryObfuscation {
 
 			obfuscation = new Obfuscation(xpath, textContent, attributeSet);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to parse an obfuscation element");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return obfuscation;
 	}

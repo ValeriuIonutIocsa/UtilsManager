@@ -93,9 +93,9 @@ public class LevelGauge extends AbstractCustomControl<StackPane> {
 			progressBar.getStylesheets().clear();
 			progressBar.getStylesheets().add(styleCssFile.toURI().toURL().toExternalForm());
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to create custom style");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 

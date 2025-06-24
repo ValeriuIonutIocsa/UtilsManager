@@ -37,9 +37,9 @@ public final class DataFileWriterJson extends AbstractDataFileWriter {
 			try (OutputStream outputStream = StreamUtils.openBufferedOutputStream(outputPathString)) {
 				write(outputStream, dataTableList);
 
-			} catch (final Exception exc) {
+			} catch (final Throwable throwable) {
 				Logger.printError("failed to generate JSON file");
-				Logger.printException(exc);
+				Logger.printThrowable(throwable);
 			}
 
 			if (StringUtils.isNotBlank(displayName)) {

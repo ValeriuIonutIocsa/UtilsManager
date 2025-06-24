@@ -33,7 +33,7 @@ class MessageConsumerGuiLogger extends AbstractMessageConsumer {
 				text = "<b>" + message + "</b><br>";
 			} else if (messageLevel == MessageLevel.WARNING) {
 				text = "<b><font color=\"DarkOrange\">" + message + "</font></b><br>";
-			} else if (messageLevel == MessageLevel.ERROR || messageLevel == MessageLevel.EXCEPTION) {
+			} else if (messageLevel == MessageLevel.ERROR || messageLevel == MessageLevel.THROWABLE) {
 				text = "<b><font color=\"red\">" + message + "</font></b><br>";
 			} else {
 				text = message + "<br>";
@@ -43,8 +43,8 @@ class MessageConsumerGuiLogger extends AbstractMessageConsumer {
 		} catch (final Throwable throwable) {
 			oldMessageConsumer.printMessageSpecific(
 					MessageLevel.ERROR, "error occurred while logging GUI line");
-			final String throwableString = Logger.exceptionToString(throwable);
-			oldMessageConsumer.printMessageSpecific(MessageLevel.EXCEPTION, throwableString);
+			final String throwableString = Logger.throwableToString(throwable);
+			oldMessageConsumer.printMessageSpecific(MessageLevel.THROWABLE, throwableString);
 		}
 	}
 }

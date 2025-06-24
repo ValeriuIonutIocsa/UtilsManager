@@ -39,9 +39,9 @@ public abstract class AbstractXlsCell implements XlsCell {
 					final Sheet sheet = row.getSheet();
 					region.write(sheet, rowIndex, cellIndex);
 
-				} catch (final Exception exc) {
+				} catch (final Throwable throwable) {
 					Logger.printError("failed to write region to Excel");
-					Logger.printException(exc);
+					Logger.printThrowable(throwable);
 				}
 			}
 		}

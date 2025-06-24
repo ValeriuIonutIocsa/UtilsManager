@@ -113,10 +113,10 @@ public final class SRecUtils {
 				}
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to patch the patch data CSV file:" +
 					System.lineSeparator() + patchDataCsvPathString);
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 	}
 

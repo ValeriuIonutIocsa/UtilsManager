@@ -142,7 +142,8 @@ public class CustomWebView extends AbstractCustomControl<WebView> {
 	public void load(
 			final String html) {
 
-		stringBuilder.append(html);
+		final int htmlStart = HTML_START.length() + MAX_CSS_LENGTH + HTML_MID.length();
+		stringBuilder.replace(htmlStart, stringBuilder.length(), html);
 
 		final String content = stringBuilder.toString();
 		loadContent(content);

@@ -44,8 +44,8 @@ public final class FactoryGradleSubProject {
 				}
 			}
 
-		} catch (final Exception exc) {
-			Logger.printException(exc);
+		} catch (final Throwable throwable) {
+			Logger.printThrowable(throwable);
 		}
 	}
 }

@@ -18,10 +18,10 @@ public abstract class AbstractDataFileWriter implements DataFileWriter {
 			generatedOutputFilePathString =
 					writeData(displayName, outputPathString, dataTableList);
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to generate the \"" + displayName + "\" data file:" +
 					System.lineSeparator() + outputPathString);
-			throw exc;
+			throw throwable;
 		}
 		return generatedOutputFilePathString;
 	}

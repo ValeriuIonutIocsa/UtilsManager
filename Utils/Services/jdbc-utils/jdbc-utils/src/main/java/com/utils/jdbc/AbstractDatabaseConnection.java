@@ -24,9 +24,9 @@ public abstract class AbstractDatabaseConnection {
 				success = statements(connection);
 			}
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("error occurred while executing SQL statements");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return success;
 	}

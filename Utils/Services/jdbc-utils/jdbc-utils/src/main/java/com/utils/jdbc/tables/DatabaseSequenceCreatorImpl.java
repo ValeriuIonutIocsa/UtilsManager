@@ -31,9 +31,9 @@ public class DatabaseSequenceCreatorImpl implements DatabaseSequenceCreator {
 			Logger.printStatus("Successfully created sequence \"" + sequenceName + "\".");
 			success = true;
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			Logger.printError("failed to create sequence \"" + sequenceName + "\"");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return success;
 	}

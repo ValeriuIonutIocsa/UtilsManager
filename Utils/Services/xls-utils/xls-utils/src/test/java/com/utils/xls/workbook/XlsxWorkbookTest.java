@@ -32,10 +32,10 @@ class XlsxWorkbookTest {
 
 			@Override
 			protected void handleError(
-					final Exception exc) {
+					final Throwable throwable) {
 
 				Logger.printError("failed to open the workbook");
-				Logger.printException(exc);
+				Logger.printThrowable(throwable);
 			}
 
 		}.parse();

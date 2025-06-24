@@ -32,10 +32,10 @@ public class DatabaseTableDropperImpl implements DatabaseTableDropper {
 			Logger.printStatus("Successfully dropped table \"" + tableName + "\".");
 			success = true;
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			final String tableName = databaseTableInfo.name();
 			Logger.printError("failed to drop table \"" + tableName + "\"");
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return success;
 	}

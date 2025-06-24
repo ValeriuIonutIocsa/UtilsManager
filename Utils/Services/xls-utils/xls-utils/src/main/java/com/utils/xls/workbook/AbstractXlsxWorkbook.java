@@ -31,8 +31,8 @@ public abstract class AbstractXlsxWorkbook implements XlsxWorkbook {
 			parseWorkbook(workbook);
 			success = true;
 
-		} catch (final Exception exc) {
-			handleError(exc);
+		} catch (final Throwable throwable) {
+			handleError(throwable);
 		}
 		return success;
 	}
@@ -60,5 +60,5 @@ public abstract class AbstractXlsxWorkbook implements XlsxWorkbook {
 	}
 
 	protected abstract void handleError(
-			Exception exc);
+			Throwable throwable);
 }

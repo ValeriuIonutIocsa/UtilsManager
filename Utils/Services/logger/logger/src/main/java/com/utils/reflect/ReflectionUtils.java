@@ -39,10 +39,10 @@ public final class ReflectionUtils {
 					singletonList.add(singleton);
 				}
 
-			} catch (final Exception exc) {
+			} catch (final Throwable throwable) {
 				Logger.printError("failed to get instance of " +
 						singletonSubTypeClass.getSimpleName());
-				Logger.printException(exc);
+				Logger.printThrowable(throwable);
 			}
 		}
 	}

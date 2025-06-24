@@ -30,11 +30,11 @@ public final class HttpUtils {
 			final Response<ObjectT> response = call.execute();
 			responseObject = response.body();
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			if (verbose) {
 				Logger.printError("failed to execute HTTP call");
 			}
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return responseObject;
 	}
@@ -49,11 +49,11 @@ public final class HttpUtils {
 		try {
 			response = call.execute();
 
-		} catch (final Exception exc) {
+		} catch (final Throwable throwable) {
 			if (verbose) {
 				Logger.printError("failed to execute HTTP call");
 			}
-			Logger.printException(exc);
+			Logger.printThrowable(throwable);
 		}
 		return response;
 	}

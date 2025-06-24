@@ -42,8 +42,8 @@ public final class YamlUtils {
 				}
 			}
 
-		} catch (final Exception exc) {
-			Logger.printException(exc);
+		} catch (final Throwable throwable) {
+			Logger.printThrowable(throwable);
 			Logger.printError("failed to parse YAML file:" +
 					System.lineSeparator() + yamlFilePathString);
 		}
@@ -71,8 +71,8 @@ public final class YamlUtils {
 				}
 			}
 
-		} catch (final Exception exc) {
-			Logger.printException(exc);
+		} catch (final Throwable throwable) {
+			Logger.printThrowable(throwable);
 		}
 		return object;
 	}
