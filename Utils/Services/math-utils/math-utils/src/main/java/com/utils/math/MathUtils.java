@@ -125,6 +125,22 @@ public final class MathUtils {
 	public static int roundToNextMultiple(
 			final int n,
 			final int d) {
+
+		return (n + d - 1) / d * d;
+	}
+
+	/**
+	 * @param n
+	 *            non-negative long to be rounded to the next multiple of d
+	 * @param d
+	 *            int greater than 0
+	 * @return the smallest multiple of d greater than n
+	 */
+	@ApiMethod
+	public static long roundToNextMultiple(
+			final long n,
+			final int d) {
+
 		return (n + d - 1) / d * d;
 	}
 
