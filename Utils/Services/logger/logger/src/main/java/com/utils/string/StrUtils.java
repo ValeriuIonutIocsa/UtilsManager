@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import com.utils.annotations.ApiMethod;
 import com.utils.string.characters.SpecialCharacterUtils;
@@ -894,7 +895,7 @@ public final class StrUtils {
 		final String resultStr;
 		if (str != null) {
 
-			if (StringUtils.startsWithIgnoreCase(str, prefix)) {
+			if (Strings.CI.startsWith(str, prefix)) {
 				resultStr = str.substring(prefix.length());
 			} else {
 				resultStr = str;
@@ -934,7 +935,7 @@ public final class StrUtils {
 		final String resultStr;
 		if (str != null) {
 
-			if (StringUtils.endsWithIgnoreCase(str, suffix)) {
+			if (Strings.CI.endsWith(str, suffix)) {
 				resultStr = str.substring(0, str.length() - suffix.length());
 			} else {
 				resultStr = str;
@@ -1094,7 +1095,7 @@ public final class StrUtils {
 			final String string) {
 
 		final int value;
-		if (StringUtils.startsWithIgnoreCase(string, "0x")) {
+		if (Strings.CI.startsWith(string, "0x")) {
 			value = StrUtils.tryParsePositiveIntFromHexString(string);
 		} else {
 			value = StrUtils.tryParsePositiveInt(string);
@@ -1157,7 +1158,7 @@ public final class StrUtils {
 			final String string) {
 
 		final long value;
-		if (StringUtils.startsWithIgnoreCase(string, "0x")) {
+		if (Strings.CI.startsWith(string, "0x")) {
 			value = StrUtils.tryParsePositiveLongFromHexString(string);
 		} else {
 			value = StrUtils.tryParsePositiveLong(string);

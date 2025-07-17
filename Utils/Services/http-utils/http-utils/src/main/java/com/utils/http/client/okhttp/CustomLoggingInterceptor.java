@@ -90,16 +90,9 @@ class CustomLoggingInterceptor implements Interceptor {
 		final Headers responseHeaders = response.headers();
 		writeResponseHeaders(responseHeaders, printStream);
 
-		final byte[] responseBodyByteArray;
-		final MediaType responseBodyContentType;
 		final ResponseBody responseBody = response.body();
-		if (responseBody != null) {
-			responseBodyByteArray = responseBody.bytes();
-			responseBodyContentType = responseBody.contentType();
-		} else {
-			responseBodyByteArray = new byte[] {};
-			responseBodyContentType = MediaType.parse("text/plain;charset=utf-8");
-		}
+		final byte[] responseBodyByteArray = responseBody.bytes();
+		final MediaType responseBodyContentType = responseBody.contentType();
 
 		writeResponseBody(responseBodyByteArray, printStream);
 

@@ -3,7 +3,7 @@ package com.utils.log;
 import java.time.Duration;
 import java.time.Instant;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.commons.lang3.SystemUtils;
 
 import com.utils.annotations.ApiMethod;
@@ -207,7 +207,7 @@ public final class Logger {
 			final String message) {
 
 		final String processedMessage =
-				StringUtils.replace(message, SystemUtils.USER_HOME, "%USERPROFILE%");
+				Strings.CS.replace(message, SystemUtils.USER_HOME, "%USERPROFILE%");
 		messageConsumer.printMessage(info, processedMessage);
 	}
 

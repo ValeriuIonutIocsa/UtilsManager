@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import com.personal.utils.gradle_roots.FactoryGradleRoot;
 import com.personal.utils.gradle_roots.GradleRoot;
@@ -60,7 +61,7 @@ final class WorkerCreate {
 		for (final String moduleRelativePathString : moduleRelativePathStringList) {
 
 			final String subProjectRelativePathString =
-					"/" + StringUtils.replace(moduleRelativePathString, "\\", "/");
+					"/" + Strings.CS.replace(moduleRelativePathString, "\\", "/");
 			subProjectRelativePathStringList.add(subProjectRelativePathString);
 		}
 
@@ -130,9 +131,9 @@ final class WorkerCreate {
 
 			String buildGradleContents =
 					ReaderUtils.fileToString(buildGradleFilePathString, StandardCharsets.UTF_8);
-			buildGradleContents = StringUtils.replace(buildGradleContents,
+			buildGradleContents = Strings.CS.replace(buildGradleContents,
 					"%%APP_INFO%%", appInfo);
-			buildGradleContents = StringUtils.replace(buildGradleContents,
+			buildGradleContents = Strings.CS.replace(buildGradleContents,
 					"%%SUB_PROJECTS%%", subProjects);
 			WriterUtils.stringToFile(buildGradleContents, StandardCharsets.UTF_8,
 					buildGradleFilePathString);
@@ -167,7 +168,7 @@ final class WorkerCreate {
 
 			String settingsGradleContents =
 					ReaderUtils.fileToString(settingsGradleFilePathString, StandardCharsets.UTF_8);
-			settingsGradleContents = StringUtils.replace(settingsGradleContents,
+			settingsGradleContents = Strings.CS.replace(settingsGradleContents,
 					"%%SUB_PROJECT_PATHS%%", subProjectPaths);
 			WriterUtils.stringToFile(settingsGradleContents, StandardCharsets.UTF_8,
 					settingsGradleFilePathString);

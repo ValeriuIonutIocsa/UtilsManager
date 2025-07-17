@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import com.utils.io.ListFileUtils;
 import com.utils.io.PathUtils;
@@ -43,7 +43,7 @@ public final class FactoryGradleRoot {
 				}, filePath -> {
 
 					final String fileName = PathUtils.computeFileName(filePath);
-					if (StringUtils.equalsIgnoreCase(fileName, "build.gradle")) {
+					if (Strings.CI.equals(fileName, "build.gradle")) {
 
 						final String filePathString = filePath.toString();
 						buildGradleFilePathStringList.add(filePathString);

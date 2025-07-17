@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 final class ReflectionToString {
 
@@ -219,8 +219,8 @@ final class ReflectionToString {
 		if (partOfJre) {
 
 			String str = obj.toString();
-			str = StringUtils.replace(str, "\n", "\\n");
-			str = StringUtils.replace(str, "\r", "\\r");
+			str = Strings.CS.replace(str, "\n", "\\n");
+			str = Strings.CS.replace(str, "\r", "\\r");
 			sb.append(str);
 
 		} else {
