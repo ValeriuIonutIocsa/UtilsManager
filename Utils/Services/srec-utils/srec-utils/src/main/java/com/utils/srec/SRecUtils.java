@@ -181,7 +181,7 @@ public final class SRecUtils {
 
 					Logger.printError("patched SREC record data byte " +
 							StrUtils.createHexString(Byte.toUnsignedLong(outputDataByte)) +
-							" different than original SREC record data length " +
+							" different than original SREC record data byte " +
 							StrUtils.createHexString(Byte.toUnsignedLong(dataByte)) +
 							" at address " + StrUtils.createHexString(outputDataByteAddress));
 				}
