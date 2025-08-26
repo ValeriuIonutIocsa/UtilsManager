@@ -25,22 +25,23 @@ public final class IdeaFilesSynchronizer {
 				FactoryFolderCreator.getInstance().createDirectories(dstIdeaFolderPathString, false, true);
 		if (createDirectoriesSuccess) {
 
-			final String[] settingsFileNameArray = {
+			final String[] settingsFileRelativePathStringArray = {
 					"checkstyle-idea.xml",
 					"eclipseCodeFormatter.xml",
 					"gradle.xml",
 					"misc.xml",
-					"saveactions_settings.xml"
+					"saveactions_settings.xml",
+					"inspectionProfiles/Project_Default.xml"
 			};
-			for (final String settingsFileName : settingsFileNameArray) {
+			for (final String settingsFileRelativePathString : settingsFileRelativePathStringArray) {
 
 				final String srcFilePathString =
-						PathUtils.computePath(srcIdeaFolderPathString, settingsFileName);
+						PathUtils.computePath(srcIdeaFolderPathString, settingsFileRelativePathString);
 				final String dstFilePathString =
-						PathUtils.computePath(dstIdeaFolderPathString, settingsFileName);
+						PathUtils.computePath(dstIdeaFolderPathString, settingsFileRelativePathString);
 				final boolean copyFileSuccess = FactoryFileCopier.getInstance()
 						.copyFile(srcFilePathString, dstFilePathString, false, true, true);
-				if (copyFileSuccess && "gradle.xml".equals(settingsFileName)) {
+				if (copyFileSuccess && "gradle.xml".equals(settingsFileRelativePathString)) {
 
 					editGradleXmlFile(dstFilePathString);
 				}
