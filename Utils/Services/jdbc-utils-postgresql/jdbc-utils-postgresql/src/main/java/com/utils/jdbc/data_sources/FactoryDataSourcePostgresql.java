@@ -3,29 +3,28 @@ package com.utils.jdbc.data_sources;
 import java.io.InputStream;
 import java.util.Properties;
 
-import com.utils.io.PathUtils;
+import com.utils.annotations.ApiMethod;
 import com.utils.io.StreamUtils;
 import com.utils.log.Logger;
 
 public final class FactoryDataSourcePostgresql {
 
-	private static DataSourcePostgresql instance = newInstance();
-
 	private FactoryDataSourcePostgresql() {
 	}
 
-	private static DataSourcePostgresql newInstance() {
+	@ApiMethod
+	public static DataSourcePostgresql newInstance(
+			final String propertiesFilePathString) {
 
-		final Properties properties = createProperties();
+		final Properties properties = createProperties(propertiesFilePathString);
 		final String databaseUrl = properties.getProperty("databaseUrl");
 		return new DataSourcePostgresql(databaseUrl, properties);
 	}
 
-	private static Properties createProperties() {
+	private static Properties createProperties(
+			final String propertiesFilePathString) {
 
 		final Properties properties = new Properties();
-		final String propertiesFilePathString = PathUtils.computePath(
-				PathUtils.createRootPath(), "IVI_MISC", "Tmp", "_cnf", "postgresql_db.properties");
 		Logger.printProgress("loading postgresql DB properties from:");
 		Logger.printLine(propertiesFilePathString);
 		try (InputStream inputStream = StreamUtils.openBufferedInputStream(propertiesFilePathString)) {
@@ -36,14 +35,5 @@ public final class FactoryDataSourcePostgresql {
 			Logger.printThrowable(throwable);
 		}
 		return properties;
-	}
-
-	public static void setInstance(
-			final DataSourcePostgresql instance) {
-		FactoryDataSourcePostgresql.instance = instance;
-	}
-
-	public static DataSourcePostgresql getInstance() {
-		return instance;
 	}
 }

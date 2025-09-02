@@ -1,11 +1,12 @@
 package com.utils.jdbc;
 
-import com.utils.jdbc.data_sources.FactoryDataSourcePostgresql;
+import com.utils.jdbc.data_sources.DataSourcePostgresql;
 
 public abstract class AbstractDatabaseConnectionPostgresql extends AbstractDatabaseConnection {
 
-	public AbstractDatabaseConnectionPostgresql() {
+	public AbstractDatabaseConnectionPostgresql(
+			final DataSourcePostgresql dataSourcePostgresql) {
 
-		super(FactoryDataSourcePostgresql.getInstance());
+		super(dataSourcePostgresql);
 	}
 }
