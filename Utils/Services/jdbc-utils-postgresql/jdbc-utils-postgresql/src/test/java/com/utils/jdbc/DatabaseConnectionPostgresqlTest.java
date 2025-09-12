@@ -15,7 +15,7 @@ class DatabaseConnectionPostgresqlTest {
 	void testConnection() {
 
 		final String propertiesFilePathString = PathUtils.computePath(
-				PathUtils.createRootPath(), "IVI_MISC", "Personal", "Tmp",
+				PathUtils.createRootPath(), "IVI_PERS", "Tmp",
 				"WeatherDatabase", "Inputs", "postgresql_db.properties");
 		final DataSourcePostgresql dataSourcePostgresql =
 				FactoryDataSourcePostgresql.newInstance(propertiesFilePathString);

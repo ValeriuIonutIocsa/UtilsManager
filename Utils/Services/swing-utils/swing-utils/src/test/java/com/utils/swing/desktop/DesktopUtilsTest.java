@@ -9,7 +9,7 @@ class DesktopUtilsTest {
 	@Test
 	void testTryBrowse() throws Exception {
 
-		final String filePathString = "D:\\IVI_MISC\\Tmp\\swing-utils\\test.html";
+		final String filePathString = "D:\\IVI\\Tmp\\swing-utils\\test.html";
 		final String url = new File(filePathString).toURI().toURL().toExternalForm();
 
 		DesktopUtils.tryBrowse(url);
@@ -18,7 +18,7 @@ class DesktopUtilsTest {
 	@Test
 	void testTryOpen() {
 
-		final String filePathString = "D:\\IVI_MISC\\Tmp\\swing-utils\\test.html";
+		final String filePathString = "D:\\IVI\\Tmp\\swing-utils\\test.html";
 
 		final File file = new File(filePathString);
 		DesktopUtils.tryOpen(file);

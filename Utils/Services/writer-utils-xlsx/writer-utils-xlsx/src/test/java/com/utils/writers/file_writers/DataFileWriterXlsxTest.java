@@ -16,7 +16,7 @@ class DataFileWriterXlsxTest {
 	void testWriteData() throws Exception {
 
 		final String outputFilePathString = PathUtils.computePath(PathUtils.createRootPath(),
-				"IVI_MISC", "Tmp", "writer-utils-xlsx", "test.xlsx");
+				"IVI", "Tmp", "writer-utils-xlsx", "test.xlsx");
 		Logger.printProgress("writing output file:");
 		Logger.printLine(outputFilePathString);
 

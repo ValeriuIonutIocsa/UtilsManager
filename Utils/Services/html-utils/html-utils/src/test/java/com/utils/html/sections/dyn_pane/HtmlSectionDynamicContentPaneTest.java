@@ -10,7 +10,7 @@ class HtmlSectionDynamicContentPaneTest {
 	@Test
 	void testWriteHtml() {
 
-		final String outputPathString = PathUtils.computePath(PathUtils.createRootPath(), "IVI_MISC", "tmp",
+		final String outputPathString = PathUtils.computePath(PathUtils.createRootPath(), "IVI", "tmp",
 				"html-utils", "Outputs", "DynamicContentPaneTest.html");
 
 		Logger.printProgress("writing output file:");
