@@ -18,6 +18,7 @@ public class TableColumnData implements Serializable {
 			final String name,
 			final String serializeName,
 			final double widthWeight) {
+
 		this(name, serializeName, widthWeight, Double.NaN, Double.NaN);
 	}
 
@@ -37,6 +38,7 @@ public class TableColumnData implements Serializable {
 
 	public double computeWidthRatio(
 			final double widthWeightSum) {
+
 		return widthWeight / widthWeightSum;
 	}
 
