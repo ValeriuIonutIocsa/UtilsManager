@@ -1,5 +1,5 @@
 @echo off
 
-pushd %~dp0\..\..\..\..\Projects\Personal\UtilsManager\UtilsManager
+pushd %~dp0\..\..\UtilsManager\UtilsManager
 call gradlew fatJar sourcesJar --console=plain
 popd
