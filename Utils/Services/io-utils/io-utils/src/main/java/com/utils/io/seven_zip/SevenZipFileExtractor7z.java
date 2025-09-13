@@ -85,7 +85,9 @@ public final class SevenZipFileExtractor7z {
 					commandPartList.add(sevenZipExecutablePathString);
 					commandPartList.add("x");
 					commandPartList.add("-bsp1");
-					commandPartList.add("-mmt=" + threadCount);
+					if (threadCount >= 1) {
+						commandPartList.add("-mmt=" + threadCount);
+					}
 					commandPartList.add("-y");
 					commandPartList.add(archiveFilePathString);
 					commandPartList.add("-o" + outputParentFolderPathString);

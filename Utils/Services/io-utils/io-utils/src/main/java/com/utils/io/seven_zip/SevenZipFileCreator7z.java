@@ -74,7 +74,9 @@ public final class SevenZipFileCreator7z {
 						commandPartList.add(sevenZipExecutablePathString);
 						commandPartList.add("a");
 						commandPartList.add("-bsp1");
-						commandPartList.add("-mmt=" + threadCount);
+						if (threadCount >= 1) {
+							commandPartList.add("-mmt=" + threadCount);
+						}
 						commandPartList.add("-mx=" + compressionLevel);
 						commandPartList.add(archiveFilePathString);
 						commandPartList.add(inputFilePathString);
