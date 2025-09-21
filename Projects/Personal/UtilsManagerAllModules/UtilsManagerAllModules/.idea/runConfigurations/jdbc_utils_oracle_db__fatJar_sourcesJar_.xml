@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="UtilsManagerAllModules [dependencyUpdates]" type="GradleRunConfiguration" factoryName="Gradle" folderName="UtilsManagerAllModules">
+  <configuration default="false" name="jdbc-utils-oracle-db [fatJar sourcesJar]" type="GradleRunConfiguration" factoryName="Gradle" folderName="jdbc-utils-oracle-db">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Utils/Services/jdbc-utils-oracle-db/jdbc-utils-oracle-db" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
@@ -10,7 +10,8 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="dependencyUpdates" />
+          <option value="fatJar" />
+          <option value="sourcesJar" />
         </list>
       </option>
       <option name="vmOptions" />

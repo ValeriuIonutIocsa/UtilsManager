@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="UtilsManagerAllModules [dependencyUpdates]" type="GradleRunConfiguration" factoryName="Gradle" folderName="UtilsManagerAllModules">
+  <configuration default="false" name="jdbc-utils-sql-lite [clean]" type="GradleRunConfiguration" factoryName="Gradle" folderName="jdbc-utils-sql-lite">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Utils/Services/jdbc-utils-sql-lite/jdbc-utils-sql-lite" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="dependencyUpdates" />
+          <option value="clean" />
         </list>
       </option>
       <option name="vmOptions" />

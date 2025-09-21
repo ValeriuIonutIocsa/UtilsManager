@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="UtilsManagerAllModules [dependencyUpdates]" type="GradleRunConfiguration" factoryName="Gradle" folderName="UtilsManagerAllModules">
+  <configuration default="false" name="concurrency-utils [fatJar sourcesJar]" type="GradleRunConfiguration" factoryName="Gradle" folderName="concurrency-utils">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Utils/Services/concurrency-utils/concurrency-utils" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
@@ -10,7 +10,8 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="dependencyUpdates" />
+          <option value="fatJar" />
+          <option value="sourcesJar" />
         </list>
       </option>
       <option name="vmOptions" />
