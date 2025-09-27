@@ -30,6 +30,7 @@ final class WorkerCreate {
 
 	static void work(
 			final String pathString,
+			final String projectType,
 			final String packageName) {
 
 		final Set<String> selectedModuleNameSet = new HashSet<>();
@@ -71,8 +72,10 @@ final class WorkerCreate {
 		final String templateProjectFolderPathString = PathUtils.computePath(utilsRootPathString,
 				"Projects", "Personal", "UtilsManager", "UtilsManager_EXE", "TemplateProject");
 
-		final String projectRelativePath = "/Projects/Personal/" + projectName + "/" + projectName;
-		final String projectFolderPathString = PathUtils.computePath(pathString, projectRelativePath);
+		final String projectRelativePath = "/Projects/" + projectType + "/" +
+				projectName + "/" + projectName;
+		final String projectFolderPathString =
+				PathUtils.computePath(pathString, projectRelativePath);
 		FactoryFolderCopier.getInstance().copyFolder(
 				templateProjectFolderPathString, projectFolderPathString, true, true, true);
 		final String appInfo = createAppInfo(packageName);
@@ -81,7 +84,7 @@ final class WorkerCreate {
 		createTestMainClass(projectFolderPathString, projectName, packageName);
 
 		final String allModulesProjectName = projectName + "AllModules";
-		final String allModulesProjectRelativePath = "/Projects/Personal/" +
+		final String allModulesProjectRelativePath = "/Projects/" + projectType + "/" +
 				allModulesProjectName + "/" + allModulesProjectName;
 		final String allModulesProjectFolderPathString =
 				PathUtils.computePath(pathString, allModulesProjectRelativePath);

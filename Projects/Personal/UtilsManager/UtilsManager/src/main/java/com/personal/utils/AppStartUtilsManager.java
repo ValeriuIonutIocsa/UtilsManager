@@ -4,8 +4,10 @@ import java.time.Instant;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.personal.utils.app_info.FactoryAppInfoUtilsManager;
 import com.personal.utils.mode.FactoryMode;
 import com.personal.utils.mode.Mode;
+import com.utils.app_info.AppInfo;
 import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
 import com.utils.log.Logger;
@@ -21,7 +23,10 @@ final class AppStartUtilsManager {
 		Logger.setDebugMode(true);
 
 		final Instant start = Instant.now();
-		Logger.printProgress("starting UtilsManager");
+
+		final AppInfo appInfo = FactoryAppInfoUtilsManager.computeInstance();
+		final String appStartMessage = appInfo.createAppStartMessage();
+		Logger.printProgress(appStartMessage);
 
 		if (args.length < 2) {
 
@@ -58,22 +63,28 @@ final class AppStartUtilsManager {
 
 		if (mode == Mode.CREATE) {
 
-			final String packageName;
+			String projectType = null;
+			String packageName = null;
 			if (args.length >= 3) {
-				packageName = args[2];
-			} else {
-				packageName = null;
-			}
 
+				projectType = args[2];
+				packageName = args[3];
+			}
+			if (StringUtils.isBlank(projectType)) {
+
+				Logger.printError("invalid project type: " + projectType);
+				System.exit(-2);
+			}
 			if (StringUtils.isBlank(packageName)) {
 
 				Logger.printError("invalid package name: " + packageName);
-				System.exit(-2);
+				System.exit(-3);
 			}
 
+			Logger.printLine("project type: " + projectType);
 			Logger.printLine("package name: " + packageName);
 
-			WorkerCreate.work(pathString, packageName);
+			WorkerCreate.work(pathString, projectType, packageName);
 
 		} else {
 			WorkerDownloadUpload.work(mode, pathString, start);
