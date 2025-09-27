@@ -14,9 +14,9 @@ public record TestTableRowData(
 
 	private static final TableColumnData[] COLUMNS = {
 
-			new TableColumnData("Name", "Name", 20),
-			new TableColumnData("Size", "Size", 10),
-			new TableColumnData("Count", "Count", 10)
+			new TableColumnData("Name", "Name", 20, Double.NaN, Double.NaN),
+			new TableColumnData("Size", "Size", 10, Double.NaN, Double.NaN),
+			new TableColumnData("Count", "Count", 10, Double.NaN, Double.NaN)
 	};
 
 	@Override

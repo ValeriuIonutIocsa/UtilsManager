@@ -104,7 +104,7 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 		double widthWeightSum = 0;
 		for (final TableColumnData tableColumn : tableColumnDataArray) {
 
-			final double widthWeight = tableColumn.getWidthWeight();
+			final double widthWeight = tableColumn.widthWeight();
 			widthWeightSum += widthWeight;
 		}
 
@@ -127,7 +127,7 @@ public final class DataFileWriterXlsx extends AbstractDataFileWriter {
 
 		for (final TableColumnData tableColumnData : tableColumnDataArray) {
 
-			final String columnName = tableColumnData.getName();
+			final String columnName = tableColumnData.name();
 			xlsRow.getXlsCellList().add(new XlsCellString(cellStyleTitle, columnName));
 		}
 
