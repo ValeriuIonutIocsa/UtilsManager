@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" factoryName="JUnit" folderName="xml-obfuscator" name="ObfuscationTest.testObfuscateText" nameIsGenerated="true" type="JUnit">
+    <configuration default="false" name="ObfuscationTest.testObfuscateText" type="JUnit" factoryName="JUnit" folderName="xml-obfuscator"
+                   nameIsGenerated="true">
         <module name="UtilsManagerAllModules.xml-obfuscator.test"/>
         <extension name="coverage">
             <pattern>
@@ -12,7 +13,7 @@
         <option name="METHOD_NAME" value="testObfuscateText"/>
         <option name="TEST_OBJECT" value="method"/>
         <method v="2">
-            <option enabled="true" name="Make"/>
+            <option name="MakeProject" enabled="true"/>
         </method>
     </configuration>
 </component>

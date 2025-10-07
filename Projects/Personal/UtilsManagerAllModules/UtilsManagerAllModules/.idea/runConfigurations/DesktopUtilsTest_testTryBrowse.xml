@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" factoryName="JUnit" folderName="swing-utils" name="DesktopUtilsTest.testTryBrowse" nameIsGenerated="true" type="JUnit">
+    <configuration default="false" name="DesktopUtilsTest.testTryBrowse" type="JUnit" factoryName="JUnit" folderName="swing-utils"
+                   nameIsGenerated="true">
         <module name="UtilsManagerAllModules.swing-utils.test"/>
         <extension name="coverage">
             <pattern>
@@ -12,7 +13,7 @@
         <option name="METHOD_NAME" value="testTryBrowse"/>
         <option name="TEST_OBJECT" value="method"/>
         <method v="2">
-            <option enabled="true" name="Make"/>
+            <option name="MakeProject" enabled="true"/>
         </method>
     </configuration>
 </component>
