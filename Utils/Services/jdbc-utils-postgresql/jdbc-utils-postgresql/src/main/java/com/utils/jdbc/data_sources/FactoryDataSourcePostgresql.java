@@ -14,12 +14,11 @@ public final class FactoryDataSourcePostgresql {
 
 	@ApiMethod
 	public static DataSourcePostgresql newInstance(
-			final String propertiesFilePathString,
-			final String tempFolderPathString) {
+			final String propertiesFilePathString) {
 
 		final Properties properties = createProperties(propertiesFilePathString);
 		final String databaseUrl = properties.getProperty("databaseUrl");
-		return new DataSourcePostgresql(databaseUrl, tempFolderPathString, properties);
+		return new DataSourcePostgresql(databaseUrl, properties);
 	}
 
 	private static Properties createProperties(

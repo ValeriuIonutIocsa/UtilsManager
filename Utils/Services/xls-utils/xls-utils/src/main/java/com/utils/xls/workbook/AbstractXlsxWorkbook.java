@@ -7,9 +7,9 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.utils.io.StreamUtils;
+import com.utils.xls.XlsUtils;
 
 public abstract class AbstractXlsxWorkbook implements XlsxWorkbook {
 
@@ -26,8 +26,9 @@ public abstract class AbstractXlsxWorkbook implements XlsxWorkbook {
 
 		boolean success = false;
 		try (InputStream inputStream = StreamUtils.openBufferedInputStream(pathString);
-				Workbook workbook = new XSSFWorkbook(inputStream)) {
+				WorkbookWrapper workbookWrapper = XlsUtils.openWorkbook(inputStream)) {
 
+			final Workbook workbook = workbookWrapper.getWorkbook();
 			parseWorkbook(workbook);
 			success = true;
 

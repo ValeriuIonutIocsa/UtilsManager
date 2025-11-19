@@ -7,23 +7,21 @@ import java.util.Properties;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 import com.utils.string.exc.SilentException;
+import com.utils.tmp.TmpFolderUtils;
 
 abstract class AbstractDataSource implements DataSource {
 
 	private final String driver;
 	private final String databaseUrl;
-	private final String tempFolderPathString;
 	private final Properties properties;
 
 	AbstractDataSource(
 			final String driver,
 			final String databaseUrl,
-			final String tempFolderPathString,
 			final Properties properties) {
 
 		this.driver = driver;
 		this.databaseUrl = databaseUrl;
-		this.tempFolderPathString = tempFolderPathString;
 		this.properties = properties;
 	}
 
@@ -31,8 +29,12 @@ abstract class AbstractDataSource implements DataSource {
 	public Connection connect() {
 
 		Connection connection = null;
-		final String javaTmpDir = System.getProperty("java.io.tmpdir");
-		System.setProperty("java.io.tmpdir", tempFolderPathString);
+
+		final String originalJavaTmpDir = System.getProperty("java.io.tmpdir");
+
+		final String tmpFolderPathString = TmpFolderUtils.createTmpFolderPathString();
+		System.setProperty("java.io.tmpdir", tmpFolderPathString);
+
 		try {
 			if (databaseUrl == null) {
 				Logger.printWarning("the database URL is null");
@@ -64,7 +66,7 @@ abstract class AbstractDataSource implements DataSource {
 			Logger.printThrowable(throwable);
 
 		} finally {
-			System.setProperty("java.io.tmpdir", javaTmpDir);
+			System.setProperty("java.io.tmpdir", originalJavaTmpDir);
 		}
 		return connection;
 	}
