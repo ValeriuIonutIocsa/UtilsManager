@@ -8,8 +8,10 @@ public class DataSourceSqlLite extends AbstractDataSource {
 
 	public DataSourceSqlLite(
 			final String databaseUrl,
+			final String tempFolderPathString,
 			final Properties properties) {
-		super("jdbc:sqlite", databaseUrl, properties);
+
+		super("jdbc:sqlite", databaseUrl, tempFolderPathString, properties);
 	}
 
 	@Override
