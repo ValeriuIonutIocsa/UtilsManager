@@ -299,6 +299,35 @@ public final class StrUtils {
 	}
 
 	@ApiMethod
+	public static String createPaddedHexString(
+			final long value,
+			final int size) {
+
+		return "0x" + unsignedLongToPaddedHexString(value, size);
+	}
+
+	@ApiMethod
+	public static void appendPaddedHexString(
+			final long value,
+			final int size,
+			final StringBuilder stringBuilder) {
+
+		stringBuilder
+				.append("0x")
+				.append(unsignedLongToPaddedHexString(value, size));
+	}
+
+	@ApiMethod
+	public static void printPaddedHexString(
+			final long value,
+			final int size,
+			final PrintStream printStream) {
+
+		printStream.print("0x");
+		printStream.print(unsignedLongToPaddedHexString(value, size));
+	}
+
+	@ApiMethod
 	public static String byteArrayToBinaryString(
 			final byte[] byteArray) {
 
@@ -867,86 +896,6 @@ public final class StrUtils {
 			result = sbResult.toString();
 		}
 		return result;
-	}
-
-	@ApiMethod
-	public static String removePrefix(
-			final String str,
-			final String prefix) {
-
-		final String resultStr;
-		if (str != null) {
-
-			if (str.startsWith(prefix)) {
-				resultStr = str.substring(prefix.length());
-			} else {
-				resultStr = str;
-			}
-
-		} else {
-			resultStr = null;
-		}
-		return resultStr;
-	}
-
-	@ApiMethod
-	public static String removePrefixIgnoreCase(
-			final String str,
-			final String prefix) {
-
-		final String resultStr;
-		if (str != null) {
-
-			if (Strings.CI.startsWith(str, prefix)) {
-				resultStr = str.substring(prefix.length());
-			} else {
-				resultStr = str;
-			}
-
-		} else {
-			resultStr = null;
-		}
-		return resultStr;
-	}
-
-	@ApiMethod
-	public static String removeSuffix(
-			final String str,
-			final String suffix) {
-
-		final String resultStr;
-		if (str != null) {
-
-			if (str.endsWith(suffix)) {
-				resultStr = str.substring(0, str.length() - suffix.length());
-			} else {
-				resultStr = str;
-			}
-
-		} else {
-			resultStr = null;
-		}
-		return resultStr;
-	}
-
-	@ApiMethod
-	public static String removeSuffixIgnoreCase(
-			final String str,
-			final String suffix) {
-
-		final String resultStr;
-		if (str != null) {
-
-			if (Strings.CI.endsWith(str, suffix)) {
-				resultStr = str.substring(0, str.length() - suffix.length());
-			} else {
-				resultStr = str;
-			}
-
-		} else {
-			resultStr = null;
-		}
-		return resultStr;
 	}
 
 	@ApiMethod

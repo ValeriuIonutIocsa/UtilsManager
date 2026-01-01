@@ -3,7 +3,7 @@ ext {
             ':jdbc-utils'
     ]
     compileClassPaths = [
-            'org.xerial:sqlite-jdbc:3.51.0.0'
+            'org.xerial:sqlite-jdbc:3.51.1.0'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []

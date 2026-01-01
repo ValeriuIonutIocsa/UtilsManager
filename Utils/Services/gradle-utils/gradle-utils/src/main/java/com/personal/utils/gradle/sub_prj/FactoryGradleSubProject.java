@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.commons.lang3.Strings;
 
 import com.utils.log.Logger;
-import com.utils.string.StrUtils;
 
 public final class FactoryGradleSubProject {
 
@@ -25,7 +24,7 @@ public final class FactoryGradleSubProject {
 				GradleSubProject gradleSubProject = null;
 				for (final String line : lineList) {
 
-					final String projectPathString = StrUtils.removePrefix(line, "project: ");
+					final String projectPathString = Strings.CS.removeStart(line, "project: ");
 					if (!Strings.CS.equals(projectPathString, line)) {
 
 						gradleSubProject = new GradleSubProject(projectPathString);
@@ -34,7 +33,7 @@ public final class FactoryGradleSubProject {
 					} else {
 						if (gradleSubProject != null) {
 
-							final String subProjectPathString = StrUtils.removePrefix(line, "subProject: ");
+							final String subProjectPathString = Strings.CS.removeStart(line, "subProject: ");
 							if (!Strings.CS.equals(subProjectPathString, line)) {
 
 								gradleSubProject.getDependencyPathSet().add(subProjectPathString);
