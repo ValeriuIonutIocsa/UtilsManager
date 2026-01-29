@@ -3,7 +3,7 @@ ext {
             ':io-utils'
     ]
     compileClassPaths = [
-            'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.20.1'
+            'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.21.0'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []
