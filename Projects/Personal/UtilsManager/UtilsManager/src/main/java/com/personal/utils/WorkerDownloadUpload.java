@@ -1,12 +1,15 @@
 package com.personal.utils;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.List;
 
 import com.personal.utils.gradle_roots.FactoryGradleRoot;
 import com.personal.utils.gradle_roots.GradleRoot;
 import com.personal.utils.mode.Mode;
 import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
+import com.utils.io.ReaderUtils;
 import com.utils.log.Logger;
 
 final class WorkerDownloadUpload {
@@ -20,19 +23,28 @@ final class WorkerDownloadUpload {
 			final Instant start) {
 
 		final String rootFolderPathString = computeRootFolderPathStringRec(pathString);
-		Logger.printLine("root folder path:");
-		Logger.printLine(rootFolderPathString);
+		if (rootFolderPathString != null) {
 
-		final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(rootFolderPathString);
+			Logger.printLine("root folder path:");
+			Logger.printLine(rootFolderPathString);
 
-		final GradleRoot utilsGradleRoot = FactoryGradleRoot.newInstanceUtils();
+			final Boolean useIntranet = checkUseIntranet(pathString);
 
-		if (mode == Mode.DOWNLOAD) {
-			gradleRoot.synchronizeFrom(utilsGradleRoot);
-		} else if (mode == Mode.UPLOAD) {
-			utilsGradleRoot.synchronizeFrom(gradleRoot);
+			final GradleRoot gradleRoot = FactoryGradleRoot.newInstance(rootFolderPathString, useIntranet);
+
+			final GradleRoot utilsGradleRoot = FactoryGradleRoot.newInstanceUtils();
+
+			if (mode == Mode.DOWNLOAD) {
+				gradleRoot.synchronizeFrom(utilsGradleRoot);
+			} else if (mode == Mode.UPLOAD) {
+				utilsGradleRoot.synchronizeFrom(gradleRoot);
+			} else {
+				Logger.printError("unsupported mode: " + mode);
+			}
+
 		} else {
-			Logger.printError("unsupported mode: " + mode);
+			Logger.printError("cannot find root folder for path:" +
+					System.lineSeparator() + pathString);
 		}
 
 		Logger.printFinishMessage(start);
@@ -56,5 +68,31 @@ final class WorkerDownloadUpload {
 			}
 		}
 		return rootFolderPathString;
+	}
+
+	private static Boolean checkUseIntranet(
+			final String pathString) {
+
+		Boolean useIntranet = null;
+		final String buildGradleFilePathString = PathUtils.computePath(pathString, "build.gradle");
+		if (IoUtils.fileExists(buildGradleFilePathString)) {
+
+			final List<String> lineList =
+					ReaderUtils.tryFileToLineList(buildGradleFilePathString, StandardCharsets.UTF_8);
+			for (final String line : lineList) {
+
+				if (line.contains("useIntranet = true")) {
+
+					useIntranet = true;
+					break;
+
+				} else if (line.contains("useIntranet = false")) {
+
+					useIntranet = false;
+					break;
+				}
+			}
+		}
+		return useIntranet;
 	}
 }

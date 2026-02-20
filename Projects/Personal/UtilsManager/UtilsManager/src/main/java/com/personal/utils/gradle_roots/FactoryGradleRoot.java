@@ -19,7 +19,7 @@ public final class FactoryGradleRoot {
 	public static GradleRoot newInstanceUtils() {
 
 		final String utilsRootPathString = createUtilsRootPathString();
-		return newInstance(utilsRootPathString);
+		return newInstance(utilsRootPathString, null);
 	}
 
 	public static String createUtilsRootPathString() {
@@ -27,7 +27,8 @@ public final class FactoryGradleRoot {
 	}
 
 	public static GradleRoot newInstance(
-			final String rootFolderPathString) {
+			final String rootFolderPathString,
+			final Boolean useIntranet) {
 
 		final String commonBuildGradleFilePathString =
 				PathUtils.computePath(rootFolderPathString, "common_build.gradle");
@@ -60,7 +61,7 @@ public final class FactoryGradleRoot {
 		final String allModulesFolderPathString = createAllModulesFolderPathString(
 				rootFolderPathString, moduleFolderPathsByNameMap);
 
-		return new GradleRoot(rootFolderPathString,
+		return new GradleRoot(rootFolderPathString, useIntranet,
 				commonBuildGradleFilePathString, commonSettingsGradleFilePathString,
 				gitAttributesFilePathString, allModulesFolderPathString, moduleFolderPathsByNameMap);
 	}
@@ -114,7 +115,7 @@ public final class FactoryGradleRoot {
 		final String gitAttributesFilePathString =
 				PathUtils.computePath(rootFolderPathString, ".gitattributes");
 
-		return new GradleRoot(rootFolderPathString,
+		return new GradleRoot(rootFolderPathString, null,
 				commonBuildGradleFilePathString, commonSettingsGradleFilePathString,
 				gitAttributesFilePathString, allModulesProjectFolderPathString, moduleFolderPathsByNameMap);
 	}

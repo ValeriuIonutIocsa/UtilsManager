@@ -2,6 +2,8 @@ package com.personal.utils.gradle_roots;
 
 import java.util.Map;
 
+import com.personal.utils.gradle_roots.patchers.DoNotUseIntranetPatcher;
+import com.personal.utils.gradle_roots.patchers.UseIntranetPatcher;
 import com.personal.utils.idea.IdeaFilesSynchronizer;
 import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
@@ -13,6 +15,7 @@ import com.utils.string.StrUtils;
 public class GradleRoot {
 
 	private final String rootFolderPathString;
+	private final Boolean useIntranet;
 	private final String commonBuildGradleFilePathString;
 	private final String commonSettingsGradleFilePathString;
 	private final String gitAttributesFilePathString;
@@ -21,6 +24,7 @@ public class GradleRoot {
 
 	GradleRoot(
 			final String rootFolderPathString,
+			final Boolean useIntranet,
 			final String commonBuildGradleFilePathString,
 			final String commonSettingsGradleFilePathString,
 			final String gitAttributesFilePathString,
@@ -28,6 +32,7 @@ public class GradleRoot {
 			final Map<String, String> moduleFolderPathsByNameMap) {
 
 		this.rootFolderPathString = rootFolderPathString;
+		this.useIntranet = useIntranet;
 		this.commonBuildGradleFilePathString = commonBuildGradleFilePathString;
 		this.commonSettingsGradleFilePathString = commonSettingsGradleFilePathString;
 		this.gitAttributesFilePathString = gitAttributesFilePathString;
@@ -54,6 +59,13 @@ public class GradleRoot {
 				FactoryFolderCopier.getInstance().copyFolder(
 						srcModuleFolderPathString, moduleFolderPathString, true, true, true);
 			}
+		}
+
+		if (useIntranet != null && srcGradleRoot.useIntranet == null) {
+			UseIntranetPatcher.work(this, useIntranet);
+		}
+		if (useIntranet == null && srcGradleRoot.useIntranet != null) {
+			DoNotUseIntranetPatcher.work(this);
 		}
 	}
 
@@ -83,8 +95,9 @@ public class GradleRoot {
 
 					final String dstGitPushPathString =
 							PathUtils.computePath(dstAllModulesFolderPathString, "git_push.bat");
-
-					if (!IoUtils.fileExists(dstGitPushPathString)) {
+					final String dstGitPushDevPathString =
+							PathUtils.computePath(dstAllModulesFolderPathString, "git_push_dev.bat");
+					if (!IoUtils.fileExists(dstGitPushPathString) && !IoUtils.fileExists(dstGitPushDevPathString)) {
 
 						final boolean createParentDirectoriesSuccess = FactoryFolderCreator.getInstance()
 								.createParentDirectories(dstGitPushPathString, false, true);
@@ -126,6 +139,10 @@ public class GradleRoot {
 
 	public String getRootFolderPathString() {
 		return rootFolderPathString;
+	}
+
+	public String getCommonBuildGradleFilePathString() {
+		return commonBuildGradleFilePathString;
 	}
 
 	public Map<String, String> getModuleFolderPathsByNameMap() {
