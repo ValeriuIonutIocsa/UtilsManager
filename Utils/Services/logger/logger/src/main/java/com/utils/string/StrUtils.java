@@ -853,6 +853,29 @@ public final class StrUtils {
 	}
 
 	@ApiMethod
+	public static String removeNonLetterOrDigit(
+			final String str) {
+
+		final String result;
+		if (str == null) {
+			result = null;
+
+		} else {
+			final StringBuilder sbResult = new StringBuilder();
+			for (int i = 0; i < str.length(); i++) {
+
+				final char ch = str.charAt(i);
+				final boolean digit = Character.isLetterOrDigit(ch);
+				if (digit) {
+					sbResult.append(ch);
+				}
+			}
+			result = sbResult.toString();
+		}
+		return result;
+	}
+
+	@ApiMethod
 	public static String removeNonDigits(
 			final String str) {
 
