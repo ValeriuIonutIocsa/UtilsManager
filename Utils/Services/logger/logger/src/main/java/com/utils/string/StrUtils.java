@@ -1111,6 +1111,21 @@ public final class StrUtils {
 	}
 
 	@ApiMethod
+	public static Long tryParseLongFromHexString(
+			final String hexStringParam) {
+
+		Long value = null;
+		try {
+			String hexString = hexStringParam;
+			hexString = hexString.substring(2);
+			value = Long.parseLong(hexString, 16);
+
+		} catch (final Throwable ignored) {
+		}
+		return value;
+	}
+
+	@ApiMethod
 	public static long tryParsePositiveLongFromHexString(
 			final String hexStringParam) {
 
@@ -1119,6 +1134,7 @@ public final class StrUtils {
 			String hexString = hexStringParam;
 			hexString = hexString.substring(2);
 			value = Long.parseLong(hexString, 16);
+
 		} catch (final Throwable ignored) {
 		}
 		return value;

@@ -1,5 +1,6 @@
 package com.personal.utils.gradle_roots;
 
+import java.nio.file.FileVisitResult;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,15 +41,15 @@ public final class FactoryGradleRoot {
 		final Map<String, String> moduleFolderPathsByNameMap = new HashMap<>();
 		final List<String> buildGradleFilePathStringList = new ArrayList<>();
 		ListFileUtils.visitFilesRecursively(rootFolderPathString,
-				dirPath -> {
-				}, filePath -> {
-
+				dirPath -> FileVisitResult.CONTINUE,
+				filePath -> {
 					final String fileName = PathUtils.computeFileName(filePath);
 					if (Strings.CI.equals(fileName, "build.gradle")) {
 
 						final String filePathString = filePath.toString();
 						buildGradleFilePathStringList.add(filePathString);
 					}
+					return FileVisitResult.CONTINUE;
 				});
 		for (final String buildGradleFilePathString : buildGradleFilePathStringList) {
 
