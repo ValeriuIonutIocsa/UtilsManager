@@ -63,7 +63,7 @@ public abstract class AbstractVBoxHelpHtml
 			final Scene parentScene) {
 
 		final String title = createTitle();
-		new PopupWindow(parentScene, null, Modality.APPLICATION_MODAL, title,
+		new PopupWindow(parentScene, null, Modality.NONE, title,
 				new Dimensions(450, 450, -1, -1, 960, 540), getRoot()).showAndWait();
 	}
 

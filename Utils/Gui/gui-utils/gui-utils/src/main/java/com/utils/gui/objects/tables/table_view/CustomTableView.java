@@ -375,7 +375,7 @@ public class CustomTableView<
 			final int columnIndex) {
 
 		final VBoxSearchTable vBoxSearchTable = new VBoxSearchTable(this, columnIndex);
-		new PopupWindow(getScene(), null, Modality.APPLICATION_MODAL, "Search Table",
+		new PopupWindow(getScene(), null, Modality.NONE, "Search Table",
 				null, vBoxSearchTable.getRoot()).show();
 	}
 
@@ -458,7 +458,7 @@ public class CustomTableView<
 			final int columnIndex) {
 
 		final VBoxFilterTable vBoxFilterTable = new VBoxFilterTable(this, columnIndex);
-		new PopupWindow(getScene(), null, Modality.APPLICATION_MODAL, "Filter Table",
+		new PopupWindow(getScene(), null, Modality.NONE, "Filter Table",
 				null, vBoxFilterTable.getRoot()).show();
 	}
 
